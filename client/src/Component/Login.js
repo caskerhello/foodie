@@ -39,12 +39,12 @@ function Login() {
         <div className="loginform">
             <div> 즐거운 미식 생활의 시작 <span>식신</span> </div>
             <div className='field'>
-                <label>E-MAIL</label>
-                <input type="text" value={email} onChange={(e)=>{ setEmail(e.currentTarget.value) }}/>
+                <label></label>
+                <input type="text" value={email} placeholder='이메일을 입력해주세요' onChange={(e)=>{ setEmail(e.currentTarget.value) }}/>
             </div>
             <div className='field'>
-                <label>PASSWORD</label>
-                <input type="password" value={pwd} onChange={(e)=>{ setPwd(e.currentTarget.value) }}/>
+                <label></label>
+                <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e)=>{ setPwd(e.currentTarget.value) }}/>
             </div>
             <div className='btns'>
                 <button onClick={ ()=>{ navigate('/main') } }>LOGIN</button>
