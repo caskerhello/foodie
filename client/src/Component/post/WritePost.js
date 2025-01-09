@@ -35,13 +35,22 @@ const WritePost = () => {
 
     const [imgList, setIimgList] = useState([]);
 
-    const fieldStyle={
-        width:"100%", 
+    const divStyle1={
+        width:"20%", 
         display: "flex",
         flexDirection:"row",
         margin:"5px 0",
         justifyContent: "space-between",
-        border:"1px solid black",
+        border:"0px solid black",
+    }
+
+    const fieldStyle={
+        width:"20%", 
+        display: "flex",
+        flexDirection:"row",
+        margin:"5px 0",
+        justifyContent: "space-between",
+        border:"0px solid black",
     }
 
     useEffect(
@@ -59,7 +68,45 @@ const WritePost = () => {
     )
 
     async function imgUpload(e, n){
-        
+        // let formData = new FormData();
+        // formData.append('image', e.target.files[0] );
+        // const result = await axios.post('/api/post/imgup', formData);
+
+        if( n == 1){
+            setDivStyle2( fieldStyle );
+            // setImgsrc1( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 2){
+            setDivStyle3( fieldStyle );
+            // setImgsrc2( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 3){
+            setDivStyle4( fieldStyle );
+            // setImgsrc3( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 4){
+            setDivStyle5( fieldStyle );
+            // setImgsrc4( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 5){
+            setDivStyle6( fieldStyle );
+            // setImgsrc5( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 6){
+            setDivStyle7( fieldStyle );
+            // setImgsrc6( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 7){
+            setDivStyle8( fieldStyle );
+            // setImgsrc7( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 8){
+            setDivStyle9( fieldStyle );
+            // setImgsrc8( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 9){
+            setDivStyle10( fieldStyle );
+            // setImgsrc9( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }else if( n == 10){
+            // setImgsrc2( `http://localhost:8070/uploads/${result.data.savefilename}`);
+        }
+
+        // let arr = [...imgList];
+        // arr.push(result.data.savefilename);
+        // setIimgList( [...arr] );
+        // console.log(imgList);
 
     }
 
@@ -74,62 +121,66 @@ const WritePost = () => {
 
             <div className='postWrite'>
                 <div className='title' style={{fontSize:"150%"}}>포스팅</div>
-                <div className='field'>
-                    <label>content</label>
+                <div className='field' id='wpcontent'>
+                    <label>내용</label>
                     <textarea rows="7" value={content} onChange={
                         (e)=>{ setContent( e.currentTarget.value ) }
                     }></textarea>
                 </div>
 
-                <div className='field' id='img1'>
+                <div className='field' id='img1'style={divStyle1}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 1) }} />
+                    {/* <label htmlFor="fileInput" className="custom-file-label">파일1 선택하기</label>
+                    <input type="file" id="fileInput" style={{display: 'none'}} onChange={(e)=>{ imgUpload(e, 1) }} /> */}
                 </div>
-                <img src={imgsrc1} height="50"/>
+                <img src={imgsrc1} />
 
                 <div className='field' id='img2' style={divStyle2}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 2) }} />
+                    {/* <label htmlFor="fileInput" className="custom-file-label">파일2 선택하기</label>
+                    <input type="file" id="fileInput" style={{display: 'none'}} onChange={(e)=>{ imgUpload(e, 2) }} /> */}
                 </div>
-                <img src={imgsrc2} height="50"/>
+                <img src={imgsrc2} />
 
                 <div className='field' id='img3' style={divStyle3}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 3) }} />
                 </div>
-                <img src={imgsrc3} height="50"/>
+                <img src={imgsrc3} />
 
                 <div className='field' id='img4' style={divStyle4}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 4) }} />
                 </div>
-                <img src={imgsrc4} height="50"/>
+                <img src={imgsrc4} />
 
                 <div className='field' id='img5' style={divStyle5}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 5) }} />
                 </div>
-                <img src={imgsrc5} height="50"/>
+                <img src={imgsrc5} />
 
                 <div className='field' id='img6' style={divStyle6}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 6) }} />
                 </div>
-                <img src={imgsrc6} height="50"/>
+                <img src={imgsrc6} />
 
                 <div className='field' id='img7' style={divStyle7}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 7) }} />
                 </div>
-                <img src={imgsrc7} height="50"/>
+                <img src={imgsrc7} />
 
                 <div className='field' id='img8' style={divStyle8}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 8) }} />
                 </div>
-                <img src={imgsrc8} height="50"/>
+                <img src={imgsrc8} />
 
                 <div className='field' id='img9' style={divStyle9}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 9) }} />
                 </div>
-                <img src={imgsrc9} height="50"/>
+                <img src={imgsrc9} />
 
                 <div className='field' id='img10' style={divStyle10}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 10) }} />
                 </div>
-                <img src={imgsrc10} height="50"/>
+                <img src={imgsrc10} />
 
                 <div className='btns'>
                     <button onClick={ ()=>{ onSubmit() } }>작성완료</button>

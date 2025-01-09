@@ -16,7 +16,7 @@ const MainMenu = (props) => {
         position: "fixed", 
         bottom:"0%",
         right:"34%",
-        width:"600px",
+        width:"700px",
         border:"1px solid silver",
         borderRadius: "15px",
         display: "flex",
@@ -58,7 +58,7 @@ const MainMenu = (props) => {
 
     useEffect(()=>{
         if(viewOrNot){
-            setInputStyle({position:'fixed' , bottom:'8%',right:'35%' ,display:"flex",justifyContents:'center',alignItems:'center',border:'1px dotted black' ,marginBottom:"10px"});
+            setInputStyle({position:'fixed' , bottom:'8%',right:'35%' ,display:"flex",justifyContents:'center',alignItems:'center',border:'1px dotted black' ,marginBottom:"10px",width:"700px"});
         }else{
             setInputStyle({display:"none"})
             props.setWord('');
@@ -114,39 +114,42 @@ const MainMenu = (props) => {
                     ()=>{ navigate('/myPage') }
                 } />
                
+                {/* <VscExport style={iconstyle} onClick={
+                    ()=>{ onLogout() }}/>     */}
+
                 <VscExport style={iconstyle} onClick={
-                    ()=>{ onLogout() }}/>    
+                    ()=>{ navigate('/')}}/>  
                 
             </div>
 
             <div className='search' style={inputStyle}>
-                <input type="text" value={searchTag} style={{flex:"5",height:'20px' ,padding:"3px"}} onChange={
+                <input type="text" value={searchTag} style={{flex:"4",height:'20px' ,padding:"3px"}} onChange={
                     (e)=>{ setSearchTag( e.currentTarget.value) } 
                 } />
                 
-                <button style={{flex:"1", padding:"3px"}} onClick={
+                <button style={{flex:"1.2", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
-                }>음식점 검색</button>
+                }>음식점 <br></br>검색</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
-                }>한식 검색</button>
+                }>한식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
-                }>양식 검색</button>
+                }>양식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
-                }>중식 검색</button>
+                }>중식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
-                }>일식 검색</button>
+                }>일식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
-                }>디저트 검색</button>
+                }>후식 <br></br>조회</button>
             </div>
         </div>
     )
