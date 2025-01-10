@@ -1,14 +1,17 @@
 .mypage{
     width:800px;
-    border:1px solid black;
+    border:0px solid black;
     margin:2px;
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 50px;
+}
+.mypage .title{
+    font-size: 200%;
 }
 .mypage .userinfo{
     width:100%;
-    border:1px solid black;
+    border:0px solid black;
     display: flex;
 }
 .mypage .userinfo .img{

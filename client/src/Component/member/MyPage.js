@@ -26,10 +26,11 @@ const MyPage = () => {
 
     return (
         <div className='mypage'>
-            
+            <div className='title'>내 정보</div>
             <MainMenu setWord={setWord} />
 
             <div className='userinfo'>
+                
                 <div className='img'>
                     <img src={imgSrc} />
                 </div>

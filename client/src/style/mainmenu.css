@@ -19,15 +19,15 @@
 .search button{
     border-radius: 30%;
     border-color: rgb(242, 38, 38);
-    
-    background-color: white;
+    color: white;
+    background-color: rgb(242, 38, 38);
     margin: 5px;
 }
 
 .search button:first-of-type{
     border-radius: 20%;
     border-color:black;
-    
+    color: #000;
     background-color: white;
     margin: 5px;
     width: 60px;
