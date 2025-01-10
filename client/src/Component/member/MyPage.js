@@ -26,10 +26,11 @@ const MyPage = () => {
 
     return (
         <div className='mypage'>
-            
+            <div className='title'>내 정보</div>
             <MainMenu setWord={setWord} />
 
             <div className='userinfo'>
+                
                 <div className='img'>
                     <img src={imgSrc} />
                 </div>
@@ -58,7 +59,7 @@ const MyPage = () => {
             </div>
             <div className='btns' >
                 <button onClick={()=>{navigate('/editProfile')}}>프로필 수정</button>
-                <button onClick={()=>{navigate('/writePost')}}>팔로우/팔로워</button>
+                {/* <button onClick={()=>{navigate('/writePost')}}>팔로우/팔로워</button> */}
             </div>
             <div className='userpost' >
                 <div style={{width:'800px',height:'900px'}}></div>

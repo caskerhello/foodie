@@ -1,0 +1,79 @@
+.editform{
+    width:600px;
+    margin-top:50px;
+    min-width: 400px; 
+    border:2px solid rgb(242, 38, 38);
+    border-radius : 20px;
+    padding:15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+.editform .logo{ 
+    /* font-family: 'Dancing Script', cursive; font-size:300%;  */
+    margin-bottom:50px; 
+    border:1px dotted blue; 
+    width:100%; 
+    text-align: center;
+}
+
+.editform span{
+    color : rgb(242, 38, 38)
+}
+
+
+.editform .field{
+    /* border:1px dotted blue;  */
+    width:100%; 
+    display: flex;
+    margin:5px 0;
+}
+.editform .field label{
+    flex:1;
+    font-weight: bold;
+    margin:5px 0;
+    color : rgb(242, 38, 38)
+}
+.editform .field input{
+    flex:4; border-radius: 10px;
+}
+.editform .field input::placeholder{
+    color : rgb(242, 38, 38);
+    text-align: center;
+}
+.editform .field div{
+    flex:4; border-radius: 10px;
+}
+.editform .btns, .editform .snslogin{
+    /* border:1px dotted blue;  */
+    width:100%; 
+    margin-top:10px;
+    display: flex;
+    padding:3px;
+    box-sizing: border-box;
+}
+
+.editform .btns button, .editform .snslogin button{
+    flex:1;   height:30px;   margin-right:5px;   font-weight: bold; border:none; padding:5px; font-size: 1.1rem; border-radius: 10px;
+}
+.editform .btns button:last-child, .editform .snslogin button:last-child{
+    margin-right: 0;
+}
+.editform .btns button{
+    color:white; background-color: rgb(242, 38, 38);
+}
+
+
+@media (max-width:700px) {
+    .editform .field , .editform .btns , .editform .snslogin{
+        flex-direction: column;
+    }
+    .editform .field input, 
+    .editform .btns button, 
+    .editform .snslogin button{
+        margin: 5px 0;
+        padding:10px;
+    }
+}

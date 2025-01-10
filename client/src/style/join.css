@@ -1,0 +1,79 @@
+.joinform{
+    width:600px;
+    margin-top:50px;
+    min-width: 400px; 
+    border:2px solid rgb(242, 38, 38);
+    border-radius : 20px;
+    padding:15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+.loginform .logo{ 
+    /* font-family: 'Dancing Script', cursive; font-size:300%;  */
+    margin-bottom:50px; 
+    border:1px dotted blue; 
+    width:100%; 
+    text-align: center;
+}
+
+.joinform span{
+    color : rgb(242, 38, 38)
+}
+
+
+.joinform .field{
+    /* border:1px dotted blue;  */
+    width:100%; 
+    display: flex;
+    margin:5px 0;
+}
+.joinform .field label{
+    flex:1;
+    font-weight: bold;
+    margin:5px 0;
+    color : rgb(242, 38, 38)
+}
+.joinform .field input{
+    flex:4; border-radius: 10px;
+}
+.joinform .field input::placeholder{
+    color : rgb(242, 38, 38);
+    text-align: center;
+}
+.joinform .field div{
+    flex:4; border-radius: 10px;
+}
+.joinform .btns, .joinform .snslogin{
+    /* border:1px dotted blue;  */
+    width:100%; 
+    margin-top:10px;
+    display: flex;
+    padding:3px;
+    box-sizing: border-box;
+}
+
+.joinform .btns button, .joinform .snslogin button{
+    flex:1;   height:30px;   margin-right:5px;   font-weight: bold; border:none; padding:5px; font-size: 1.1rem; border-radius: 10px;
+}
+.joinform .btns button:last-child, .joinform .snslogin button:last-child{
+    margin-right: 0;
+}
+.joinform .btns button{
+    color:white; background-color: rgb(242, 38, 38);
+}
+
+
+@media (max-width:700px) {
+    .joinform .field , .joinform .btns , .joinform .snslogin{
+        flex-direction: column;
+    }
+    .joinform .field input, 
+    .joinform .btns button, 
+    .joinform .snslogin button{
+        margin: 5px 0;
+        padding:10px;
+    }
+}

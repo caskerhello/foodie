@@ -3,10 +3,10 @@ import {  Routes, Route } from "react-router-dom";
 
 import Login from './Component/Login';
 import Main from './Component/Main';
-// import Join from './Component/member/Join';
+import Join from './Component/member/Join';
 import WritePost from './Component/post/WritePost';
 import MyPage from './Component/member/MyPage';
-// import EditProfile from './Component/member/EditProfile';
+import EditProfile from './Component/member/EditProfile';
 // import Kakaosaveinfo from './Component/member/Kakaosaveinfo';
 // import MemberPage from './Component/member/MemberPage';
 
@@ -23,9 +23,9 @@ function App() {
 
                 <Route path="/myPage" element={<MyPage />} />
 
-                {/* <Route path="/join" element={<Join />} />
-                <Route path="/myPage" element={<MyPage />} />
-                <Route path="/editProfile" element={<EditProfile />} /> */}
+                <Route path="/join" element={<Join />}></Route>
+
+                <Route path="/editProfile" element={<EditProfile />} />
                 
                 {/* <Route path="/join" element={<Join />} />
                 <Route path="/main" element={<Main />} />
