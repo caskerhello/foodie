@@ -10,6 +10,9 @@
     margin-top: 50px;
     margin-bottom: 100px;
 }
+.postWrite .title{
+    font-size: 200%;
+}
 
 .postWrite .field{
     display: flex;
@@ -27,8 +30,9 @@
 }
 .postWrite .field label{
     flex:1;
-    font-weight: bold;
+    
     margin:5px 0;
+    font-size: 150%;
 }
 .postWrite .field textarea{
     flex:6; 

@@ -120,7 +120,8 @@ const WritePost = () => {
             <MainMenu setWord={setWord}/>
 
             <div className='postWrite'>
-                <div className='title' style={{fontSize:"150%"}}>포스팅</div>
+                <div className='title' >포스팅</div>
+                <br></br>
                 <div className='field' id='wpcontent'>
                     <label>내용</label>
                     <textarea rows="7" value={content} onChange={

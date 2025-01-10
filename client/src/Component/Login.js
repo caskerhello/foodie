@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BiSolidKey } from "react-icons/bi";
+import { BiSolidUserPlus } from "react-icons/bi";
 
 import '../style/login.css'
 
@@ -51,17 +53,23 @@ function Login() {
                 <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e)=>{ setPwd(e.currentTarget.value) }}/>
             </div>
             <div className='btns'>
-                <button onClick={ ()=>{ navigate('/main') } }>LOGIN</button>
-                <button onClick={ ()=>{ navigate('/join') } }>JOIN</button>
-            </div>
-            <div className='snslogin'>
+                <BiSolidKey style={{height:'40px',width:'40px'}} onClick={ ()=>{ navigate('/main')}}/>
+                {/* <button onClick={ ()=>{ navigate('/main') } }>LOGIN</button> */}
+                <BiSolidUserPlus style={{height:'50px',width:'50px'}} onClick={ ()=>{ navigate('/join') } }/>
+                {/* <button onClick={ ()=>{ navigate('/join') } }>JOIN</button> */}
+
                 <button onClick={()=>{
                     window.location.href='http://localhost:8070/member/kakaostart';
-                }}>KAKAO</button>
+                }}><img style={{height:"40px"  }} src="images/free-icon-kakao-talk.png"/></button>
+            </div>
+            {/* <div className='snslogin'>
+                <button onClick={()=>{
+                    window.location.href='http://localhost:8070/member/kakaostart';
+                }}><img style={{height:"40px"  }} src="images/free-icon-kakao-talk.png"/></button>
                 <button>NAVER</button>
                 <button>GOOGLE</button>
                 <button>FACEBOOK</button>
-            </div>
+            </div> */}
         </div>
     )
 }

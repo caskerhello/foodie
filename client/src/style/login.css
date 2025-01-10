@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
 .loginform{
     width:600px;
     
     margin-top:200px;
     min-width: 400px; 
     border:2px solid rgb(242, 38, 38);
+    background-color: rgb(242, 38, 38);
     border-radius : 20px;
     padding:15px;
     display: flex;
@@ -12,12 +15,23 @@
 }
 
 .loginform .title{
-    font-size: 200%
+
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+
+    font-size: 300%;
+    /* background-color: white; */
+    color: white;
+    border-radius: 10px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
 .loginform .logo{ 
-    /* font-family: 'Dancing Script', cursive; font-size:300%;  */
+
+    
+
+    
     margin-bottom:50px; 
     border:1px dotted blue; 
     width:100%; 
@@ -25,7 +39,8 @@
 }
 
 .loginform span{
-    color : rgb(242, 38, 38)
+    color : white;
+    font-size: 160%;
 }
 
 
@@ -46,8 +61,16 @@
     padding: 5px;
 }
 .loginform .field input::placeholder{
+
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+
+    
+
+
     color : rgb(242, 38, 38);
-    font-size: 130%;
+    font-size: 200%;
     text-align: center;
 }
 .loginform .field div{
@@ -69,7 +92,9 @@
     margin-right: 0;
 }
 .loginform .btns button{
-    color:white; background-color: rgb(242, 38, 38);
+    color:rgb(242, 38, 38); 
+    background-color: white;
+    /* background-color: rgb(242, 38, 38); */
     height: 50px;
 }
 .loginform .snslogin button:nth-child(1){background-color: yellow;}
