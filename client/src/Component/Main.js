@@ -1,12 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import MainMenu from './MainMenu';
 import Post from './post/Post';
 import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
-import { Map, MapMarker  } from "react-kakao-maps-sdk";
+import { Map, MapMarker ,ZoomControl  } from "react-kakao-maps-sdk";
 // import useWatchLocation from '@utils/hooks/useCurrentLocation'
+import debounce from 'lodash.debounce';
+
+const { kakao } = window;
 
 
 // import '../style/main.css';
@@ -16,7 +19,9 @@ const Main = () => {
     const [postList, setPostList ] = useState([]);
     const [paging, setPaging] = useState({});
     const [word, setWord] = useState(null);
-    const [location, setLocation] = useState();
+    const [location, setLocation] = useState({lat:37.57261013516411,lng:126.99042333710086});
+    const [movedLocation,setMovedLocation] =useState({})
+    const [center, setCenter] =useState({});
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     const [error, setError] = useState();
@@ -59,17 +64,30 @@ const Main = () => {
 
         // 위치 정보를 가져오는 함수
     const getLocation = () => {
+
+        setLocation(movedLocation);
+        
+
         navigator.geolocation.getCurrentPosition(
         (position) => {
             setLat(position.coords.latitude);
             setLng(position.coords.longitude);
-            setError(null);            
+            setLocation({lat:position.coords.latitude, lng:position.coords.longitude});
+            // Map.setCenter({lat:position.coords.latitude, lng:position.coords.longitude});  
         },
         (err) => {
             window.alert("위치 정보 접근을 허용해주세요");            
         }
         );
     };    
+
+    // useEffect(() => {
+    //     if (location.lat && location.lng) {
+    //         // 위치 정보가 업데이트되었을 때만 실행되는 코드
+    //         console.log('위치 정보가 갱신되었습니다:', location);
+    //     }
+    // }, [location]);
+
 
     const [viewMapOrNot, setViewMapOrNot] = useState(false);
     useEffect(()=>{
@@ -124,7 +142,11 @@ const Main = () => {
             // setLocation({ lat:lan, lng:lon }); // 상태에 위치 정보 저장
             
           } catch (err) {
-            window.alert('위치 정보를 가져오는 데 실패했습니다. 종로3가역 기준으로 탐색을 시작합니다.');
+            if (!sessionStorage.getItem('alertShown')) {
+                alert('위치 정보를 가져오는 데 실패했습니다. 종로3가역 기준으로 탐색을 시작합니다.');
+                // 알람을 표시한 후 'alertShown' 값을 sessionStorage에 저장
+                sessionStorage.setItem('alertShown', 'true');
+              }
             setLocation({lat:37.57261013516411,lng:126.99042333710086});
             setLat(37.57261013516411);
             setLng(126.99042333710086);
@@ -157,9 +179,19 @@ const Main = () => {
             {/* {location} */}         
             
             <Map
+                
                 center={location}   // 지도의 중심 좌표
                 style={inputMapStyle} // 지도 크기
-                level={4} // 지도 확대 레벨s                       
+                level={4} // 지도 확대 레벨s  
+                // onCenterChanged={updateCenterWhenMapMoved}
+                onDragEnd={(map) => {
+                    const {lat,lng} = map.getCenter()
+                    
+                    setMovedLocation({lat:lat,lng:lng});
+                    // setResult(
+                    //   `변경된 지도 중심좌표는 ${latlng.getLat()} 이고, 경도는 ${latlng.getLng()} 입니다`,
+                    // )
+                  }}
             >
 
                 <MapMarker image={{
@@ -172,6 +204,8 @@ const Main = () => {
                 }}
 
                 position={location}/>
+
+<ZoomControl position={"RIGHT"} />
 
             </Map>
 
