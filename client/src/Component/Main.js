@@ -76,7 +76,8 @@ const Main = () => {
             // Map.setCenter({lat:position.coords.latitude, lng:position.coords.longitude});  
         },
         (err) => {
-            window.alert("위치 정보 접근을 허용해주세요");            
+            window.alert("위치 정보 접근을 허용해주세요");  
+            setLocation({lat:37.57261013516411,lng:126.99042333710086});          
         }
         );
     };    
