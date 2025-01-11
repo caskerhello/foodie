@@ -47,16 +47,22 @@ function Login() {
                 <label></label>
                 <input type="text" value={email} placeholder='이메일을 입력해주세요' onChange={(e)=>{ setEmail(e.currentTarget.value) }}/>
             </div>
-            <br></br>
+            
             <div className='field'>
                 <label></label>
                 <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e)=>{ setPwd(e.currentTarget.value) }}/>
             </div>
+
             <div className='btns'>
-                <BiSolidKey style={{height:'40px',width:'40px'}} onClick={ ()=>{ navigate('/main')}}/>
-                {/* <button onClick={ ()=>{ navigate('/main') } }>LOGIN</button> */}
-                <BiSolidUserPlus style={{height:'50px',width:'50px'}} onClick={ ()=>{ navigate('/join') } }/>
-                {/* <button onClick={ ()=>{ navigate('/join') } }>JOIN</button> */}
+            <div className='btn'><BiSolidKey style={{height:'40px',width:'40px'}} onClick={ ()=>{ navigate('/main')}}/>
+            {/* <button onClick={ ()=>{ navigate('/main') } }>LOGIN</button> */}</div>
+
+            <div className='btn'>
+            <BiSolidUserPlus style={{height:'50px',width:'50px'}} onClick={ ()=>{ navigate('/join') } }/>
+            {/* <button onClick={ ()=>{ navigate('/join') } }>JOIN</button> */}
+            </div>
+                
+                
 
                 <button onClick={()=>{
                     window.location.href='http://localhost:8070/member/kakaostart';
