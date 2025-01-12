@@ -13,8 +13,18 @@ const WritePost = () => {
     const [content, setContent] = useState('');
     const [word, setWord] = useState('')
     const [loginUser, setLoginUser ] = useState({});
+    
+
+
+
     const [modalOpen, setModalOpen] = useState(false);
     const modalBackground = useRef();
+
+    const [place_name,setPlace_name] = useState();
+    const [road_address_name,setRoad_address_name] = useState();
+    const [phone,setPhone] = useState();
+    const [place_url,setPlace_url] = useState();
+    const [selectedPlace,setSelectedPlace] = useState({});
 
     const [InputText, setInputText] = useState('')
     const [Place, setPlace] = useState('')
@@ -205,12 +215,18 @@ const WritePost = () => {
                     <button onClick={() => setModalOpen(true)}>카카오맵검색</button>
                 </div>
 
-                <div className='field' style={{width:"30vw",height:"10vh",border:"1px solid black"}}>
-                    선택된 장소가 조회될 공간입니다.
-                    <input type="hidden" name='category'></input>
+                <div className='field' style={{width:"30vw",height:"20vh",border:"1px solid black",overflow: "auto"}}>
+                    선택된 장소가 조회될 공간입니다.<br/>
+                    {/* <h3>선택된 장소 정보:</h3> */}
+                    장소 이름: {selectedPlace.placeName}<br></br>
+                    도로명 주소: {selectedPlace.roadAddress}<br></br>
+                    {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
+                    전화번호: {selectedPlace.phone}<br></br>
+                    카카오맵 링크: <a href={selectedPlace.placeUrl} target="_blank" rel="noopener noreferrer">{selectedPlace.placeUrl}</a><br></br>
+                    {/* <input type="hidden" name='category'></input>
                     <input type="hidden" name='place_name'></input>
                     <input type="hidden" name='3'></input>
-                    <input type="hidden" name='4'></input>
+                    <input type="hidden" name='4'></input> */}
                 </div>
 
                     {
@@ -230,7 +246,7 @@ const WritePost = () => {
                             <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
                             <button type="submit">검색</button>
                         </form>
-                        <MapContainer searchPlace={Place} setPlace={setPlace} />
+                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace}/>
                                             
 
                     </div>
