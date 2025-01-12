@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef  } from 'react'
 import { CiGps } from "react-icons/ci";
 
 import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace }) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace}) => {
 
   const [locationw, setLocationw] = useState();
   const [options, setOptions] = useState({
@@ -13,7 +13,8 @@ const MapContainer = ({ searchPlace, setPlace }) => {
     // center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   });
-  const [options1, setOptions1] = useState({      
+  const [options1, setOptions1] = useState(
+    {      
     location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
     radius: 1000,
     sort: kakao.maps.services.SortBy.DISTANCE,
@@ -41,12 +42,13 @@ const MapContainer = ({ searchPlace, setPlace }) => {
         setLanw(position.coords.latitude)
         setLonw(position.coords.longitude)
 
-        // setOptions1({      
-        //   location: new kakao.maps.LatLng(position.coords.latitude,position.coords.latitude),     
-        //   radius: 1000,
-        //   sort: kakao.maps.services.SortBy.DISTANCE,
-        // })  
-        // setPlace('')
+        setOptions1({      
+          location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),    
+          radius: 1000,
+          sort: kakao.maps.services.SortBy.DISTANCE,
+        })  
+        setPlace('')
+        // setInputText('')
     },
     (err) => {
         window.alert("위치 정보 접근을 허용해주세요");  
@@ -94,11 +96,11 @@ const MapContainer = ({ searchPlace, setPlace }) => {
         image: markerImage
       })
 
-      var content = '<div class="wrap">' + 
-            '    <div class="info">' + 
-            '        <div class="title">' + 
+      var content = '<div id="overlaywrap">' + 
+            '    <div id="overlayinfo">' + 
+            '        <div id="overlaytitle">' + 
             '            현재위치' + 
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+            '            <div id="overlayclose" onclick="closeOverlay()">X</div>' + 
             '        </div>' +            
             '    </div>' +    
             '</div>';
@@ -123,6 +125,8 @@ const MapContainer = ({ searchPlace, setPlace }) => {
     ps.keywordSearch(searchPlace, placesSearchCB, options1)
 
     function placesSearchCB(data, status, pagination) {
+
+
       if (status === kakao.maps.services.Status.OK) {
         let bounds = new kakao.maps.LatLngBounds()
 
@@ -134,6 +138,7 @@ const MapContainer = ({ searchPlace, setPlace }) => {
         map.setBounds(bounds)
         // 페이지 목록 보여주는 displayPagination() 추가
         displayPagination(pagination)
+        setPlaces('')
         setPlaces(data)
       }
     }
@@ -175,12 +180,55 @@ const MapContainer = ({ searchPlace, setPlace }) => {
         position: new kakao.maps.LatLng(place.y, place.x),
       })
 
-      kakao.maps.event.addListener(marker, 'click', function () {
+      kakao.maps.event.addListener(marker, 'mouseover', function () {
         infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>')
         infowindow.open(map, marker)
       })
+
+      kakao.maps.event.addListener(marker, 'mouseout', function () {
+        infowindow.close();
+      })
     }
   }, [searchPlace, options, options1])
+
+
+  const placeRefs = useRef([]);
+
+  const Selection = (i) => {
+
+    // const placeElement = placeRefs.current[i];
+    
+    // setPlace_name(placeElement.innerText)
+    // setRoad_address_name()
+    // setPhone()
+    // setPlace_url()
+
+    const placeNameElement = placeRefs.current[`${Places[i].id}-place_name`];
+    const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
+    // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
+    const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
+    const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
+
+    const place = {
+      placeName: placeNameElement ? placeNameElement.innerText : '',
+      roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
+      // address: addressElement ? addressElement.innerText : '',
+      phone: phoneElement ? phoneElement.innerText : '',
+      placeUrl: placeurlElement? placeurlElement.innerHTML : '',
+    };
+
+    setSelectedPlace(place);
+
+
+
+
+
+
+    setModalOpen(false)
+  }
+
+
+  
 
   return (
     <div id='MapContainer'>
@@ -202,18 +250,22 @@ const MapContainer = ({ searchPlace, setPlace }) => {
           <div key={i} style={{ marginTop: '20px' }}>
             <span>{i + 1}</span>
             <div>
-              <h5>{item.place_name}</h5>
+              <h5 ref={(el) => placeRefs.current[`${item.id}-place_name`] = el} id={`${item.id}-place_name`}>{item.place_name}</h5>
               {item.road_address_name ? (
                 <div>
-                  <span>{item.road_address_name}</span>
-                  <span>{item.address_name}</span>
+                  <span ref={(el) => placeRefs.current[`${item.id}-road_address_name`] = el} id={`${item.id}-road_address_name`}>{item.road_address_name}</span><br></br>
+                  <span>({item.address_name})</span>
                 </div>
               ) : (
                 <span>{item.address_name}</span>
               )}
-              <span>{item.phone}</span>
+              <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/>
+
+              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-place_url`] = el} id={`${item.place_url}-place_url`}>{item.place_url}</span><br/>
+
+              <button onClick={() => window.open(item.place_url, '_blank')}>카카오맵에서 보기</button>
             </div>
-            <button>상세보기</button><button>선택</button>
+            <button onClick={() => Selection(i)}>선택</button>
           </div>
         ))}
         <div id="pagination"></div>
