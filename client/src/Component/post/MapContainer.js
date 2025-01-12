@@ -38,6 +38,9 @@ const MapContainer = ({ searchPlace, setPlace }) => {
           level: 3,
         });
 
+        setLanw(position.coords.latitude)
+        setLonw(position.coords.longitude)
+
         // setOptions1({      
         //   location: new kakao.maps.LatLng(position.coords.latitude,position.coords.latitude),     
         //   radius: 1000,
@@ -52,6 +55,8 @@ const MapContainer = ({ searchPlace, setPlace }) => {
           // center: new kakao.maps.LatLng(33.450701, 126.570667),
           level: 3,
         });
+        setLanw(37.57261013516411)
+        setLonw(126.99042333710086)
         // setLocationw({lat:37.57261013516411,lng:126.99042333710086});          
     }
     );
@@ -76,6 +81,33 @@ const MapContainer = ({ searchPlace, setPlace }) => {
     // }
     
     const map = new kakao.maps.Map(container, options)
+
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다    
+    imageSize = new kakao.maps.Size(25, 40), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+
+    let marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(lanw, lonw),
+        image: markerImage
+      })
+
+      var content = '<div class="wrap">' + 
+            '    <div class="info">' + 
+            '        <div class="title">' + 
+            '            현재위치' + 
+            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+            '        </div>' +            
+            '    </div>' +    
+            '</div>';
+
+    var overlay = new kakao.maps.CustomOverlay({
+        content: content,
+        map: map,
+        position: marker.getPosition()       
+    });
 
     const ps = new kakao.maps.services.Places()
 
