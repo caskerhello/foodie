@@ -7,7 +7,7 @@ import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
 import { Map, MapMarker ,ZoomControl  } from "react-kakao-maps-sdk";
 // import useWatchLocation from '@utils/hooks/useCurrentLocation'
-import debounce from 'lodash.debounce';
+
 
 const { kakao } = window;
 
@@ -242,32 +242,8 @@ const Main = () => {
                 style={{ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' }} // 지도 크기
                 level={4}                                   // 지도 확대 레벨s
             >
-            </Map> */}     
-
-            
-
-
-        {/* if(!{location})
-      
-
-            <Map                
-                center={{lat:33.5,lng:127}}   // 지도의 중심 좌표
-                style={inputMapStyle} // 지도 크기
-                level={4} // 지도 확대 레벨s                       
-            >
-            </Map>
+            </Map> */}                 
         
-        else{
-            
-            <Map                
-            center={{lat:33.5,lng:127}}   // 지도의 중심 좌표
-            style={inputMapStyle} // 지도 크기
-            level={4} // 지도 확대 레벨s                       
-            >
-            </Map>
-
-        } */}
-
             <CiGps style={{ position: 'fixed', top:'2%',right:'4%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocation()}}/>
 
             <VscMap style={{ position: 'fixed', top:'2%',right:'1%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{onChangeMapView()}}/>

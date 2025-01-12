@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import MainMenu from '../MainMenu';
+import MapContainer from '../post/MapContainer';
 
+import '../../style/mapcontainer.css'
 import '../../style/writepost.css'
 
 const WritePost = () => {
@@ -11,6 +13,21 @@ const WritePost = () => {
     const [content, setContent] = useState('');
     const [word, setWord] = useState('')
     const [loginUser, setLoginUser ] = useState({});
+    const [modalOpen, setModalOpen] = useState(false);
+    const modalBackground = useRef();
+
+    const [InputText, setInputText] = useState('')
+    const [Place, setPlace] = useState('')
+  
+    const onChange = (e) => {
+      setInputText(e.target.value)
+    }
+  
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      setPlace(InputText)
+      setInputText('')
+    }
 
     const [ imgsrc1, setImgsrc1 ] = useState('');
     const [ imgsrc2, setImgsrc2 ] = useState('');
@@ -182,6 +199,43 @@ const WritePost = () => {
                     <input type="file" onChange={(e)=>{ imgUpload(e, 10) }} />
                 </div>
                 <img src={imgsrc10} />
+
+                <div className='field' >
+                    {/* <input type="text" /> */}
+                    <button onClick={() => setModalOpen(true)}>카카오맵검색</button>
+                </div>
+
+                <div className='field' style={{width:"30vw",height:"10vh",border:"1px solid black"}}>
+                    선택된 장소가 조회될 공간입니다.
+                    <input type="hidden" name='category'></input>
+                    <input type="hidden" name='place_name'></input>
+                    <input type="hidden" name='3'></input>
+                    <input type="hidden" name='4'></input>
+                </div>
+
+                    {
+                    modalOpen &&
+                    <div className={'modal-container'} ref={modalBackground} onClick={e => {
+                    if (e.target === modalBackground.current) {
+                        setModalOpen(false);
+                    }
+                    }}>
+                    <div className={'modal-content'}>
+                        
+                        <p>카카오맵 검색 결과가 조회됩니다<button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
+                        모달 닫기
+                        </button></p>
+                        
+                        <form className="inputForm" onSubmit={handleSubmit}>
+                            <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
+                            <button type="submit">검색</button>
+                        </form>
+                        <MapContainer searchPlace={Place} setPlace={setPlace} />
+                                            
+
+                    </div>
+                    </div>
+                    }
 
                 <div className='btns'>
                     <button onClick={ ()=>{ onSubmit() } }>작성완료</button>
