@@ -21,6 +21,7 @@ const Main = () => {
     const [word, setWord] = useState(null);
     const [location, setLocation] = useState({lat:37.57261013516411,lng:126.99042333710086});
     const [movedLocation,setMovedLocation] =useState({})
+    
     const [center, setCenter] =useState({});
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();

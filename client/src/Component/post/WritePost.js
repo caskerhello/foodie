@@ -8,6 +8,8 @@ import MapContainer from '../post/MapContainer';
 import '../../style/mapcontainer.css'
 import '../../style/writepost.css'
 
+const { kakao } = window
+
 const WritePost = () => {
     const navigate=useNavigate();
     const [content, setContent] = useState('');
@@ -26,6 +28,15 @@ const WritePost = () => {
     const [place_url,setPlace_url] = useState();
     const [selectedPlace,setSelectedPlace] = useState({});
 
+    const [options1, setOptions1] = useState(
+        {      
+        location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
+        radius: 1000,
+        sort: kakao.maps.services.SortBy.DISTANCE,
+      });
+
+    const [movedLocation2,setMovedLocation2] =useState({})
+
     const [InputText, setInputText] = useState('')
     const [Place, setPlace] = useState('')
   
@@ -35,6 +46,12 @@ const WritePost = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault()
+
+      setOptions1({      
+        location: new kakao.maps.LatLng(movedLocation2),     
+        radius: 1000,
+        sort: kakao.maps.services.SortBy.DISTANCE,
+      })
       setPlace(InputText)
       setInputText('')
     }
@@ -246,7 +263,7 @@ const WritePost = () => {
                             <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
                             <button type="submit">검색</button>
                         </form>
-                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace}/>
+                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1}/>
                                             
 
                     </div>

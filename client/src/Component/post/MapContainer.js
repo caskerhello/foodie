@@ -5,7 +5,7 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace}) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1}) => {
 
   const [locationw, setLocationw] = useState();
   const [options, setOptions] = useState({
@@ -13,12 +13,12 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
     // center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   });
-  const [options1, setOptions1] = useState(
-    {      
-    location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
-    radius: 1000,
-    sort: kakao.maps.services.SortBy.DISTANCE,
-  });
+  // const [options1, setOptions1] = useState(
+  //   {      
+  //   location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
+  //   radius: 1000,
+  //   sort: kakao.maps.services.SortBy.DISTANCE,
+  // });
   const [lanw, setLanw] = useState();
   const [lonw, setLonw] = useState();
 
@@ -113,7 +113,21 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
 
     const ps = new kakao.maps.services.Places()
 
+    kakao.maps.event.addListener(map, 'dragend', function() {        
     
+      // 지도 중심좌표를 얻어옵니다 
+      var latlng = map.getCenter(); 
+
+      setMovedLocation2(latlng)
+      
+
+      // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
+      // message += '경도는 ' + latlng.getLng() + ' 입니다';
+      
+      // var resultDiv = document.getElementById('result');  
+      // resultDiv.innerHTML = message;
+      
+  });
       
     // var options1 = {
       
