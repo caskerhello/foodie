@@ -223,7 +223,7 @@ const Main = () => {
                 </div>
 
               포스트 loading...
-                {/* {
+                {
                     (postList)?(
                         postList.map((post, idx)=>{
                             return (
@@ -233,7 +233,7 @@ const Main = () => {
                             )
                         })
                     ):(null)
-                } */}
+                }
             </div>
             </div>
 

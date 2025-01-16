@@ -19,8 +19,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
   //   radius: 1000,
   //   sort: kakao.maps.services.SortBy.DISTANCE,
   // });
-  const [lanw, setLanw] = useState();
-  const [lonw, setLonw] = useState();
+  const [lanw, setLanw] = useState(37.57261013516411);
+  const [lonw, setLonw] = useState(126.99042333710086);
 
   const getLocationw = () => {
 
@@ -112,7 +112,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         position: marker.getPosition()       
     });
 
-    
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     const ps = new kakao.maps.services.Places()
 
@@ -121,14 +122,9 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       // 지도 중심좌표를 얻어옵니다 
       var latlng = map.getCenter(); 
 
-      // console.log(latlng)
+      setMovedLocation2({lat:latlng.getLat(),lng:latlng.getLng()})
 
-      // console.log(latlng.getLat())
-
-      setMovedLocation2(latlng)
-
-      // console.log(movedLocation2.getLat())
-      
+      // console.log({lat:latlng.getLat(),lng:latlng.getLng()})
 
       // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
       // message += '경도는 ' + latlng.getLng() + ' 입니다';

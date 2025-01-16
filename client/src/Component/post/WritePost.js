@@ -45,17 +45,17 @@ const WritePost = () => {
     }
   
     const handleSubmit = (e) => {
-      e.preventDefault()
+      e.preventDefault()      
 
       
 
       setOptions1({      
-        location: new kakao.maps.LatLng(movedLocation2.getLat(),movedLocation2.getLng()),     
+        location: new kakao.maps.LatLng(movedLocation2.lat,movedLocation2.lng),     
         radius: 1000,
         sort: kakao.maps.services.SortBy.DISTANCE,
-      })
+      })      
 
-      console.log(options1)
+    //   console.log(options1)
 
       setPlace(InputText)
       setInputText('')
