@@ -5,7 +5,7 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace}) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1}) => {
 
   const [locationw, setLocationw] = useState();
   const [options, setOptions] = useState({
@@ -13,14 +13,14 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
     // center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   });
-  const [options1, setOptions1] = useState(
-    {      
-    location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
-    radius: 1000,
-    sort: kakao.maps.services.SortBy.DISTANCE,
-  });
-  const [lanw, setLanw] = useState();
-  const [lonw, setLonw] = useState();
+  // const [options1, setOptions1] = useState(
+  //   {      
+  //   location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
+  //   radius: 1000,
+  //   sort: kakao.maps.services.SortBy.DISTANCE,
+  // });
+  const [lanw, setLanw] = useState(37.57261013516411);
+  const [lonw, setLonw] = useState(126.99042333710086);
 
   const getLocationw = () => {
 
@@ -65,6 +65,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
 };    
 
   
+  
 
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([])
@@ -100,7 +101,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
             '    <div id="overlayinfo">' + 
             '        <div id="overlaytitle">' + 
             '            현재위치' + 
-            '            <div id="overlayclose" onclick="closeOverlay()">X</div>' + 
+            // '            <div id="overlayclose" onclick="closeOverlay()">X</div>' + 
             '        </div>' +            
             '    </div>' +    
             '</div>';
@@ -111,9 +112,27 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         position: marker.getPosition()       
     });
 
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
     const ps = new kakao.maps.services.Places()
 
+    kakao.maps.event.addListener(map, 'dragend', function() {        
     
+      // 지도 중심좌표를 얻어옵니다 
+      var latlng = map.getCenter(); 
+
+      setMovedLocation2({lat:latlng.getLat(),lng:latlng.getLng()})
+
+      // console.log({lat:latlng.getLat(),lng:latlng.getLng()})
+
+      // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
+      // message += '경도는 ' + latlng.getLng() + ' 입니다';
+      
+      // var resultDiv = document.getElementById('result');  
+      // resultDiv.innerHTML = message;
+      
+  });
       
     // var options1 = {
       
@@ -207,6 +226,9 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
     const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
     // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
     const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
+    const idElement = placeRefs.current[`${Places[i].id}-id`];
+    const xElement = placeRefs.current[`${Places[i].id}-x`];
+    const yElement = placeRefs.current[`${Places[i].id}-y`];
     const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
 
     const place = {
@@ -214,15 +236,13 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
       // address: addressElement ? addressElement.innerText : '',
       phone: phoneElement ? phoneElement.innerText : '',
+      id: idElement? idElement.innerHTML : '',
+      x: xElement? xElement.innerHTML : '',
+      y: yElement? yElement.innerHTML : '',
       placeUrl: placeurlElement? placeurlElement.innerHTML : '',
     };
 
     setSelectedPlace(place);
-
-
-
-
-
 
     setModalOpen(false)
   }
@@ -260,6 +280,12 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
                 <span>{item.address_name}</span>
               )}
               <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-id`] = el} id={`${item.id}-id`}>{item.id}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-x`] = el} id={`${item.x}-x`}>{item.x}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-y`] = el} id={`${item.ㅛ}-y`}>{item.y}</span><br/>
 
               <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-place_url`] = el} id={`${item.place_url}-place_url`}>{item.place_url}</span><br/>
 

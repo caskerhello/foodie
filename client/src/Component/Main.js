@@ -21,6 +21,7 @@ const Main = () => {
     const [word, setWord] = useState(null);
     const [location, setLocation] = useState({lat:37.57261013516411,lng:126.99042333710086});
     const [movedLocation,setMovedLocation] =useState({})
+    
     const [center, setCenter] =useState({});
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
@@ -179,8 +180,7 @@ const Main = () => {
         <p>
             {/* {location} */}         
             
-            <Map
-                
+            <Map                
                 center={location}   // 지도의 중심 좌표
                 style={inputMapStyle} // 지도 크기
                 level={4} // 지도 확대 레벨s  
@@ -222,7 +222,7 @@ const Main = () => {
                 </div>
 
               포스트 loading...
-                {/* {
+                {
                     (postList)?(
                         postList.map((post, idx)=>{
                             return (
@@ -232,7 +232,7 @@ const Main = () => {
                             )
                         })
                     ):(null)
-                } */}
+                }
             </div>
             </div>
 
