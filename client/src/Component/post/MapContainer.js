@@ -65,6 +65,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
 };    
 
   
+  
 
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([])
@@ -100,7 +101,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
             '    <div id="overlayinfo">' + 
             '        <div id="overlaytitle">' + 
             '            현재위치' + 
-            '            <div id="overlayclose" onclick="closeOverlay()">X</div>' + 
+            // '            <div id="overlayclose" onclick="closeOverlay()">X</div>' + 
             '        </div>' +            
             '    </div>' +    
             '</div>';
@@ -111,6 +112,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         position: marker.getPosition()       
     });
 
+    
+
     const ps = new kakao.maps.services.Places()
 
     kakao.maps.event.addListener(map, 'dragend', function() {        
@@ -118,7 +121,13 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       // 지도 중심좌표를 얻어옵니다 
       var latlng = map.getCenter(); 
 
+      // console.log(latlng)
+
+      // console.log(latlng.getLat())
+
       setMovedLocation2(latlng)
+
+      // console.log(movedLocation2.getLat())
       
 
       // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
