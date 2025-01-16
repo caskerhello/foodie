@@ -180,8 +180,7 @@ const Main = () => {
         <p>
             {/* {location} */}         
             
-            <Map
-                
+            <Map                
                 center={location}   // 지도의 중심 좌표
                 style={inputMapStyle} // 지도 크기
                 level={4} // 지도 확대 레벨s  

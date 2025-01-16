@@ -60,6 +60,7 @@ const MyPage = () => {
             <div className='btns' >
                 <button onClick={()=>{navigate('/editProfile')}}>프로필 수정</button>
                 <button>팔로우/팔로워</button>
+                <button>북마크</button>
             </div>
             <div className='userpost' >
                 <div style={{width:'800px',height:'900px'}}></div>

@@ -226,6 +226,9 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
     const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
     // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
     const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
+    const idElement = placeRefs.current[`${Places[i].id}-id`];
+    const xElement = placeRefs.current[`${Places[i].id}-x`];
+    const yElement = placeRefs.current[`${Places[i].id}-y`];
     const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
 
     const place = {
@@ -233,15 +236,13 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
       // address: addressElement ? addressElement.innerText : '',
       phone: phoneElement ? phoneElement.innerText : '',
+      id: idElement? idElement.innerHTML : '',
+      x: xElement? xElement.innerHTML : '',
+      y: yElement? yElement.innerHTML : '',
       placeUrl: placeurlElement? placeurlElement.innerHTML : '',
     };
 
     setSelectedPlace(place);
-
-
-
-
-
 
     setModalOpen(false)
   }
@@ -279,6 +280,12 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
                 <span>{item.address_name}</span>
               )}
               <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-id`] = el} id={`${item.id}-id`}>{item.id}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-x`] = el} id={`${item.x}-x`}>{item.x}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-y`] = el} id={`${item.ㅛ}-y`}>{item.y}</span><br/>
 
               <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-place_url`] = el} id={`${item.place_url}-place_url`}>{item.place_url}</span><br/>
 

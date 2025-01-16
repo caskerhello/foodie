@@ -29,8 +29,8 @@ const WritePost = () => {
     const [selectedPlace,setSelectedPlace] = useState({});
 
     const [options1, setOptions1] = useState(
-        {      
-        location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
+        {
+        location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
         radius: 1000,
         sort: kakao.maps.services.SortBy.DISTANCE,
       });
@@ -45,15 +45,15 @@ const WritePost = () => {
     }
   
     const handleSubmit = (e) => {
-      e.preventDefault()      
+      e.preventDefault()
 
-      
 
-      setOptions1({      
-        location: new kakao.maps.LatLng(movedLocation2.lat,movedLocation2.lng),     
+
+      setOptions1({
+        location: new kakao.maps.LatLng(movedLocation2.lat,movedLocation2.lng),
         radius: 1000,
         sort: kakao.maps.services.SortBy.DISTANCE,
-      })      
+      })
 
     //   console.log(options1)
 
@@ -244,6 +244,9 @@ const WritePost = () => {
                     도로명 주소: {selectedPlace.roadAddress}<br></br>
                     {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
                     전화번호: {selectedPlace.phone}<br></br>
+                    id: {selectedPlace.id}<br></br>
+                    x좌표: {selectedPlace.x}<br></br>
+                    y좌표: {selectedPlace.y}<br></br>
                     카카오맵 링크: <a href={selectedPlace.placeUrl} target="_blank" rel="noopener noreferrer">{selectedPlace.placeUrl}</a><br></br>
                     {/* <input type="hidden" name='category'></input>
                     <input type="hidden" name='place_name'></input>
