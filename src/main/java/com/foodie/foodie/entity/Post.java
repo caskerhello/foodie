@@ -5,19 +5,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
-@Data
+import java.sql.Timestamp;
+
 @Entity
-public class Member {
+@Data
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int postid;
     private int memberid;
-    private String nickname;
-    private String email;
-    private String pwd;
-    private String profileimg;
-    private String profilemsg;
-    private String snsid;
-    private String provider;
-    private String phone;
+    private String content;
+    @CreationTimestamp
+    private Timestamp writedate;
+    private int stars;
+    private int placeid;
+
 }

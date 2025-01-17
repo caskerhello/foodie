@@ -8,16 +8,10 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Member {
+public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberid;
-    private String nickname;
-    private String email;
-    private String pwd;
-    private String profileimg;
-    private String profilemsg;
-    private String snsid;
-    private String provider;
-    private String phone;
+    private int imagesid;
+    private int postid;
+    private String savefilename;
 }

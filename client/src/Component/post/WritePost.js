@@ -160,6 +160,21 @@ const WritePost = () => {
     }
 
     async function onSubmit(){
+        if(!content){return alert('내용을 입력하세요');}
+        if(!imgList) {return alert('이미지를 하나이상 선택하세요')}
+
+        // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴 
+        const result = await axios.post('/api/post/writePost', { content, writer:lUser.nickname} )
+        let postid = result.data.postid;
+
+        
+
+        // 리턴 아이디와  이미지 이름들로  images 테이블에 레코드들을 추가
+        for( let i=0; i<imgList.length; i++){
+            await axios.post('/api/post/writeImages', { postid, savefilename:imgList[i] });
+        }
+        //window.location.href='http://localhost:3000/main
+        navigate('/main');
         
     }
 
