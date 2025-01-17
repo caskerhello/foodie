@@ -23,6 +23,8 @@ const Join = () => {
         if(nickname==''){ return alert('닉네임을 입력하세요');}
 
         try{
+            // console.log("email"+email)
+
             let result = await axios.post('/api/member/emailcheck', null, {params:{email}} );
             if(result.data.msg == 'no' ){
                 return alert('이메일이 중복됩니다');

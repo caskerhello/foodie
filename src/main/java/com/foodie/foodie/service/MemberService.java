@@ -16,4 +16,12 @@ public class MemberService {
 
     public Member getMember(String email) {        return MR.findByEmail(email);
     }
+
+    public Member getMemberByNickname(String nickname) {
+        return MR.getMemberByNickname( nickname );
+    }
+
+    public void insertMember(Member member) {
+        MR.save(member);
+    }
 }

@@ -232,6 +232,10 @@ const WritePost = () => {
                 </div>
                 <img src={imgsrc10} />
 
+                <div className='field'>
+                    별점 
+                </div>
+
                 <div className='field' >
                     {/* <input type="text" /> */}
                     <button onClick={() => setModalOpen(true)}>카카오맵검색</button>

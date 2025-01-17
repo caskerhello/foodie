@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react'
-import { ToastContainer, toast , Bounce} from 'react-toastify';
+import { ToastContainer, toast , Bounce, Slide, Flip} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import MainMenu from './MainMenu';
@@ -32,12 +32,16 @@ const Main = () => {
 
     
     useEffect(() => {
+      if(!sessionStorage.getItem('loginAlertShown'))
       toast.success("로그인 완료!", {
         position: "top-center",  // 알림 위치 설정
         autoClose: 3000,         // 자동으로 닫히는 시간 (3초)
       });
+      sessionStorage.setItem('loginAlertShown', 'true');
         
     }, []);
+
+    
     
 
     const navigate = useNavigate();   
@@ -273,8 +277,8 @@ const Main = () => {
         pauseOnFocusLoss       // 페이지에서 포커스를 잃으면 알림 멈추기
         draggable={true}            // 알림을 드래그할 수 있게 할지 여부
         pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
-        theme="dark"          // 알림의 테마 (light/dark)
-        transition={Bounce}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
+        theme="light"          // 알림의 테마 (light/dark)
+        transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
       />
               
 

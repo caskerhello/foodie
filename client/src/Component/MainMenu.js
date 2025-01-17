@@ -118,7 +118,11 @@ const MainMenu = (props) => {
                     ()=>{ onLogout() }}/>     */}
 
                 <VscExport style={iconstyle} onClick={
-                    ()=>{ navigate('/')}}/>  
+                    ()=>{ 
+                        navigate('/') ; 
+                        sessionStorage.setItem('loginAlertShown', '');
+
+                    }}/>  
                 
             </div>
 
