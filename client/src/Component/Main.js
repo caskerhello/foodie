@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react'
+import { ToastContainer, toast , Bounce} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import MainMenu from './MainMenu';
@@ -28,6 +29,15 @@ const Main = () => {
     const [error, setError] = useState();
     const [position, setPosition] = useState();
     const [isLocationBlocked, setIsLocationBlocked] = useState(false);
+
+    
+    useEffect(() => {
+      toast.success("로그인 완료!", {
+        position: "top-center",  // 알림 위치 설정
+        autoClose: 3000,         // 자동으로 닫히는 시간 (3초)
+      });
+        
+    }, []);
     
 
     const navigate = useNavigate();   
@@ -250,6 +260,26 @@ const Main = () => {
                        
             </div>
 
+            <div>
+            {/* <button onClick={notify}>토스트 알림 보기</button>  */}
+
+            <ToastContainer
+        position="top-right"
+        autoClose={5000}        // 알림이 자동으로 닫히는 시간 (ms)
+        hideProgressBar={false} // 진행바 숨기기
+        newestOnTop={false}     // 새 알림이 위에 표시될지 여부
+        closeOnClick={false}    // 알림 클릭 시 닫히게 할지 여부
+        rtl={false}             // 오른쪽에서 왼쪽으로 표시할지 여부 (right-to-left)
+        pauseOnFocusLoss       // 페이지에서 포커스를 잃으면 알림 멈추기
+        draggable={true}            // 알림을 드래그할 수 있게 할지 여부
+        pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
+        theme="dark"          // 알림의 테마 (light/dark)
+        transition={Bounce}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
+      />
+              
+
+              
+            </div>
             
 
         </div>

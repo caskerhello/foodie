@@ -1,0 +1,33 @@
+# application.yml
+
+# server.port = 8070
+server:
+ port: 8070
+
+#spring.application.name=SP_Server
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://localhost:3306/board
+#spring.datasource.username=root
+#spring.datasource.password=adminuser
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.properties.hibernate.format_sql=true
+#spring.jpa.show-sql=true
+spring:
+  application:
+    name: foodie
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/foodie
+    username: root
+    password: adminuser
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+kakao:
+  client_id: 626518f490cdfa8cfb51cdca88122b82
+  redirect_uri: http://localhost:8070/member/kakaoLogin

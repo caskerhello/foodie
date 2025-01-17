@@ -12,30 +12,34 @@ function Login() {
     // const dispatch = useDispatch();  // 쓰기를 위한 함수 생성
 
     const navigate = useNavigate();
-    // async function onLoginLocal(){
-    //     if(!email){return alert("이메일을 입력하세요");}
-    //     if(!pwd){return alert("패스워드를 입력하세요");}
-    //     try{
-    //         const result = await axios.post('/api/member/loginlocal', {email, pwd} )
-    //         if( result.data.msg== 'ok'){
-    //             alert("로그인 되었습니다")
-    //             const res=await axios.get('/api/member/getLoginUser')
 
-    //             console.log(res.data.loginUser)
-    //             console.log('followings', res.data.followings)
-    //             console.log('followers', res.data.followers)
+    async function onLoginLocal(){
+        if(!email){return alert("이메일을 입력하세요");}
+        if(!pwd){return alert("패스워드를 입력하세요");}
+        
+        try{
+            // console.log(email,pwd)
 
-    //             dispatch( loginAction( res.data.loginUser )  );     
-    //             dispatch( setFollowers( {followers:res.data.followers} ) );          
-    //             dispatch( setFollowings( {followings:res.data.followings} ) );
+            const result = await axios.post('/api/member/loginlocal', {email, pwd} )
+            if( result.data.msg== 'ok'){
+                alert("로그인 되었습니다")
+                // const res=await axios.get('/api/member/getLoginUser')
+
+                // console.log(res.data.loginUser)
+                // console.log('followings', res.data.followings)
+                // console.log('followers', res.data.followers)
+
+                // dispatch( loginAction( res.data.loginUser )  );     
+                // dispatch( setFollowers( {followers:res.data.followers} ) );          
+                // dispatch( setFollowings( {followings:res.data.followings} ) );
                 
-    //             navigate('/main'); 
-    //         }else{
-    //             setPwd("");
-    //             return alert(result.data.msg);
-    //         }
-    //     }catch(err){ console.error(err)}
-    // }
+                navigate('/main'); 
+            }else{
+                setPwd("");
+                return alert(result.data.msg);
+            }
+        }catch(err){ console.error(err)}
+    }
 
     return (
         <div className="loginform">
@@ -54,7 +58,10 @@ function Login() {
             </div>
 
             <div className='btns'>
-            <div className='btn'><BiSolidKey style={{height:'40px',width:'40px'}} onClick={ ()=>{ navigate('/main')}}/>
+            <div className='btn'><BiSolidKey style={{height:'40px',width:'40px'}} 
+            onClick={ ()=>{ onLoginLocal() }}
+            // onClick={ ()=>{ navigate('/main')}}
+            />
             {/* <button onClick={ ()=>{ navigate('/main') } }>LOGIN</button> */}</div>
 
             <div className='btn'>
