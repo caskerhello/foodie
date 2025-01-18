@@ -24,4 +24,8 @@ public class MemberService {
     public void insertMember(Member member) {
         MR.save(member);
     }
+
+    public Member getMemberByMemberid(int id) {
+        return MR.getMemberByMemberid(id);
+    }
 }

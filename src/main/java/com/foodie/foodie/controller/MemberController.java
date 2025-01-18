@@ -46,6 +46,30 @@ public class MemberController {
         return result;
     }
 
+    @GetMapping("/getLoginUser")
+    public HashMap<String , Object> getLoginUser(HttpSession session) {
+        HashMap<String, Object> result = new HashMap<>();
+        System.out.println("getLoginUser");
+
+        int id = (Integer) session.getAttribute("memberid");
+
+        // loginUser 멤버정보 조회
+        Member member = ms.getMemberByMemberid(id);
+        System.out.println("getLoginUser Member"+member);
+
+        // 로그인 유저의  follower 조회
+//        List<Follow> followers = ms.getFollowers(id);
+
+        // 로그인 유저가 following하는 멤버 조회
+//        List<Follow> followings = ms.getFollowings(id);
+
+        result.put("loginUser", member);
+//        result.put("followers", followers);
+//        result.put("followings", followings);
+
+        return result;
+    }
+
 
 
     @PostMapping("/emailcheck")

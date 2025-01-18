@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import MainMenu from './MainMenu';
 import Post from './post/Post';
+import { useSelector } from 'react-redux';
 import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
 import { Map, MapMarker ,ZoomControl  } from "react-kakao-maps-sdk";
@@ -25,6 +26,8 @@ const Main = () => {
 
     const [findLocation, setFindLocation] = useState({});
     const [placeInfo, setPlaceInfo] =useState();
+
+    
     
     const [center, setCenter] =useState({});
     const [lat, setLat] = useState();
@@ -33,28 +36,71 @@ const Main = () => {
     const [position, setPosition] = useState();
     const [isLocationBlocked, setIsLocationBlocked] = useState(false);
 
+    const lUser = useSelector( state=>state.user );
+
     
     useEffect(() => {
       if(!sessionStorage.getItem('loginAlertShown'))
-      toast.success("로그인 완료!", {
-        position: "top-center",  // 알림 위치 설정
-        autoClose: 3000,         // 자동으로 닫히는 시간 (3초)
-      });
+      {toast.success(`${lUser.nickname}님 로그인 완료!`, {
+        position: "top-right",  // 알림 위치 설정
+        autoClose: 500,         // 자동으로 닫히는 시간 (2초)
+      });}
       sessionStorage.setItem('loginAlertShown', 'true');
 
-      axios.get(`/api/post/getPostList`, {params:{word}})
+      axios.get(`/api/post/getPostList`, {params:{page:1,word}})
             .then((result)=>{
               console.log("result.data.postList:",result.data.postList)
-                setPostList( result.data.postList );
-                //setPaging( result.data.paging );
-            }).catch((err)=>{console.error(err)})
-
-      
-
-
-
+              console.log("result.data.postList.content:",result.data.postList.content)
+              console.log("result.data.postList.pageable.pageNumber:"+result.data.postList.pageable.pageNumber)
+                setPostList( result.data.postList.content );
+                setPaging( result.data.postList.pageable.pageNumber+1 );
+            }).catch((err)=>{console.error(err)})     
         
     }, []);
+
+    useEffect(
+      ()=>{
+          window.addEventListener('scroll', handleScroll );
+          return () => {
+              window.removeEventListener("scroll", handleScroll);
+          }
+      }
+  )
+
+
+    const handleScroll=()=>{
+        const scrollHeight = document.documentElement.scrollHeight - 10; // 스크롤이 가능한 크기
+        // 가능 크기를 10px 줄여서 다음페이지 표시 반응 영역을 조금더 넓힙니다
+        const scrollTop = document.documentElement.scrollTop;  // 현재 위치
+        const clientHeight = document.documentElement.clientHeight; // 내용물의 크기
+        if( scrollTop + clientHeight >= scrollHeight ) {
+          console.log("Number(paging) + 1 :"+ (paging + 1))
+            onPageMove( paging + 1 );
+        }
+    }
+
+      async function onPageMove( page ){
+        console.log("onPageMove( page )"+page)
+
+        
+
+        const result = await axios.get(`/api/post/getPostList`, {params:{page:page,word}})
+        .then((result)=>{
+        console.log("result.data.postList.pageable.pageNumber(move):"+result.data.postList.pageable.pageNumber);
+        setPaging( result.data.postList.pageable.pageNumber+1 );
+        let posts = [];
+        posts = [...postList];
+        posts = [...posts, ...result.data.postList.content ];
+
+        console.log("moveposts:"+posts)
+        setPostList([...posts]);
+        }).catch((err)=>{console.error(err)})     
+      }
+
+
+
+
+
 
     function findRestorantLocation(placeid) {
       // console.log(placeid)
@@ -263,6 +309,9 @@ const Main = () => {
         </div>
       ) : (
        <div className='MainMapLoading'>위치 정보를 가져오는 중...
+
+
+      
             
         </div>
       )     } 
@@ -307,18 +356,18 @@ const Main = () => {
             {/* <button onClick={notify}>토스트 알림 보기</button>  */}
 
             <ToastContainer
-        position="top-right"
-        autoClose={5000}        // 알림이 자동으로 닫히는 시간 (ms)
-        hideProgressBar={false} // 진행바 숨기기
-        newestOnTop={false}     // 새 알림이 위에 표시될지 여부
-        closeOnClick={false}    // 알림 클릭 시 닫히게 할지 여부
-        rtl={false}             // 오른쪽에서 왼쪽으로 표시할지 여부 (right-to-left)
-        pauseOnFocusLoss       // 페이지에서 포커스를 잃으면 알림 멈추기
-        draggable={true}            // 알림을 드래그할 수 있게 할지 여부
-        pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
-        theme="light"          // 알림의 테마 (light/dark)
-        transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
-      />
+            position="top-right"
+            autoClose={1000}        // 알림이 자동으로 닫히는 시간 (ms)
+            hideProgressBar={false} // 진행바 숨기기
+            newestOnTop={false}     // 새 알림이 위에 표시될지 여부
+            closeOnClick={false}    // 알림 클릭 시 닫히게 할지 여부
+            rtl={false}             // 오른쪽에서 왼쪽으로 표시할지 여부 (right-to-left)
+            pauseOnFocusLoss       // 페이지에서 포커스를 잃으면 알림 멈추기
+            draggable={true}            // 알림을 드래그할 수 있게 할지 여부
+            pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
+            theme="light"          // 알림의 테마 (light/dark)
+            transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
+            />
               
 
               

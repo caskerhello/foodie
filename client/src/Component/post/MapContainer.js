@@ -240,7 +240,10 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
     const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
 
     // console.log(phoneElement)
-    if(categorygroupcodeElement.innerHTML !== 'FD6'){return alert("음식점만 선택해주세요") }
+    if(!((categorygroupcodeElement.innerHTML == 'FD6')||(categorygroupcodeElement.innerHTML == 'CE7'))
+
+
+    ){return alert("음식점만 선택해주세요") }
 
     const place = {
       placeName: placeNameElement ? placeNameElement.innerText : '',
@@ -301,7 +304,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
               <br/>
               <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-category_group_code`] = el} id={`${item.id}-category_group_code`}>{item.category_group_code}</span><br/>
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-category_group_code`] = el} id={`${item.id}-category_group_code`}>{item.category_group_code}</span><br/>
 
               <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-category_name`] = el} id={`${item.id}-category_name`}>{item.category_name}</span><br/>
 

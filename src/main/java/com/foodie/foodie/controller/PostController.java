@@ -6,6 +6,8 @@ import com.foodie.foodie.service.PostService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,10 +73,20 @@ public class PostController {
         return result;
     }
 
+    @Autowired
+    private PostService postService;
+
     @GetMapping("/getPostList")
-    public HashMap<String,Object> getPostList( @RequestParam(value="word", required = false) String word) {
+    public HashMap<String, Object> getPostList(
+            @RequestParam("page") int page,
+            @RequestParam(value="word", required = false) String word) {
         HashMap<String,Object> result = new HashMap<>();
-        result.put("postList", ps.getPostList( word ) );
+
+        System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ㅍpage:"+page);
+
+        result.put("postList", ps.getPostList( word , page ) );
+
+        System.out.println("ps.getPostList( word , page ) : "+ps.getPostList( word , page ));
         return result;
     }
 

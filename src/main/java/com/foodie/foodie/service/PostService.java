@@ -1,13 +1,17 @@
 package com.foodie.foodie.service;
 
+import com.foodie.foodie.dto.Paging;
 import com.foodie.foodie.repository.ImagesRepository;
 import com.foodie.foodie.repository.PostRepository;
 import com.foodie.foodie.entity.Post;
 import com.foodie.foodie.entity.Images;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -34,11 +38,33 @@ public class PostService {
         ir.save(images);
     }
 
-    public List<Post> getPostList(String word) {
+    public Page<Post> getPostList(String word, int page) {
         List<Post> list=null;
-        if( word==null || word.equals("") ) {
+        List<Post> list2=null;
+//        if( word==null || word.equals("") ) {
+
+            Paging paging = new Paging();
+            paging.setPage(page);
+            paging.calPaing();
+
             list = pr.findAll(Sort.by(Sort.Direction.DESC, "postid"));
-        }else{
+            paging.setTotalCount(list.size());
+            paging.getStartNum();
+
+        System.out.println("paging.getStartNum();:"+paging.getStartNum());
+
+
+        Pageable pageable = PageRequest.of(page-1, 2, Sort.by(Sort.Order.desc("postid")));
+
+        System.out.println("pr.findAllByOrderByPostidDesc(pageable) :"+pr.findAllByOrderByPostidDesc(pageable));
+
+        return pr.findAllByOrderByPostidDesc(pageable);
+
+//            return pr.findAll(paging);
+
+
+//        }
+//        else{
             // word로 hashtag 테이블 검색
             // select id from hashtag where word=?
 
@@ -62,12 +88,16 @@ public class PostService {
 
 //                list = pr.findByIdIn( poistidList );  // poistidList 로 Post 테이블 검색
 //            }
-        }
-        return list;
+//        }
+//        return returnpage;
     }
 
     public List<Images> getImagesList(int postid) {
         List<Images> list = ir.findByPostid( postid );
         return list;
     }
+
+//    public Page<Post> getAllPosts(int page, int size) {
+//        return pr.findAll(page,size);
+//    }
 }

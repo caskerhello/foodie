@@ -4,13 +4,17 @@ import axios from "axios";
 import { BiSolidKey } from "react-icons/bi";
 import { BiSolidUserPlus } from "react-icons/bi";
 
+import { useDispatch } from 'react-redux';
+import { loginAction, setFollowers, setFollowings } from './store/userSlice';
+import {Cookies} from 'react-cookie'
+
 import '../style/login.css'
 
 function Login() {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
-    // const dispatch = useDispatch();  // 쓰기를 위한 함수 생성
-
+    const dispatch = useDispatch();  // 쓰기를 위한 함수 생성
+    const cookies = new Cookies()
     const navigate = useNavigate();
 
     async function onLoginLocal(){
@@ -22,14 +26,19 @@ function Login() {
 
             const result = await axios.post('/api/member/loginlocal', {email, pwd} )
             if( result.data.msg== 'ok'){
-                alert("로그인 되었습니다")
-                // const res=await axios.get('/api/member/getLoginUser')
+                // alert("로그인 되었습니다")
+                const res=await axios.get('/api/member/getLoginUser')
+                const lUser = res.data.loginUser;
+
+                cookies.set('user', JSON.stringify( lUser ) , {path:'/', })
 
                 // console.log(res.data.loginUser)
                 // console.log('followings', res.data.followings)
                 // console.log('followers', res.data.followers)
 
-                // dispatch( loginAction( res.data.loginUser )  );     
+                // console.log("res.data.loginUser"+JSON.stringify(res.data.loginUser))
+
+                dispatch( loginAction( res.data.loginUser )  );     
                 // dispatch( setFollowers( {followers:res.data.followers} ) );          
                 // dispatch( setFollowings( {followings:res.data.followings} ) );
                 
