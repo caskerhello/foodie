@@ -1,0 +1,51 @@
+.MainContainer{
+    position: absolute;
+    left: 15%;
+    /* display:flex;
+    flex-direction:row; 
+    align-items:center; */
+    /* margin-top:50px; */
+    /* border: 1px solid black; */
+    /* height:600px;
+    width:800px */
+}
+
+.MainPosts{
+    position: relative;
+    /* left: 0%; */
+    width:95%;
+    border:1px solid blue;
+    padding:5px;
+    margin:5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.Post{
+    margin-bottom: 30px;
+}
+
+.MainMapLoading{
+    height: 30px;
+    width: 200px;
+    border: 1px solid black;
+    position: fixed;
+    
+    left: 1%;
+    top: 1%;
+}
+
+.mainimg{
+    width:50vw ;
+    height:50vh  
+
+}
+
+.mainimg img{
+    width:100% ;
+    height:100%  
+
+}

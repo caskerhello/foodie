@@ -122,7 +122,11 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       // 지도 중심좌표를 얻어옵니다 
       var latlng = map.getCenter(); 
 
+       
+
       setMovedLocation2({lat:latlng.getLat(),lng:latlng.getLng()})
+
+      // if(!latlng.getLat()){setMovedLocation2({lat:37.57261013516411,lng:126.99042333710086})}
 
       // console.log({lat:latlng.getLat(),lng:latlng.getLng()})
 
@@ -215,6 +219,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
 
   const Selection = (i) => {
 
+    
+
     // const placeElement = placeRefs.current[i];
     
     // setPlace_name(placeElement.innerText)
@@ -226,16 +232,26 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
     const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
     // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
     const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
+    const categorygroupcodeElement = placeRefs.current[`${Places[i].id}-category_group_code`];
+    const categorynameElement = placeRefs.current[`${Places[i].id}-category_name`];
     const idElement = placeRefs.current[`${Places[i].id}-id`];
     const xElement = placeRefs.current[`${Places[i].id}-x`];
     const yElement = placeRefs.current[`${Places[i].id}-y`];
     const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
+
+    // console.log(phoneElement)
+    if(!((categorygroupcodeElement.innerHTML == 'FD6')||(categorygroupcodeElement.innerHTML == 'CE7'))
+
+
+    ){return alert("음식점만 선택해주세요") }
 
     const place = {
       placeName: placeNameElement ? placeNameElement.innerText : '',
       roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
       // address: addressElement ? addressElement.innerText : '',
       phone: phoneElement ? phoneElement.innerText : '',
+      categoryGroupCode: categorygroupcodeElement? categorygroupcodeElement.innerHTML : '',
+      categoryName: categorynameElement? categorynameElement.innerHTML : '',
       id: idElement? idElement.innerHTML : '',
       x: xElement? xElement.innerHTML : '',
       y: yElement? yElement.innerHTML : '',
@@ -266,6 +282,12 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       
       
       <div id="result-list">
+
+        
+        위도 {options1.x} 과 경도 {options1.y} 를 기준으로 
+        {options1.radius} m 반경내 검색합니다.
+
+
         {Places.map((item, i) => (
           <div key={i} style={{ marginTop: '20px' }}>
             <span>{i + 1}</span>
@@ -279,7 +301,12 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
               ) : (
                 <span>{item.address_name}</span>
               )}
-              <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/>
+              <br/>
+              <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-category_group_code`] = el} id={`${item.id}-category_group_code`}>{item.category_group_code}</span><br/>
+
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-category_name`] = el} id={`${item.id}-category_name`}>{item.category_name}</span><br/>
 
               <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-id`] = el} id={`${item.id}-id`}>{item.id}</span><br/>
 
