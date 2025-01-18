@@ -122,6 +122,15 @@ public class MemberController {
         return result;
     }
 
+    @GetMapping("/logout")
+    public HashMap<String, Object> logout(HttpSession session) {
+        HashMap<String, Object> result = new HashMap<>();
+        session.removeAttribute("loginUser");
+        result.put("msg", "ok");
+        return result;
+    }
+
+
 
 
 

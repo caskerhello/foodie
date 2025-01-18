@@ -9,6 +9,10 @@ import { VscSearch } from "react-icons/vsc";
 import { VscAccount } from "react-icons/vsc";
 import { VscExport } from "react-icons/vsc";
 
+import { useSelector, useDispatch } from 'react-redux';
+import { loginAction, logoutAction, setFollowers, setFollowings } from './store/userSlice';
+import {Cookies} from 'react-cookie'
+
 import '../style/mainmenu.css'
 
 const MainMenu = (props) => {
@@ -41,7 +45,7 @@ const MainMenu = (props) => {
         boxSizing:"border-box",
     }
 
-
+    const cookies = new Cookies()
 
     const navigate=useNavigate();
     const [loginUser, setLoginUser] = useState({});
@@ -54,7 +58,7 @@ const MainMenu = (props) => {
     const [viewOrNot, setViewOrNot] = useState(false);
     const [inputStyle, setInputStyle ] = useState({display:"none"})
     const [imgSrc, setImgSrc]=useState('http://localhost:8070/images/user.png');
-   
+    const dispatch = useDispatch();
     
 
     useEffect(()=>{
@@ -81,7 +85,12 @@ const MainMenu = (props) => {
     },[menuViewOrNot])
 
     function onLogout(){
-        
+        axios.get('/api/member/logout')
+        .then((result)=>{
+            dispatch( logoutAction() );
+            cookies.remove('user', {path:'/',} )
+            navigate('/')
+        }).catch((err)=>{console.error(err)})
     }
 
     function onSearch(){
@@ -119,11 +128,14 @@ const MainMenu = (props) => {
                     ()=>{ onLogout() }}/>     */}
 
                 <VscExport style={iconstyle} onClick={
-                    ()=>{ 
-                        navigate('/') ; 
-                        sessionStorage.setItem('loginAlertShown', '');
+                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
 
-                    }}/>  
+                    // ()=>{ 
+                    //     navigate('/') ; 
+                    //     sessionStorage.setItem('loginAlertShown', '');
+
+                    // }}
+                    />  
                 
             </div>
 

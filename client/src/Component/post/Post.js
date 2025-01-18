@@ -206,7 +206,7 @@ function Post( props ) {
                         ()=>{ 
                             props.findRestorantLocation(props.post.placeid)                               
                         }
-                    }>음식점 위치</button></span>
+                    }>위치</button></span>
             </div>
             {/* <div className='like'>
                 {
