@@ -40,12 +40,7 @@ const Main = () => {
 
     
     useEffect(() => {
-      if(!sessionStorage.getItem('loginAlertShown'))
-      {toast.success(`${lUser.nickname}님 로그인 완료!`, {
-        position: "top-right",  // 알림 위치 설정
-        autoClose: 500,         // 자동으로 닫히는 시간 (2초)
-      });}
-      sessionStorage.setItem('loginAlertShown', 'true');
+      
 
       axios.get(`/api/post/getPostList`, {params:{page:1,word}})
             .then((result)=>{
@@ -196,14 +191,14 @@ const Main = () => {
 
     useEffect(()=>{
         if(!viewMapOrNot){
-            setInputMapStyle({ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
+            setInputMapStyle({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
         }else{
             setInputMapStyle({display:"none"})
             
         }
         },[viewMapOrNot])
 
-    const [inputMapStyle, setInputMapStyle ] = useState({ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' })
+    const [inputMapStyle, setInputMapStyle ] = useState({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' })
 
     const getCurrentLocation = () => {
         return new Promise((resolve, reject) => {
@@ -355,7 +350,7 @@ const Main = () => {
             <div>
             {/* <button onClick={notify}>토스트 알림 보기</button>  */}
 
-            <ToastContainer
+            {/* <ToastContainer
             position="top-right"
             autoClose={1000}        // 알림이 자동으로 닫히는 시간 (ms)
             hideProgressBar={false} // 진행바 숨기기
@@ -367,7 +362,7 @@ const Main = () => {
             pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
             theme="light"          // 알림의 테마 (light/dark)
             transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
-            />
+            /> */}
               
 
               
