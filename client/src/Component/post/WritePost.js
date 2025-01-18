@@ -44,6 +44,17 @@ const WritePost = () => {
 
     const [InputText, setInputText] = useState('')
     const [Place, setPlace] = useState('')
+
+    function SelectionOverlay(place){
+        console.log(place)
+        setSelectedPlace(place);
+        // setModalOpen(false)
+    }
+
+    // const SelectionOverlay = (id) => {
+    //     console.log(id)
+    
+    //   }
   
     const onChange = (e) => {
       setInputText(e.target.value)
@@ -190,7 +201,7 @@ const WritePost = () => {
         if(!selectedPlace) {return alert('음식점을 선택하세요')}
 
         // 데이터베이스에 place정보 있는지 조회
-        let placeresult = await axios.post('/api/place/checkPlace', { placeName: selectedPlace.placeName, roadAddress:selectedPlace.roadAddress, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, placeUrl:selectedPlace.placeUrl, avestars:stars, category:category } )
+        let placeresult = await axios.post('/api/place/checkPlace', { place_name: selectedPlace.place_name, road_address_name:selectedPlace.road_address_name, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, place_url:selectedPlace.place_url, avestars:stars, category:category } )
 
         let placeid = placeresult.data.place.placeid
 
@@ -334,14 +345,14 @@ const WritePost = () => {
                         <div className='contents' style={{width:"40vw",height:"20vh",border:"1px solid black",overflow: "auto"}} >
                     선택된 장소가 조회될 공간입니다.<br/>
                     {/* <h3>선택된 장소 정보:</h3> */}
-                    장소 이름: {selectedPlace.placeName}<br></br>
-                    도로명 주소: {selectedPlace.roadAddress}<br></br>
+                    장소 이름: {selectedPlace.place_name}<br></br>
+                    도로명 주소: {selectedPlace.road_address_name}<br></br>
                     {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
                     전화번호: {selectedPlace.phone}<br></br>
                     id: {selectedPlace.id}<br></br>
                     x좌표: {selectedPlace.x}<br></br>
                     y좌표: {selectedPlace.y}<br></br>
-                    카카오맵 링크: <a href={selectedPlace.placeUrl} target="_blank" rel="noopener noreferrer">{selectedPlace.placeUrl}</a><br></br>
+                    카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a><br></br>
                     {/* <input type="hidden" name='category'></input>
                     <input type="hidden" name='place_name'></input>
                     <input type="hidden" name='3'></input>
@@ -407,7 +418,7 @@ const WritePost = () => {
                             <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
                             <button type="submit">검색</button>
                         </form>
-                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1}/>
+                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1} SelectionOverlay={SelectionOverlay}/>
                                             
 
                     </div>

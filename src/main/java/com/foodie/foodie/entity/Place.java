@@ -14,10 +14,10 @@ public class Place {
     private double avestars;
     private int kakaoplaceid;
     private int category;
-    private String placeName;
-    private String roadAddress;
+    private String place_name;
+    private String road_address_name;
     private String phone;
-    private String placeUrl;
+    private String place_url;
     private double x;
     private double y;
 }

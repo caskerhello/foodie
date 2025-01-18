@@ -82,7 +82,7 @@ public class PostController {
             @RequestParam(value="word", required = false) String word) {
         HashMap<String,Object> result = new HashMap<>();
 
-        System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ㅍpage:"+page);
+        System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★page:"+page);
 
         result.put("postList", ps.getPostList( word , page ) );
 
