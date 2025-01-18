@@ -38,6 +38,7 @@ public class MemberController {
             result.put("msg", "패스워드가 틀립니다.");
         }else {
 
+            session.setAttribute("memberid", mem.getMemberid() );
             session.setAttribute("loginUser", mem.getEmail());
             result.put("msg", "ok");
             result.put("loginUser", mem);

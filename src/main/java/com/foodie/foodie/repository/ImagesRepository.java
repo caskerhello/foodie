@@ -1,4 +1,4 @@
-package com.foodie.foodie.dao;
+package com.foodie.foodie.repository;
 
 import com.foodie.foodie.entity.Images;
 import org.springframework.data.jpa.repository.JpaRepository;

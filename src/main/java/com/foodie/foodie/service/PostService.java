@@ -1,18 +1,12 @@
 package com.foodie.foodie.service;
 
-import com.foodie.foodie.dao.ImagesRepository;
-import com.foodie.foodie.dao.PostRepository;
+import com.foodie.foodie.repository.ImagesRepository;
+import com.foodie.foodie.repository.PostRepository;
 import com.foodie.foodie.entity.Post;
 import com.foodie.foodie.entity.Images;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 @Transactional

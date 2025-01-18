@@ -3,8 +3,10 @@ package com.foodie.foodie.controller;
 import com.foodie.foodie.entity.Images;
 import com.foodie.foodie.entity.Place;
 import com.foodie.foodie.entity.Post;
+import com.foodie.foodie.service.PlaceService;
 import com.foodie.foodie.service.PostService;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +22,8 @@ public class PostController {
 
     @Autowired
     PostService ps;
+
+
 
     @Autowired
     ServletContext context;
@@ -42,13 +46,19 @@ public class PostController {
     }
 
 
+
+
     @PostMapping("/writePost")
-    public HashMap<String, Object> writePost(@RequestBody Post post,@RequestBody Place place){
+    public HashMap<String, Object> writePost(
+            @RequestBody Post post, HttpSession session
+            ){
         HashMap<String, Object> result = new HashMap<String, Object>();
 
-//        if()
+        System.out.println("post"+post);
 
         Post p = ps.insertPost(post);  // 방금 추가된 레코드의 id 를위해 추가된 레코드를 리턴
+
+        System.out.println("리턴될 post"+p);
         result.put("postid", p.getPostid() );
         return result;
     }
@@ -56,6 +66,8 @@ public class PostController {
     @PostMapping("/writeImages")
     public HashMap<String, Object> writeimages( @RequestBody Images images){
         HashMap<String, Object> result = new HashMap<String, Object>();
+        System.out.println("writeimages");
+        System.out.println("images:"+images);
         ps.insertImages(images);
         return result;
     }

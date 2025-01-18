@@ -183,7 +183,9 @@ function Post( props ) {
                 }
                 
             </div>
+            
             <div className='content' style={{fontWeight:"bold"}}>{props.post.content}</div>
+
             <div className='reply'>
                 {
                     (replyList && replyList.length>=1)?(
