@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { setFollowings } from '../../store/userSlice';
 
+import { format, parseISO } from 'date-fns'
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -35,6 +36,9 @@ function Post( props ) {
     const [followings, setFollowings2] = useState([]);
     // const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const date = parseISO(props.post.writedate); // ISO 형식을 Date 객체로 변환
+    const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
 
     useEffect(
         ()=>{
@@ -131,9 +135,9 @@ function Post( props ) {
 
 
     return (
-        <div className='post' style={{width:"600px"}}>
+        <div className='Post' style={{width:"600px"}}>
             <div className='writer' style={{display:"flex"}}>
-                <div>{props.post.postid}번째 게시물&nbsp;&nbsp;{props.post.memberid}번째 가입자&nbsp;&nbsp;{props.post.writedate}</div>
+                <div>{props.post.postid}번째 게시물&nbsp;&nbsp;{props.post.memberid}번째 가입자&nbsp;&nbsp;{formattedDate}</div>
                 {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
                 {
                     // ( 
@@ -193,7 +197,15 @@ function Post( props ) {
 
             <div className='content'>포스팅 내용 : {props.post.content}</div>
             <div className='content'>포스팅 별점 : {props.post.stars}</div>
-            <div className='content'>포스팅한 음식점 : {props.post.placeid}</div>
+            <div className='content' style={{display:"none"}}>포스팅한 음식점 : {props.post.placeid}</div>
+            <div className='content'> 
+                <button style={{flex:"1"}} onClick={
+                        ()=>{ 
+                            props.findRestorantLocation(props.post.placeid)
+                            // props.setFindLocation(props.post.placeid)   
+                        }
+                    }>포스팅한 음식점 위치보기</button>
+            </div>
 
             <div className='reply'>
                 {

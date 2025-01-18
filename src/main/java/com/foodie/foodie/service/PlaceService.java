@@ -43,4 +43,7 @@ public class PlaceService {
     }
 
 
+    public Place getPlaceInfo(int placeid) {
+        return PR.findByPlaceid(placeid);
+    }
 }

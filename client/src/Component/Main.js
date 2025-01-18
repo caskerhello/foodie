@@ -22,6 +22,9 @@ const Main = () => {
     const [word, setWord] = useState(null);
     const [location, setLocation] = useState({lat:37.57261013516411,lng:126.99042333710086});
     const [movedLocation,setMovedLocation] =useState({})
+
+    const [findLocation, setFindLocation] = useState({});
+    const [placeInfo, setPlaceInfo] =useState();
     
     const [center, setCenter] =useState({});
     const [lat, setLat] = useState();
@@ -46,12 +49,32 @@ const Main = () => {
                 //setPaging( result.data.paging );
             }).catch((err)=>{console.error(err)})
 
+      
+
 
 
         
     }, []);
 
-    
+    function findRestorantLocation(placeid) {
+      // console.log(placeid)
+      axios.get(`/api/place/getPlaceInfo`, {params:{placeid}})
+            .then((result)=>{
+              console.log("result.data.place:",result.data.place)
+              console.log("result.data.place.x:",result.data.place.x)
+              console.log("result.data.place.y:",result.data.place.y)
+              setLocation({lat:result.data.place.y, lng:result.data.place.x});
+                //setPaging( result.data.paging );
+              console.log("location"+JSON.stringify(location))
+            }).catch((err)=>{console.error(err)})
+
+      console.log("placeInfo"+placeInfo);
+      // console.log("placeInfo",placeInfo.x,placeInfo.y)
+
+
+      setLocation(placeInfo);
+      
+    }
     
 
     const navigate = useNavigate();   
@@ -193,7 +216,7 @@ const Main = () => {
             
             <MainMenu setWord={setWord} />
 
-            <div className='Posts' style={{border:"1px solid black", height:"600px", width:"600px"}}>
+            <div className='MainPosts'>
 
                 <div className='title'>
                     {/* <h1>현재 위치 정보</h1> */}
@@ -230,7 +253,7 @@ const Main = () => {
 
                 position={location}/>
 
-<ZoomControl position={"RIGHT"} />
+              <ZoomControl position={"RIGHT"} />
 
             </Map>
 
@@ -243,13 +266,21 @@ const Main = () => {
             
         </div>
       )     } 
-                </div>              
+        </div> 
+
+
+
+
+
                 {
                     (postList)?(
                         postList.map((post, idx)=>{
                             return (
 
-                                <Post key={idx} post={post} loginUser={loginUser}/>
+                                <Post key={idx} post={post} loginUser={loginUser} setFindLocation={setFindLocation} 
+                                findLocation={findLocation}
+                                findRestorantLocation={findRestorantLocation}
+                                />
 
                             )
                         })

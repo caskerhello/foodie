@@ -1,3 +1,29 @@
+.MainContainer{
+    /* display:flex;
+    flex-direction:row; 
+    align-items:center; */
+    /* margin-top:50px; */
+    /* border: 1px solid black; */
+    /* height:600px;
+    width:800px */
+}
+
+.MainPosts{
+    width:95%;
+    border:1px solid blue;
+    padding:5px;
+    margin:5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.Post{
+    margin-bottom: 30px;
+}
+
 .mainimg{
     width:50vw ;
     height:50vh  
