@@ -151,8 +151,9 @@ function Post( props ) {
 
     return (
         <div className='Post' style={{width:"600px"}}>
-            <div className='writer' style={{display:"flex"}}>
-                <div>{props.post.postid}번째 게시물&nbsp;&nbsp;{props.post.memberid}번째 가입자&nbsp;&nbsp;{formattedDate}</div>
+            <div className='writer' >
+            {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
+                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}</span>&nbsp;&nbsp;<span>{props.post.memberid}</span>&nbsp;&nbsp;<span>{formattedDate}</span><span>{images.length}</span></div>
                 {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
                 {
                     // ( 
@@ -179,8 +180,8 @@ function Post( props ) {
                 }
             </Slider>  }
 
-            <div className='like'>
-                {
+            <div className='like' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                <span>{
                     (likeList)?( 
                         likeList.some(
                             (like)=>(lUser.memberid==like.memberid) 
@@ -192,15 +193,22 @@ function Post( props ) {
                     ):(
                         <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
                     )
-                }
-
-                &nbsp;&nbsp;
+                }{likeList.length}
+                
                 <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
                     viewOrNot()
-                }}/>
-                {replyList.length}
+                }}/>{replyList.length}</span>
+                
+                <span>
+                {props.post.content}★{props.post.stars}&nbsp;</span> 
+                <span>
+            <button style={{flex:"1"}} onClick={
+                        ()=>{ 
+                            props.findRestorantLocation(props.post.placeid)                               
+                        }
+                    }>음식점 위치</button></span>
             </div>
-            <div className='like'>
+            {/* <div className='like'>
                 {
                     (likeList && likeList.length>=1)?(
                         <span>{likeList.length} 명이 좋아합니다</span>
@@ -209,17 +217,20 @@ function Post( props ) {
                     )
                 }
                 
-            </div>
+            </div> */}
 
-            <div className='content'>포스팅 내용 : {props.post.content}</div>
-            <div className='content'>포스팅 별점 : {props.post.stars}</div>
-            <div className='content' style={{display:"none"}}>포스팅한 음식점 : {props.post.placeid}</div>
-            <div className='content'> 
-                <button style={{flex:"1"}} onClick={
+            {/* <div className='content'>{props.post.content} ★{props.post.stars}&nbsp;
+            <button style={{flex:"1"}} onClick={
                         ()=>{ 
                             props.findRestorantLocation(props.post.placeid)                               
                         }
-                    }>포스팅한 음식점 위치보기</button>
+                    }>음식점 위치</button>
+
+            </div> */}
+            <div className='content'></div>
+            <div className='content' style={{display:"none"}}>포스팅한 음식점 : {props.post.placeid}</div>
+            <div className='content'> 
+                
             </div>
 
             <div className='reply'> 
