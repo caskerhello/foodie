@@ -262,7 +262,7 @@ const Main = () => {
 
         </div>
       ) : (
-       <div>위치 정보를 가져오는 중...
+       <div className='MainMapLoading'>위치 정보를 가져오는 중...
             
         </div>
       )     } 

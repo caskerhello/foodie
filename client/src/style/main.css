@@ -26,6 +26,18 @@
     flex-direction: column;
     margin-bottom: 30px;
 } */
+
+.MainMapLoading{
+    height: 300px;
+    width: 200px;
+    border: 1px solid black;
+    position: fixed;
+    
+    left: 1%;
+    top: 1%;
+}
+
+
 .writer{
     margin:5px;
     border:1px solid black;

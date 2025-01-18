@@ -1,4 +1,6 @@
 .MainContainer{
+    position: absolute;
+    left: 15%;
     /* display:flex;
     flex-direction:row; 
     align-items:center; */
@@ -9,6 +11,8 @@
 }
 
 .MainPosts{
+    position: relative;
+    /* left: 0%; */
     width:95%;
     border:1px solid blue;
     padding:5px;
@@ -22,6 +26,16 @@
 
 .Post{
     margin-bottom: 30px;
+}
+
+.MainMapLoading{
+    height: 30px;
+    width: 200px;
+    border: 1px solid black;
+    position: fixed;
+    
+    left: 1%;
+    top: 1%;
 }
 
 .mainimg{
