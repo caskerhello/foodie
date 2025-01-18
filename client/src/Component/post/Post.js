@@ -10,7 +10,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 
-import '../../style/posts.css';
+import '../../style/post.css';
 
 const settings = {
     dot:false,
@@ -41,17 +41,22 @@ function Post( props ) {
             //console.log("Post.js")
             // setFollowings2([...lUser.Followings]);
 
-            axios.get(`/api/post/getImages/${props.post.id}` )
-            .then((result)=>{ setImages( result.data ); })
-            .catch((err)=>{console.error(err)})
+            console.log("post:",props.post)
+            console.log("poststring",JSON.stringify(props.post))
 
-            axios.get(`/api/post/getLikes/${props.post.id}` )
-            .then((result)=>{ setLikeList( result.data );  })
-            .catch((err)=>{console.error(err)})
+            axios.get(`/api/post/getImages/${props.post.postid}` )
+            .then((result)=>{ 
+                console.log("result.data.images"+result.data.imgList);
+                setImages( result.data.imgList ); })
+            .catch((err)=>{console.error(err)})            
 
-            axios.get(`/api/post/getReplys/${props.post.id}`)
-            .then((result)=>{ setReplyList( result.data ); })
-            .catch((err)=>{console.error(err)})
+            // axios.get(`/api/post/getLikes/${props.post.id}` )
+            // .then((result)=>{ setLikeList( result.data );  })
+            // .catch((err)=>{console.error(err)})
+
+            // axios.get(`/api/post/getReplys/${props.post.id}`)
+            // .then((result)=>{ setReplyList( result.data ); })
+            // .catch((err)=>{console.error(err)})
 
         },[  ]
     )
@@ -126,10 +131,10 @@ function Post( props ) {
 
 
     return (
-        <div className='post' style={{width:"780px"}}>
+        <div className='post' style={{width:"600px"}}>
             <div className='writer' style={{display:"flex"}}>
-                <div>{props.post.id}&nbsp;&nbsp;</div>
-                <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div>
+                <div>{props.post.postid}번째 게시물&nbsp;&nbsp;{props.post.memberid}번째 가입자&nbsp;&nbsp;{props.post.writedate}</div>
+                {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
                 {
                     // ( 
                     //     ( props.post.writer != lUser.nickname) 
@@ -146,7 +151,9 @@ function Post( props ) {
                     (images)?(
                         images.map((img, idx)=>{
                             return (
-                                <img key={idx} src={`http://localhost:8070/uploads/${img.savefilename}`} width="750" height="900"/>
+                                <div className='mainimg'>
+                                <img key={idx}  src={`http://localhost:8070/uploads/${img.savefilename}`} width="750" height="900"/>
+                                </div>
                             )
                         })
                     ):(null)
@@ -169,9 +176,9 @@ function Post( props ) {
                 }
 
                 &nbsp;&nbsp;
-                <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
+                {/* <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
                     viewOrNot()
-                }}/>
+                }}/> */}
             </div>
             <div className='like'>
                 {
@@ -183,8 +190,10 @@ function Post( props ) {
                 }
                 
             </div>
-            
-            <div className='content' style={{fontWeight:"bold"}}>{props.post.content}</div>
+
+            <div className='content'>포스팅 내용 : {props.post.content}</div>
+            <div className='content'>포스팅 별점 : {props.post.stars}</div>
+            <div className='content'>포스팅한 음식점 : {props.post.placeid}</div>
 
             <div className='reply'>
                 {

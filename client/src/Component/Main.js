@@ -38,6 +38,16 @@ const Main = () => {
         autoClose: 3000,         // 자동으로 닫히는 시간 (3초)
       });
       sessionStorage.setItem('loginAlertShown', 'true');
+
+      axios.get(`/api/post/getPostList`, {params:{word}})
+            .then((result)=>{
+              console.log("result.data.postList:",result.data.postList)
+                setPostList( result.data.postList );
+                //setPaging( result.data.paging );
+            }).catch((err)=>{console.error(err)})
+
+
+
         
     }, []);
 
@@ -177,8 +187,8 @@ const Main = () => {
       
  
   return (
-    <div style={{display:"flex", flexDirection:"row", alignItems:"center",marginTop: "50px"}}>
-          <div style={{border:"1px solid black", height:"600px", width:"800px"}}>
+    <div>
+          <div className='MainContainer'>
             
             
             <MainMenu setWord={setWord} />
@@ -191,7 +201,7 @@ const Main = () => {
       {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
 
       {location ? (
-        <p>
+        <div>
             {/* {location} */}         
             
             <Map                
@@ -227,21 +237,19 @@ const Main = () => {
 
             
 
-        </p>
+        </div>
       ) : (
-        <p>위치 정보를 가져오는 중...
+       <div>위치 정보를 가져오는 중...
             
-        </p>
+        </div>
       )     } 
-                </div>
-
-              포스트 loading...
+                </div>              
                 {
                     (postList)?(
                         postList.map((post, idx)=>{
                             return (
 
-                                <Post key={idx} post={post} postid={post.id} loginUser={loginUser}/>
+                                <Post key={idx} post={post} loginUser={loginUser}/>
 
                             )
                         })
