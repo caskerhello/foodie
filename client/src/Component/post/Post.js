@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { setFollowings } from '../../store/userSlice';
 
 import { format, parseISO } from 'date-fns'
@@ -28,11 +28,12 @@ function Post( props ) {
     const [likeList, setLikeList ] = useState([]);
     const [replyList, setReplyList] = useState([]);
     const [loginUser, setLoginUser] = useState({});
-    // let lUser = useSelector( state=>state.user );
+    let lUser = useSelector( state=>state.user );
 
     const [ viewVal, setViewVal ] = useState(false)
     const [ replyStyle, setReplyStyle] = useState({display:"none"})
     const [replyContent, setReplyContent]  = useState('');
+    const [replyDate, setReplyDate]  = useState('');
     const [followings, setFollowings2] = useState([]);
     // const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -40,13 +41,30 @@ function Post( props ) {
     const date = parseISO(props.post.writedate); // ISO 형식을 Date 객체로 변환
     const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString); // ISO 8601 형식의 문자열을 Date 객체로 변환
+      
+        const day = String(date.getDate()).padStart(2, '0'); // 일 (2자리로 맞추기)
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월 (0부터 시작하므로 +1)
+        const year = String(date.getFullYear()).slice(-2); // 년 (끝 두 자리만 사용)
+        
+        const hours = String(date.getHours()).padStart(2, '0'); // 시간
+        const minutes = String(date.getMinutes()).padStart(2, '0'); // 분
+        
+        return `${year}/${month}/${day} ${hours}h${minutes}m`;
+      }
+
+    
+    // const date1 = parseISO(replyList); // ISO 형식을 Date 객체로 변환
+    // const formattedDate1 = format(date1, 'yyMMdd HH/mm분'); // 원하는 포맷으로 변환
+
     useEffect(
         ()=>{
             //console.log("Post.js")
             // setFollowings2([...lUser.Followings]);
 
             console.log("post:",props.post)
-            console.log("poststring",JSON.stringify(props.post))
+            console.log("poststring",JSON.stringify(props.post.postid))
 
             axios.get(`/api/post/getImages/${props.post.postid}` )
             .then((result)=>{ 
@@ -54,31 +72,39 @@ function Post( props ) {
                 setImages( result.data.imgList ); })
             .catch((err)=>{console.error(err)})            
 
-            // axios.get(`/api/post/getLikes/${props.post.id}` )
-            // .then((result)=>{ setLikeList( result.data );  })
-            // .catch((err)=>{console.error(err)})
+            axios.get(`/api/post/getLikeList/${props.post.postid}`)
+            .then((result)=>{
+                console.log("result.data.likeList:"+result.data.likeList)
+                 setLikeList( [...result.data.likeList ] );
+            }).catch((err)=>{console.error(err)})
 
-            // axios.get(`/api/post/getReplys/${props.post.id}`)
-            // .then((result)=>{ setReplyList( result.data ); })
-            // .catch((err)=>{console.error(err)})
+            axios.get(`/api/post/getReplyList/${props.post.postid}`)
+            .then((result)=>{
+                
+                let temp = [...result.data.replyList];
+                
+                setReplyList([...temp]);
+
+                
+            }).catch((err)=>{console.error(err)})
 
         },[  ]
     )
 
-    // async function onLike(){
-    //     try{
-    //         // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
-    //         // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
-    //         console.log(props.post.id, lUser.nickname)
-    //         await axios.post('/api/post/addlike', null, {params:{ postid:props.post.id, likenick:lUser.nickname}});
+    async function onLike(){
+        try{
+            // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
+            // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
+            console.log(props.post.postid,lUser.nickname, lUser.memberid)
+            await axios.post('/api/post/addlike', { postid:props.post.postid, memberid:lUser.memberid});
 
-    //         // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
-    //         const result = await axios.get(`/api/post/getLikes/${props.post.id}` )
-    //         setLikeList( result.data );
-    //     }catch(err){
-    //         console.error(err);
-    //     }
-    // }
+            // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
+            const result = await axios.get(`/api/post/getLikeList/${props.post.postid}`)
+            setLikeList( result.data.likeList );
+        }catch(err){
+            console.error(err);
+        }
+    }
 
 
 
@@ -99,40 +125,29 @@ function Post( props ) {
     }
 
 
-    // async function addReply(){
-    //     try{
-    //         // 댓글을 추가하고 댓글 리스트를 재조회 및 갱신하세요
-    //         await axios.post('/api/post/addReply', {writer:lUser.nickname, content:replyContent, postid:props.post.id})
-    //         const result = await axios.get(`/api/post/getReplys/${props.post.id}`)
-    //         setReplyList( result.data );
-    //     }catch(err){
-    //         console.error(err);
-    //     }
-    //     setReplyContent('');
-    // }
-    // async function deleteReply(id){
-    //     try{
-    //         // 댓글을 삭제하고 댓글 리스트를 재조회 및 갱신하세요
-    //         await axios.delete(`/api/post/deleteReply/${id}`)
-    //         const result = await axios.get(`/api/post/getReplys/${props.post.id}`)
-    //         setReplyList( result.data );
-    //     }catch(err){
-    //         console.error(err);
-    //     }
+    async function addReply(){
+        try{
+            // 댓글을 추가하고 댓글 리스트를 재조회 및 갱신하세요
+            await axios.post('/api/post/addReply', {memberid:lUser.memberid, content:replyContent, postid:props.post.postid})
+            const result = await axios.get(`/api/post/getReplyList/${props.post.postid}`)
+            setReplyList( result.data.replyList );
+        }catch(err){
+            console.error(err);
+        }
+        setReplyContent('');
+    }
+    async function deleteReply(id){
+        // console.log("deleteReplyid"+id);
+        try{
+            // 댓글을 삭제하고 댓글 리스트를 재조회 및 갱신하세요
+            await axios.delete(`/api/post/deleteReply/${id}`)
+            const result = await axios.get(`/api/post/getReplyList/${props.post.postid}`)
+            setReplyList( result.data.replyList );
+        }catch(err){
+            console.error(err);
+        }
 
-    // }
-
-    // async function onFollow( writer ){
-    //     try{
-    //         await axios.post('/api/member/follow', null, { params:{ffrom:lUser.nickname, fto:writer} } );
-    //         const result = await axios.get('/api/member/getFollowings');
-    //         dispatch( setFollowings({ followings:result.data} ) );
-    //         setFollowings2( result.data );
-    //     }catch(err){
-    //         console.error(err);
-    //     }
-    // }
-
+    }
 
     return (
         <div className='Post' style={{width:"600px"}}>
@@ -166,23 +181,23 @@ function Post( props ) {
 
             <div className='like'>
                 {
-                    // (likeList)?( 
-                    //     likeList.some(
-                    //         (like)=>(lUser.nickname==like.likenick) 
-                    //     )
-                    //     ?
-                    //     ( <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />)
-                    //     :
-                    //     (<img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />)
-                    // ):(
-                    //     <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
-                    // )
+                    (likeList)?( 
+                        likeList.some(
+                            (like)=>(lUser.memberid==like.memberid) 
+                        )
+                        ?
+                        ( <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />)
+                        :
+                        (<img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />)
+                    ):(
+                        <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                    )
                 }
 
                 &nbsp;&nbsp;
-                {/* <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
+                <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
                     viewOrNot()
-                }}/> */}
+                }}/>
             </div>
             <div className='like'>
                 {
@@ -201,8 +216,7 @@ function Post( props ) {
             <div className='content'> 
                 <button style={{flex:"1"}} onClick={
                         ()=>{ 
-                            props.findRestorantLocation(props.post.placeid)
-                            // props.setFindLocation(props.post.placeid)   
+                            props.findRestorantLocation(props.post.placeid)                               
                         }
                     }>포스팅한 음식점 위치보기</button>
             </div>
@@ -213,13 +227,14 @@ function Post( props ) {
                         replyList.map((reply, idx)=>{
                             return (
                                 <div key={idx} style={replyStyle}>
-                                    <div style={{flex:"1", fontWeight:"bold"}}>{reply.writer}&nbsp;</div>
+                                    <div style={{flex:"1", fontWeight:"bold"}}>{reply.memberid}&nbsp;</div>
                                     <div style={{flex:"3"}}>{reply.content}</div>
+                                    <div style={{flex:"1", fontWeight:"bold"}}>{formatDate(reply.writedate)}&nbsp;</div>
                                     <div style={{flex:"1", textAlign:"right"}}>
                                         {
-                                            // (reply.writer==lUser.nickname)?(
-                                            //     <button onClick={ ()=>{ deleteReply(reply.id)  } } style={{width:"100%"}}>삭제</button>
-                                            // ):(null)
+                                             (reply.memberid==lUser.memberid)?(
+                                                 <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:"100%"}}>삭제</button>
+                                             ):(null)
                                         }
                                     </div>
                                 </div>
@@ -232,7 +247,7 @@ function Post( props ) {
                         (e)=>{ setReplyContent( e.currentTarget.value) }
                     }/>
                     <button style={{flex:"1"}} onClick={
-                        ()=>{  }
+                        ()=>{  addReply() }
                     }>댓글입력</button>
                 </div>
             </div>

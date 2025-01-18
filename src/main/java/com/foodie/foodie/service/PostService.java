@@ -1,10 +1,14 @@
 package com.foodie.foodie.service;
 
 import com.foodie.foodie.dto.Paging;
+import com.foodie.foodie.entity.Likes;
+import com.foodie.foodie.entity.Reply;
 import com.foodie.foodie.repository.ImagesRepository;
+import com.foodie.foodie.repository.LikesRepository;
 import com.foodie.foodie.repository.PostRepository;
 import com.foodie.foodie.entity.Post;
 import com.foodie.foodie.entity.Images;
+import com.foodie.foodie.repository.ReplyRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -97,7 +102,45 @@ public class PostService {
         return list;
     }
 
-//    public Page<Post> getAllPosts(int page, int size) {
-//        return pr.findAll(page,size);
-//    }
+    @Autowired
+    LikesRepository lr;
+
+    public List<Likes> getLikeList(int postid) {
+        System.out.println("PostService postid:"+postid);
+        List<Likes> list = lr.findByPostid( postid );
+        System.out.println("PostService list:"+list);
+        // [ { id:1, postid:3, likeid:5} , {  id:2, postid:4, likeid:6} , {} ... ]  좋아요 테이블의 레코드 객체 리스트
+        // [ 5, 4 , 6, ...]  멤버의 아이디들 리스트
+        return list;
+    }
+
+    public void insertLikes(Likes likes) {
+        Optional<Likes> recored = lr.findByPostidAndMemberid( likes.getPostid(), likes.getMemberid());
+        if( recored.isPresent() ) {
+            lr.delete( recored.get() );
+        }else{
+            Likes addlikes = new Likes();
+            addlikes.setPostid( likes.getPostid());
+            addlikes.setMemberid( likes.getMemberid() );
+            lr.save( addlikes );
+        }
+    }
+
+    @Autowired
+    ReplyRepository rr;
+
+    public void addReply(Reply reply) {
+        rr.save(reply);
+    }
+
+    public List<Reply> getReplyList(int postid) {
+        return rr.findByPostidOrderByReplyidDesc(postid);
+    }
+
+    public void deleteReply(int replyid) {
+        Optional<Reply> rep = rr.findById((long)replyid);
+        if( rep.isPresent() ) {
+            rr.delete( rep.get() );
+        }
+    }
 }
