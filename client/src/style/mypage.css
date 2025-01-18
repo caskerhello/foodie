@@ -16,7 +16,7 @@
 }
 .mypage .userinfo .img{
     flex-basis:250px;    
-    border:1px solid black;
+    /* border:1px solid black; */
 }
 .mypage .userinfo .img img{
     width:250px;
@@ -72,7 +72,7 @@
 
 .userpost{
     width:100%;
-    border:1px solid black;
+    /* border:1px solid black; */
     display: grid;
     grid-template-columns:1fr 1fr 1fr; 
 }

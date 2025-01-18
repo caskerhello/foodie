@@ -40,18 +40,13 @@ const Main = () => {
 
     
     useEffect(() => {
-      if(!sessionStorage.getItem('loginAlertShown'))
-      {toast.success(`${lUser.nickname}님 로그인 완료!`, {
-        position: "top-right",  // 알림 위치 설정
-        autoClose: 500,         // 자동으로 닫히는 시간 (2초)
-      });}
-      sessionStorage.setItem('loginAlertShown', 'true');
+      
 
       axios.get(`/api/post/getPostList`, {params:{page:1,word}})
             .then((result)=>{
-              console.log("result.data.postList:",result.data.postList)
-              console.log("result.data.postList.content:",result.data.postList.content)
-              console.log("result.data.postList.pageable.pageNumber:"+result.data.postList.pageable.pageNumber)
+              // console.log("result.data.postList:",result.data.postList)
+              // console.log("result.data.postList.content:",result.data.postList.content)
+              // console.log("result.data.postList.pageable.pageNumber:"+result.data.postList.pageable.pageNumber)
                 setPostList( result.data.postList.content );
                 setPaging( result.data.postList.pageable.pageNumber+1 );
             }).catch((err)=>{console.error(err)})     
@@ -74,25 +69,25 @@ const Main = () => {
         const scrollTop = document.documentElement.scrollTop;  // 현재 위치
         const clientHeight = document.documentElement.clientHeight; // 내용물의 크기
         if( scrollTop + clientHeight >= scrollHeight ) {
-          console.log("Number(paging) + 1 :"+ (paging + 1))
+          // console.log("Number(paging) + 1 :"+ (paging + 1))
             onPageMove( paging + 1 );
         }
     }
 
       async function onPageMove( page ){
-        console.log("onPageMove( page )"+page)
+        // console.log("onPageMove( page )"+page)
 
         
 
         const result = await axios.get(`/api/post/getPostList`, {params:{page:page,word}})
         .then((result)=>{
-        console.log("result.data.postList.pageable.pageNumber(move):"+result.data.postList.pageable.pageNumber);
+        // console.log("result.data.postList.pageable.pageNumber(move):"+result.data.postList.pageable.pageNumber);
         setPaging( result.data.postList.pageable.pageNumber+1 );
         let posts = [];
         posts = [...postList];
         posts = [...posts, ...result.data.postList.content ];
 
-        console.log("moveposts:"+posts)
+        // console.log("moveposts:"+posts)
         setPostList([...posts]);
         }).catch((err)=>{console.error(err)})     
       }
@@ -106,15 +101,15 @@ const Main = () => {
       // console.log(placeid)
       axios.get(`/api/place/getPlaceInfo`, {params:{placeid}})
             .then((result)=>{
-              console.log("result.data.place:",result.data.place)
-              console.log("result.data.place.x:",result.data.place.x)
-              console.log("result.data.place.y:",result.data.place.y)
+              // console.log("result.data.place:",result.data.place)
+              // console.log("result.data.place.x:",result.data.place.x)
+              // console.log("result.data.place.y:",result.data.place.y)
               setLocation({lat:result.data.place.y, lng:result.data.place.x});
                 //setPaging( result.data.paging );
-              console.log("location"+JSON.stringify(location))
+              // console.log("location"+JSON.stringify(location))
             }).catch((err)=>{console.error(err)})
 
-      console.log("placeInfo"+placeInfo);
+      // console.log("placeInfo"+placeInfo);
       // console.log("placeInfo",placeInfo.x,placeInfo.y)
 
 
@@ -196,14 +191,14 @@ const Main = () => {
 
     useEffect(()=>{
         if(!viewMapOrNot){
-            setInputMapStyle({ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
+            setInputMapStyle({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
         }else{
             setInputMapStyle({display:"none"})
             
         }
         },[viewMapOrNot])
 
-    const [inputMapStyle, setInputMapStyle ] = useState({ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' })
+    const [inputMapStyle, setInputMapStyle ] = useState({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' })
 
     const getCurrentLocation = () => {
         return new Promise((resolve, reject) => {
@@ -226,7 +221,7 @@ const Main = () => {
           try {
             const { lan, lon } = await getCurrentLocation(); // 위치 정보 받아오기
 
-            console.log("lan, lon",lan, lon);
+            // console.log("lan, lon",lan, lon);
 
             setLocation({lat:lan,lng:lon});
 
@@ -355,7 +350,7 @@ const Main = () => {
             <div>
             {/* <button onClick={notify}>토스트 알림 보기</button>  */}
 
-            <ToastContainer
+            {/* <ToastContainer
             position="top-right"
             autoClose={1000}        // 알림이 자동으로 닫히는 시간 (ms)
             hideProgressBar={false} // 진행바 숨기기
@@ -367,7 +362,7 @@ const Main = () => {
             pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
             theme="light"          // 알림의 테마 (light/dark)
             transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
-            />
+            /> */}
               
 
               

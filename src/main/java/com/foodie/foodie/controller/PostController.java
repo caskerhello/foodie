@@ -82,7 +82,7 @@ public class PostController {
             @RequestParam(value="word", required = false) String word) {
         HashMap<String,Object> result = new HashMap<>();
 
-        System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ㅍpage:"+page);
+        System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★page:"+page);
 
         result.put("postList", ps.getPostList( word , page ) );
 
@@ -101,7 +101,8 @@ public class PostController {
     @GetMapping("/getLikeList/{postid}")
     public HashMap<String,Object> getLikeList(@PathVariable("postid") int postid) {
         HashMap<String,Object> result = new HashMap<>();
-        //result.put("likeList", ps.getLikeList( postid ) );
+        System.out.println("likeList######################################"+ps.getLikeList( postid ));
+        result.put("likeList", ps.getLikeList( postid ) );
         return result;
     }
 
@@ -109,7 +110,9 @@ public class PostController {
     @PostMapping("/addlike")
     public HashMap<String,Object> addLike(@RequestBody Likes likes) {
         HashMap<String,Object> result = new HashMap<>();
-        //ps.insertLikes(likes);
+        System.out.println("addlikes"+likes);
+
+        ps.insertLikes(likes);
         result.put("msg", "ok");
         return result;
     }
@@ -119,7 +122,7 @@ public class PostController {
     @PostMapping("/addReply")
     public HashMap<String,Object> addReply(@RequestBody Reply reply) {
         HashMap<String,Object> result = new HashMap<>();
-        //ps.addReply(reply);
+        ps.addReply(reply);
         result.put("msg", "ok");
         return result;
     }
@@ -127,20 +130,28 @@ public class PostController {
 
     @GetMapping("/getReplyList/{postid}")
     public HashMap<String,Object> getReplyList(@PathVariable("postid") int postid) {
+        System.out.println("getReplyList postid: "+postid);
         HashMap<String,Object> result = new HashMap<>();
-        //List<Reply> list = ps.getReplyList( postid );
-        //result.put("replyList", list );
+        List<Reply> list = ps.getReplyList( postid );
+        result.put("replyList", list );
         return result;
     }
 
     @DeleteMapping("/deleteReply/{replyid}")
     public HashMap<String,Object> deleteReply(@PathVariable("replyid") int replyid) {
         HashMap<String,Object> result = new HashMap<>();
-        //ps.deleteReply( replyid );
+        ps.deleteReply( replyid );
         result.put("msg", "ok");
         return result;
 
     }
+
+
+
+
+
+
+
 
 
 
