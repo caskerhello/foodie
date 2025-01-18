@@ -16,12 +16,22 @@
 
 .postWrite .field{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    width: 80%;
+    margin-bottom: 30px;
+}
+
+.postWrite .field .title{
+    flex:1
+}
+
+.postWrite .field .contents{
+    flex:6
 }
 
 .postWrite #wpcontent{
-    width:100%; 
+    width:80%; 
     display: flex;
     margin:5px 0;
     justify-content: space-between;
@@ -52,10 +62,11 @@
     border-radius: 0px;
     /* border:1px solid black; */
 }
-.postWrite .field img{
+.postWrite img{
     flex:1; 
-    border-radius: 0px;
-    border:1px solid black;
+    /* border-radius: 0px; */
+    /* border:1px solid black; */
+    width: 50%;
 }
 /* .postWrite .btns{ 
     display: flex;

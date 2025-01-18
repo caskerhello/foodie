@@ -282,9 +282,10 @@ const WritePost = () => {
                 </div>
                 <img src={imgsrc10} />
 
-                <div className='field'>
-                    별점
-                    <div>
+                <div className='field' id='wpstars'>
+                <div className='title' >별점</div>
+                    
+                    <div className='contents'>
                         <label>
                             ★
                             <input type="radio" name='stars' onClick={()=>{setStars(1)}}></input>
@@ -320,9 +321,40 @@ const WritePost = () => {
                     </div>
                 </div>
 
-                <div className='field'>
-                    카테고리
-                    <div>
+                
+
+                <div className='field' >
+                    {/* <input type="text" /> */}
+                    
+                </div>
+
+                <div className='field' >
+                        <div className='title'><button onClick={() => setModalOpen(true)}>카카오맵검색</button></div>
+
+                        <div className='contents' style={{width:"40vw",height:"20vh",border:"1px solid black",overflow: "auto"}} >
+                    선택된 장소가 조회될 공간입니다.<br/>
+                    {/* <h3>선택된 장소 정보:</h3> */}
+                    장소 이름: {selectedPlace.placeName}<br></br>
+                    도로명 주소: {selectedPlace.roadAddress}<br></br>
+                    {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
+                    전화번호: {selectedPlace.phone}<br></br>
+                    id: {selectedPlace.id}<br></br>
+                    x좌표: {selectedPlace.x}<br></br>
+                    y좌표: {selectedPlace.y}<br></br>
+                    카카오맵 링크: <a href={selectedPlace.placeUrl} target="_blank" rel="noopener noreferrer">{selectedPlace.placeUrl}</a><br></br>
+                    {/* <input type="hidden" name='category'></input>
+                    <input type="hidden" name='place_name'></input>
+                    <input type="hidden" name='3'></input>
+                    <input type="hidden" name='4'></input> */}
+                    </div>
+
+                </div>
+
+
+                <div className='field' id='wpcategory' >
+                    <div className='title' >카테고리</div>
+                    
+                    <div className='contents' >
                         <label>
                             한식
                             <input type="radio" name='category' onClick={()=>{setCategory(1)}}></input>
@@ -356,28 +388,6 @@ const WritePost = () => {
                         
                         카테고리 {category} 입니다.
                     </div>
-                </div>
-
-                <div className='field' >
-                    {/* <input type="text" /> */}
-                    <button onClick={() => setModalOpen(true)}>카카오맵검색</button>
-                </div>
-
-                <div className='field' style={{width:"40vw",height:"20vh",border:"1px solid black",overflow: "auto"}}>
-                    선택된 장소가 조회될 공간입니다.<br/>
-                    {/* <h3>선택된 장소 정보:</h3> */}
-                    장소 이름: {selectedPlace.placeName}<br></br>
-                    도로명 주소: {selectedPlace.roadAddress}<br></br>
-                    {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
-                    전화번호: {selectedPlace.phone}<br></br>
-                    id: {selectedPlace.id}<br></br>
-                    x좌표: {selectedPlace.x}<br></br>
-                    y좌표: {selectedPlace.y}<br></br>
-                    카카오맵 링크: <a href={selectedPlace.placeUrl} target="_blank" rel="noopener noreferrer">{selectedPlace.placeUrl}</a><br></br>
-                    {/* <input type="hidden" name='category'></input>
-                    <input type="hidden" name='place_name'></input>
-                    <input type="hidden" name='3'></input>
-                    <input type="hidden" name='4'></input> */}
                 </div>
 
                     {
