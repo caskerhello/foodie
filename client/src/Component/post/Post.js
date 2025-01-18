@@ -63,18 +63,18 @@ function Post( props ) {
             //console.log("Post.js")
             // setFollowings2([...lUser.Followings]);
 
-            console.log("post:",props.post)
-            console.log("poststring",JSON.stringify(props.post.postid))
+            // console.log("post:",props.post)
+            // console.log("poststring",JSON.stringify(props.post.postid))
 
             axios.get(`/api/post/getImages/${props.post.postid}` )
             .then((result)=>{ 
-                console.log("result.data.images"+result.data.imgList);
+                // console.log("result.data.images"+result.data.imgList);
                 setImages( result.data.imgList ); })
             .catch((err)=>{console.error(err)})            
 
             axios.get(`/api/post/getLikeList/${props.post.postid}`)
             .then((result)=>{
-                console.log("result.data.likeList:"+result.data.likeList)
+                // console.log("result.data.likeList:"+result.data.likeList)
                  setLikeList( [...result.data.likeList ] );
             }).catch((err)=>{console.error(err)})
 
@@ -95,7 +95,7 @@ function Post( props ) {
         try{
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
-            console.log(props.post.postid,lUser.nickname, lUser.memberid)
+            // console.log(props.post.postid,lUser.nickname, lUser.memberid)
             await axios.post('/api/post/addlike', { postid:props.post.postid, memberid:lUser.memberid});
 
             // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
@@ -198,6 +198,7 @@ function Post( props ) {
                 <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
                     viewOrNot()
                 }}/>
+                {replyList.length}
             </div>
             <div className='like'>
                 {
@@ -221,7 +222,8 @@ function Post( props ) {
                     }>포스팅한 음식점 위치보기</button>
             </div>
 
-            <div className='reply'>
+            <div className='reply'> 
+
                 {
                     (replyList && replyList.length>=1)?(
                         replyList.map((reply, idx)=>{

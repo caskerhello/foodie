@@ -46,7 +46,7 @@ const WritePost = () => {
     const [Place, setPlace] = useState('')
 
     function SelectionOverlay(place){
-        console.log(place)
+        // console.log(place)
         setSelectedPlace(place);
         // setModalOpen(false)
     }
@@ -189,7 +189,7 @@ const WritePost = () => {
         let arr = [...imgList];
         arr.push(result.data.savefilename);
         setImgList( [...arr] );
-        console.log(imgList);
+        // console.log(imgList);
 
     }
 
