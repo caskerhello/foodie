@@ -130,6 +130,15 @@ public class MemberController {
         return result;
     }
 
+    @PostMapping("/updateProfile")
+    public HashMap<String, Object> updateProfile( @RequestBody Member member, HttpSession session) {
+        HashMap<String, Object> result = new HashMap<>();
+        System.out.println("updateProfile:"+member);
+        ms.updateMember( member );
+        session.setAttribute("loginUser", member.getEmail() );
+        result.put("msg", "ok");
+        return result;
+    }
 
 
 

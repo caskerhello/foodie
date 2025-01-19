@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class MemberService {
@@ -27,5 +29,18 @@ public class MemberService {
 
     public Member getMemberByMemberid(int id) {
         return MR.getMemberByMemberid(id);
+    }
+
+    public void updateMember(Member member) {
+        Optional<Member> memberOptional = MR.findByMemberid(member.getMemberid());
+        if(memberOptional.isPresent()) {
+            Member updateMember = memberOptional.get();
+            updateMember.setNickname(member.getNickname());
+            updateMember.setEmail(member.getEmail());
+            updateMember.setPwd(member.getPwd());
+            updateMember.setPhone(member.getPhone());
+            updateMember.setProfileimg(member.getProfileimg());
+            updateMember.setProfilemsg(member.getProfilemsg());
+        }
     }
 }

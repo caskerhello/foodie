@@ -84,7 +84,7 @@ const Join = () => {
                 <label>전화번호</label>
                 <input type="text" value={phone} onChange={
                     (e)=>{ setPhone( e.currentTarget.value ) }
-                }/>
+                } readOnly/>
             </div>
             <div className='field'>
                 <label>소개</label>
