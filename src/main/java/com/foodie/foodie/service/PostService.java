@@ -157,4 +157,25 @@ public class PostService {
             rr.delete( rep.get() );
         }
     }
+
+//    public List getMyPosts(int memberid) {
+//        return pr.findAllByMemberid(memberid);
+//    }
+
+    public List<Post> getPostListByMemberid(int memberid) {
+        return pr.findAllByMemberid(memberid);
+    }
+
+    public List<Images> getImgListByPostid(int id) {
+        return ir.findByPostid( id );
+    }
+
+    public Post getPost(int id) {
+        Optional<Post> p = pr.findByPostid(id);
+        if( p.isPresent() ){
+            return p.get();
+        }else{
+            return null;
+        }
+    }
 }

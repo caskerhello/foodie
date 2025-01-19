@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // import { setFollowings } from '../../store/userSlice';
 
+import { VscHeart } from "react-icons/vsc";
+import { VscHeartFilled } from "react-icons/vsc";
+import { VscFileMedia } from "react-icons/vsc";
+import { VscFeedback } from "react-icons/vsc";
+
 import { format, parseISO } from 'date-fns'
 
 import Slider from 'react-slick';
@@ -153,7 +158,7 @@ function Post( props ) {
         <div className='Post' style={{width:"600px"}}>
             <div className='writer' >
             {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
-                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}</span>&nbsp;&nbsp;<span>{props.post.nickname}</span>&nbsp;&nbsp;<span>{formattedDate}</span><span>{images.length}</span></div>
+                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}&nbsp;{props.post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formattedDate}</span><span></span><span><VscFileMedia  />{images.length}</span></div>
                 {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
                 {
                     // ( 
@@ -187,17 +192,28 @@ function Post( props ) {
                             (like)=>(lUser.memberid==like.memberid) 
                         )
                         ?
-                        ( <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />)
+                        ( 
+                            <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
+                        // <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />
+                        )
                         :
-                        (<img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />)
+                        (
+                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+
+                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                        )
                     ):(
-                        <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+
+                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
                     )
-                }{likeList.length}
-                
-                <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
+                }{likeList.length}&nbsp;&nbsp;&nbsp;
+                <VscFeedback style={{height:"20px",width:"20px"}} onClick={()=>{
+                    viewOrNot()}}/>
+                {/* <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
                     viewOrNot()
-                }}/>{replyList.length}</span>
+                }}/> */}
+                {replyList.length}</span>
                 
                 <span>
                 {props.post.post_content}★{props.post.post_stars}&nbsp;</span> 

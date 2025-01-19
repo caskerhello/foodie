@@ -148,7 +148,10 @@ public class PostController {
     }
 
 
-
+    @GetMapping("/getPost/{id}")
+    public Post getPost( @PathVariable("id") int id){
+        return ps.getPost(id);
+    }
 
 
 
