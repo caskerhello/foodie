@@ -38,7 +38,7 @@ function Post( props ) {
     // const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const date = parseISO(props.post.writedate); // ISO 형식을 Date 객체로 변환
+    const date = parseISO(props.post.post_write_date); // ISO 형식을 Date 객체로 변환
     const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
 
     const formatDate = (dateString) => {
@@ -153,7 +153,7 @@ function Post( props ) {
         <div className='Post' style={{width:"600px"}}>
             <div className='writer' >
             {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
-                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}</span>&nbsp;&nbsp;<span>{props.post.memberid}</span>&nbsp;&nbsp;<span>{formattedDate}</span><span>{images.length}</span></div>
+                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}</span>&nbsp;&nbsp;<span>{props.post.nickname}</span>&nbsp;&nbsp;<span>{formattedDate}</span><span>{images.length}</span></div>
                 {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
                 {
                     // ( 
@@ -200,8 +200,9 @@ function Post( props ) {
                 }}/>{replyList.length}</span>
                 
                 <span>
-                {props.post.content}★{props.post.stars}&nbsp;</span> 
+                {props.post.post_content}★{props.post.post_stars}&nbsp;</span> 
                 <span>
+            <div className='content' style={{display:"block"}}>{props.post.place_name}</div>
             <button style={{flex:"1"}} onClick={
                         ()=>{ 
                             props.findRestorantLocation(props.post.placeid)                               
@@ -228,7 +229,7 @@ function Post( props ) {
 
             </div> */}
             <div className='content'></div>
-            <div className='content' style={{display:"none"}}>포스팅한 음식점 : {props.post.placeid}</div>
+            
             <div className='content'> 
                 
             </div>
@@ -240,8 +241,8 @@ function Post( props ) {
                         replyList.map((reply, idx)=>{
                             return (
                                 <div key={idx} style={replyStyle}>
-                                    <div style={{flex:"1", fontWeight:"bold"}}>{reply.memberid}&nbsp;</div>
-                                    <div style={{flex:"3"}}>{reply.content}</div>
+                                    <div style={{flex:"1", fontWeight:"bold"}}>{reply.nickname}&nbsp;</div>
+                                    <div style={{flex:"3"}}>{reply.reply_content}</div>
                                     <div style={{flex:"1", fontWeight:"bold"}}>{formatDate(reply.writedate)}&nbsp;</div>
                                     <div style={{flex:"1", textAlign:"right"}}>
                                         {

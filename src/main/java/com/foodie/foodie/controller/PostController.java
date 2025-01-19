@@ -1,5 +1,6 @@
 package com.foodie.foodie.controller;
 
+import com.foodie.foodie.dto.ReplyMemberDTO;
 import com.foodie.foodie.entity.*;
 import com.foodie.foodie.service.PlaceService;
 import com.foodie.foodie.service.PostService;
@@ -132,7 +133,7 @@ public class PostController {
     public HashMap<String,Object> getReplyList(@PathVariable("postid") int postid) {
         System.out.println("getReplyList postid: "+postid);
         HashMap<String,Object> result = new HashMap<>();
-        List<Reply> list = ps.getReplyList( postid );
+        List<ReplyMemberView> list = ps.getReplyList( postid );
         result.put("replyList", list );
         return result;
     }
