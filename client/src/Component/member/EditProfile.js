@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import '../../style/editprofile.css'
 
 const EditProfile = () => {
@@ -87,7 +88,6 @@ const EditProfile = () => {
 
     }
 
-
     return (
         <div className='editform'>
             <div className="logo" style={{fontSize:"2.0rem"}}>내 정보 수정</div>
@@ -144,8 +144,8 @@ const EditProfile = () => {
             </div>
 
             <div className='btns'>
-                <button onClick={ ()=>{   onSubmit()    }  }>수정</button>
-                <button onClick={ ()=>{ navigate('/myPage')   }  }>뒤로</button>
+                <button onClick={()=>{ onSubmit() }}>수정</button>
+                <button onClick={()=>{ navigate('/myPage') }}>뒤로</button>
             </div>
 
         </div>

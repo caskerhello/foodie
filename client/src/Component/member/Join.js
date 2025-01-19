@@ -17,10 +17,10 @@ const Join = () => {
     const navigate = useNavigate();
 
     async function onSubmit(){
-        if(email==''){ return alert('이메일을 입력하세요');}
-        if(pwd==''){ return alert('패스워드를 입력하세요');}
-        if(pwd!==pwdChk){ return alert('패스워드 확인이 일치하지 않습니다');}
-        if(nickname==''){ return alert('닉네임을 입력하세요');}
+        if(!email){ return alert('이메일을 입력하세요');}
+        if(!pwd){ return alert('패스워드를 입력하세요');}
+        if(pwd !== pwdChk){ return alert('패스워드 확인이 일치하지 않습니다');}
+        if(!nickname){ return alert('닉네임을 입력하세요');}
 
         try{
             let result = await axios.post('/api/member/emailcheck', null, {params:{email}} );
@@ -53,57 +53,76 @@ const Join = () => {
 
     return (
         <div className='joinform'>
-            <div className="logo" style={{fontSize:"2.0rem"}}>가입</div>
+            <div className="logo" style={{fontSize:"2.0rem"}}>회원가입</div>
             <div className='field'>
                 <label>이메일</label>
-                <input type="text" value={email} onChange={
-                    (e)=>{ setEmail( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type="text" value={email} placeholder='이메일 입력' onChange={
+                        (e) => { setEmail(e.currentTarget.value) }
+                    }/>
+                    <button type='button' className='send-button'>인증번호 받기</button>
+                </div>
             </div>
             <div className='field'>
                 <label>비밀번호</label>
-                <input type="password" value={pwd} onChange={
-                    (e)=>{ setPwd( e.currentTarget.value ) }
-                }/>
-            </div>
-            <div className='field'>
-                <label>비밀번호재입력</label>
-                <input type="password" value={pwdChk} onChange={
-                    (e)=>{ setPwdChk( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type="password" value={pwd} placeholder='비밀번호 입력' onChange={
+                        (e) => { setPwd(e.currentTarget.value) }
+                    }/>
+                </div>
+                <div className='input-wrapper'>
+                    <input type="password" value={pwdChk} placeholder='비밀번호 확인' onChange={
+                        (e) => { setPwdChk(e.currentTarget.value) }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>별명</label>
-                <input type="text"  value={nickname} onChange={
-                    (e)=>{ setNickname( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type="text" value={nickname} placeholder='별명 입력' onChange={
+                        (e) => {
+                            setNickname(e.currentTarget.value)
+                        }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>전화번호</label>
-                <input type="text" value={phone} onChange={
-                    (e)=>{ setPhone( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type="text" value={phone} placeholder='전화번호 입력' onChange={
+                        (e) => {
+                            setPhone(e.currentTarget.value)
+                        }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>소개</label>
-                <input type="text" value={intro} onChange={
-                    (e)=>{ setIntro( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type="text" value={intro} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
+                        (e) => {
+                            setIntro(e.currentTarget.value)
+                        }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>사진</label>
-                <input type="file" onChange={(e)=>{ fileupload(e) }}/>
+                <input type="file" onChange={(e) => {
+                    fileupload(e)
+                }}/>
             </div>
             <div className='field'>
                 <label>사진미리보기</label>
-                <div><img src={imgSrc} style={imgStyle} /></div>
+                <div><img src={imgSrc} style={imgStyle}/></div>
             </div>
 
             <div className='btns'>
-                <button onClick={ ()=>{   onSubmit()    }  }>가입</button>
-                <button onClick={ ()=>{ navigate('/')   }  }>뒤로</button>
+                <button onClick={() => { onSubmit() }}>가입
+                </button>
+                <button onClick={() => { navigate('/') }}>뒤로
+                </button>
             </div>
-
         </div>
     )
 }
