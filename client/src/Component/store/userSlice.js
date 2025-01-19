@@ -42,7 +42,7 @@ export const userSlice=createSlice(
         initialState : getLoginUser()  || initialState,
         reducers:{
             loginAction:(state, action)=>{
-                state.id = action.payload.id;
+                state.memberid = action.payload.memberid;
                 state.email = action.payload.email;
                 state.nickname = action.payload.nickname;
                 state.phone = action.payload.phone;
@@ -52,7 +52,7 @@ export const userSlice=createSlice(
                 state.snsid = action.payload.snsid;
             },
             logoutAction:(state)=>{
-                state.id = '';
+                state.memberid = '';
                 state.email = '';
                 state.nickname = '';
                 state.phone = '';
