@@ -44,7 +44,7 @@ const Main = () => {
 
       axios.get(`/api/post/getPostList`, {params:{page:1,word}})
             .then((result)=>{
-              // console.log("result.data.postList:",result.data.postList)
+              console.log("result.data.postList:",result.data.postList)
               // console.log("result.data.postList.content:",result.data.postList.content)
               // console.log("result.data.postList.pageable.pageNumber:"+result.data.postList.pageable.pageNumber)
                 setPostList( result.data.postList.content );
@@ -81,6 +81,7 @@ const Main = () => {
 
         const result = await axios.get(`/api/post/getPostList`, {params:{page:page,word}})
         .then((result)=>{
+          console.log("result.data.postList.content"+result.data.postList.content)
         // console.log("result.data.postList.pageable.pageNumber(move):"+result.data.postList.pageable.pageNumber);
         setPaging( result.data.postList.pageable.pageNumber+1 );
         let posts = [];

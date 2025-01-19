@@ -1,14 +1,10 @@
 package com.foodie.foodie.service;
 
 import com.foodie.foodie.dto.Paging;
-import com.foodie.foodie.entity.Likes;
-import com.foodie.foodie.entity.Reply;
-import com.foodie.foodie.repository.ImagesRepository;
-import com.foodie.foodie.repository.LikesRepository;
-import com.foodie.foodie.repository.PostRepository;
-import com.foodie.foodie.entity.Post;
-import com.foodie.foodie.entity.Images;
-import com.foodie.foodie.repository.ReplyRepository;
+import com.foodie.foodie.dto.PostMemberDTO;
+import com.foodie.foodie.dto.ReplyMemberDTO;
+import com.foodie.foodie.entity.*;
+import com.foodie.foodie.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +23,9 @@ public class PostService {
     PostRepository pr;
 
     @Autowired
+    postmemberview pmv;
+
+    @Autowired
     ImagesRepository ir;
 
     public Post insertPost(Post post) {
@@ -43,7 +42,7 @@ public class PostService {
         ir.save(images);
     }
 
-    public Page<Post> getPostList(String word, int page) {
+    public Page<PostMemberView> getPostList(String word, int page) {
         List<Post> list=null;
         List<Post> list2=null;
 //        if( word==null || word.equals("") ) {
@@ -61,9 +60,15 @@ public class PostService {
 
         Pageable pageable = PageRequest.of(page-1, 2, Sort.by(Sort.Order.desc("postid")));
 
-        System.out.println("pr.findAllByOrderByPostidDesc(pageable) :"+pr.findAllByOrderByPostidDesc(pageable));
+//        System.out.println("pr.findAllByOrderByPostidDesc(pageable) :"+pr.findAllByOrderByPostidDesc(pageable));
 
-        return pr.findAllByOrderByPostidDesc(pageable);
+        System.out.println("pmv.findAllByOrderByPostidDesc(pageable) :"+pmv.findAllByOrderByPostidDesc(pageable));
+
+//        return pr.findAllByOrderByPostidDesc(pageable);
+
+        return pmv.findAllByOrderByPostidDesc(pageable);
+
+
 
 //            return pr.findAll(paging);
 
@@ -129,12 +134,16 @@ public class PostService {
     @Autowired
     ReplyRepository rr;
 
+    @Autowired
+    replymemberview rmv;
+
     public void addReply(Reply reply) {
         rr.save(reply);
     }
 
-    public List<Reply> getReplyList(int postid) {
-        return rr.findByPostidOrderByReplyidDesc(postid);
+    public List<ReplyMemberView> getReplyList(int postid) {
+        // rr.findByPostidOrderByReplyidDesc(postid);
+        return rmv.findByPostidOrderByReplyidDesc(postid);
     }
 
     public void deleteReply(int replyid) {
