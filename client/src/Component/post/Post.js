@@ -38,7 +38,7 @@ function Post( props ) {
     // const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const date = parseISO(props.post.writedate); // ISO 형식을 Date 객체로 변환
+    const date = parseISO(props.post.post_write_date); // ISO 형식을 Date 객체로 변환
     const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
 
     const formatDate = (dateString) => {
@@ -200,8 +200,9 @@ function Post( props ) {
                 }}/>{replyList.length}</span>
                 
                 <span>
-                {props.post.post_content}★{props.post.stars}&nbsp;</span> 
+                {props.post.post_content}★{props.post.post_stars}&nbsp;</span> 
                 <span>
+            <div className='content' style={{display:"block"}}>{props.post.place_name}</div>
             <button style={{flex:"1"}} onClick={
                         ()=>{ 
                             props.findRestorantLocation(props.post.placeid)                               
@@ -228,7 +229,7 @@ function Post( props ) {
 
             </div> */}
             <div className='content'></div>
-            <div className='content' style={{display:"none"}}>포스팅한 음식점 : {props.post.placeid}</div>
+            
             <div className='content'> 
                 
             </div>

@@ -26,6 +26,9 @@ public class PostService {
     postmemberview pmv;
 
     @Autowired
+    postmemberplaceview pmpv;
+
+    @Autowired
     ImagesRepository ir;
 
     public Post insertPost(Post post) {
@@ -42,7 +45,7 @@ public class PostService {
         ir.save(images);
     }
 
-    public Page<PostMemberView> getPostList(String word, int page) {
+    public Page<PostMemberPlaceView> getPostList(String word, int page) {
         List<Post> list=null;
         List<Post> list2=null;
 //        if( word==null || word.equals("") ) {
@@ -66,7 +69,9 @@ public class PostService {
 
 //        return pr.findAllByOrderByPostidDesc(pageable);
 
-        return pmv.findAllByOrderByPostidDesc(pageable);
+//        return pmv.findAllByOrderByPostidDesc(pageable);
+
+        return pmpv.findAllByOrderByPostidDesc(pageable);
 
 
 
