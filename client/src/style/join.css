@@ -1,112 +1,113 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
-.joinform{
-    width: 500px;
-    margin-top:50px;
-    min-width: 400px; 
-    border:2px solid rgb(242, 38, 38);
-    border-radius : 20px;
-    padding: 15px;
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    max-height: 100%;
+    height: 100vh;
 }
 
-.loginform .logo{
-    /* font-family: 'Dancing Script', cursive; font-size:300%;  */
-    margin-bottom: 50px;
-    border: 1px dotted blue;
-    width: 100%;
-    text-align: center;
+.joinform {
+    width: 360px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid rgb(242, 38, 38);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.joinform span{
-    color : rgb(242, 38, 38)
-}
-
-.joinform .field{
-    border:1px dotted blue;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 5px 0;
-}
-.joinform .field label{
-    flex: 1;
-    text-align: left;
+.logo {
+    font-size: 24px;
     font-weight: bold;
-    margin: 5px 0;
-    color : #818181;
+    color: rgb(242, 38, 38);
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.joinform .input-wrapper {
-    width: 100%;
+/* 필드 스타일 */
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+}
+
+.input-wrapper {
+    position: relative;
     display: flex;
-    align-items: center;
-    /*padding-bottom: 5px;*/
+    flex-direction: column;
 }
 
-.joinform .input-wrapper input {
+.input-wrapper input[type="text"],
+.input-wrapper input[type="password"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-wrapper input:focus {
+    border-color: rgb(242, 38, 38);
+}
+
+.input-wrapper .message {
+    margin-top: 3px; /* 입력 필드 아래 간격 */
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 12px;
+    color: rgb(242, 38, 38);
+}
+
+/* 버튼 스타일 */
+button {
     width: 100%;
-    height: 25px;
     padding: 10px;
-    background-color: #FAFAFA;
-    border: 1px solid #FAFAFA;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.joinform .input-wrapper button {
-    margin-left: 10px;
-    padding: 10px;
-    background-color: #007bff;
+    font-size: 16px;
     color: #fff;
+    background-color: rgb(242, 38, 38);
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
-.joinform .input-wrapper button:hover {
-    background-color: #0056b3;
+button:hover {
+    background-color: rgb(200, 30, 30);
 }
 
-.joinform .field input::placeholder{
-    color: #B8B8B8;
-}
-
-.joinform .field div{
-    flex:4;
-    border-radius: 10px;
-}
-
-.joinform .btns, .joinform .snslogin{
-    /* border:1px dotted blue;  */
-    width:100%; 
-    margin-top:10px;
+.btns {
     display: flex;
-    padding:3px;
-    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 10px;
 }
 
-.joinform .btns button, .joinform .snslogin button{
+.btns button {
     flex: 1;
-    height: 30px;
-    margin-right: 5px;
-    font-weight: bold;
-    border: none;
-    padding: 5px;
-    font-size: 1.1rem;
-    border-radius: 10px;
 }
 
-.joinform .btns button:last-child, .joinform .snslogin button:last-child{
-    margin-right: 0;
+/* 파일 업로드 및 미리보기 */
+input[type="file"] {
+    margin-top: 5px;
 }
 
-.joinform .btns button{
-    color: white;
-    background-color: rgb(242, 38, 38);
+.field img {
+    margin-top: 10px;
+    max-width: 100%;
+    border-radius: 5px;
 }
 
 @media (max-width:700px) {
