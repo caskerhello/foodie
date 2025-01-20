@@ -27,11 +27,7 @@
 }
 
 
-.loginform .logo{ 
-
-    
-
-    
+.loginform .logo{
     margin-bottom:50px; 
     border:1px dotted blue; 
     width:100%; 
@@ -42,7 +38,6 @@
     color : white;
     font-size: 160%;
 }
-
 
 .loginform .field{
     /* border:1px dotted blue;  */

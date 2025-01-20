@@ -53,33 +53,39 @@ const Join = () => {
 
     return (
         <div className='joinform'>
-            <div className="logo" style={{fontSize:"2.0rem"}}>회원가입</div>
+            <div className='logo'>회원가입</div>
             <div className='field'>
                 <label>이메일</label>
                 <div className='input-wrapper'>
-                    <input type="text" value={email} placeholder='이메일 입력' onChange={
-                        (e) => { setEmail(e.currentTarget.value) }
+                    <input type='text' value={email} placeholder='이메일 입력' onChange={
+                        (e) => {
+                            setEmail(e.currentTarget.value)
+                        }
                     }/>
-                    <button type='button' className='send-button'>인증번호 받기</button>
                 </div>
+                <button>중복확인</button>
             </div>
             <div className='field'>
                 <label>비밀번호</label>
                 <div className='input-wrapper'>
-                    <input type="password" value={pwd} placeholder='비밀번호 입력' onChange={
+                    <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
                         (e) => { setPwd(e.currentTarget.value) }
                     }/>
+                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
                 </div>
                 <div className='input-wrapper'>
-                    <input type="password" value={pwdChk} placeholder='비밀번호 확인' onChange={
-                        (e) => { setPwdChk(e.currentTarget.value) }
+                    <input type='password' value={pwdChk} placeholder='비밀번호 확인' onChange={
+                        (e) => {
+                            setPwdChk(e.currentTarget.value)
+                        }
                     }/>
+                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
                 </div>
             </div>
             <div className='field'>
                 <label>별명</label>
                 <div className='input-wrapper'>
-                    <input type="text" value={nickname} placeholder='별명 입력' onChange={
+                    <input type='text' value={nickname} placeholder='별명 입력' onChange={
                         (e) => {
                             setNickname(e.currentTarget.value)
                         }
@@ -89,7 +95,7 @@ const Join = () => {
             <div className='field'>
                 <label>전화번호</label>
                 <div className='input-wrapper'>
-                    <input type="text" value={phone} placeholder='전화번호 입력' onChange={
+                    <input type='text' value={phone} placeholder='전화번호 입력' onChange={
                         (e) => {
                             setPhone(e.currentTarget.value)
                         }
@@ -99,7 +105,7 @@ const Join = () => {
             <div className='field'>
                 <label>소개</label>
                 <div className='input-wrapper'>
-                    <input type="text" value={intro} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
+                    <input type='text' value={intro} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
                         (e) => {
                             setIntro(e.currentTarget.value)
                         }
@@ -108,7 +114,7 @@ const Join = () => {
             </div>
             <div className='field'>
                 <label>사진</label>
-                <input type="file" onChange={(e) => {
+                <input type='file' onChange={(e) => {
                     fileupload(e)
                 }}/>
             </div>
