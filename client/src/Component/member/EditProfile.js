@@ -65,15 +65,11 @@ const EditProfile = () => {
         try{
             if( email != lUser.email ){
                 let result = await axios.post('/api/member/emailcheck', null, {params:{email}} );
-                if(result.data.msg == 'no' ){
-                    return alert('이메일이 중복됩니다');
-                }
+                if(result.data.msg == 'no' ){ return alert('이메일이 중복됩니다'); }
             }
             if( nickname != lUser.nickname ){
                 let result = await axios.post('/api/member/nicknamecheck', null, {params:{nickname}} );
-                if(result.data.msg == 'no' ){
-                    return alert('닉네임이 중복됩니다');
-                }
+                if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
 
             if( !profileimg ){
@@ -81,84 +77,94 @@ const EditProfile = () => {
             }
 
             //회원정보수정
-                let result = await axios.post('/api/member/updateProfile', { memberid,email, nickname, pwd, phone,  profileimg, profilemsg })
-                if(result.data.msg=='ok'){
-                    alert('회원 수정이 완료되었습니다.');
-                    // 로그인유저 조회
-                    const res=await axios.get('/api/member/getLoginUser')
-                    // 리덕스 수정
-                    cookies.set('user', JSON.stringify( res.data.loginUser ) , {path:'/', })
-                    dispatch( loginAction( res.data.loginUser )  );     
-                    // dispatch( setFollowers( {followers:res.data.followers} ) );          
-                    // dispatch( setFollowings( {followings:res.data.followings} ) );
-                }
-                window.location.href='http://localhost:3000/myPage';
-
+            let result = await axios.post('/api/member/updateProfile', { memberid,email, nickname, pwd, phone, profileimg, profilemsg })
+            if(result.data.msg == 'ok'){
+                alert('회원 수정이 완료되었습니다.');
+                // 로그인유저 조회
+                const res=await axios.get('/api/member/getLoginUser')
+                // 리덕스 수정
+                cookies.set('user', JSON.stringify( res.data.loginUser ) , {path:'/', })
+                dispatch( loginAction(res.data.loginUser) );
+                // dispatch( setFollowers( {followers:res.data.followers} ) );
+                // dispatch( setFollowings( {followings:res.data.followings} ) );
+            }
+            window.location.href='http://localhost:3000/myPage';
         }catch(err){console.error(err)}
-
     }
-
 
     return (
         <div className='editform'>
-            <div className="logo" style={{fontSize:"2.0rem"}}>내 정보 수정</div>
+            <div className='logo'>내 정보 수정</div>
             <div className='field'>
                 <label>이메일</label>
-                <input type="text" value={email} onChange={
-                    (e)=>{ setEmail( e.currentTarget.value ) }
-                } readOnly/>
+                <div className='input-wrapper'>
+                    <input type='text' value={email} readOnly/>
+                </div>
             </div>
             <div className='field'>
                 <label>비밀번호</label>
-                <input type="password" id="pwd" value={pwd} onChange={
-                    (e)=>{ setPwd( e.currentTarget.value ) }
-                }/>
-            </div>
-            <div className='field'>
-                <label>비밀번호 재입력</label>
-                <input type="password" id="pwdchk" value={pwdChk} onChange={
-                    (e)=>{ setPwdChk( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
+                        (e) => {
+                            setPwd(e.currentTarget.value)
+                        }
+                    }/>
+                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                </div>
+                <div className='input-wrapper'>
+                    <input type='password' value={pwdChk} placeholder='비밀번호 확인' onChange={
+                        (e) => {
+                            setPwdChk(e.currentTarget.value)
+                        }
+                    }/>
+                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                </div>
             </div>
             <div className='field'>
                 <label>별명</label>
-                <input type="text"  value={nickname} onChange={
-                    (e)=>{ setNickname( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type='text' value={nickname} placeholder='별명 입력' onChange={
+                        (e) => {
+                            setNickname(e.currentTarget.value)
+                        }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>전화번호</label>
-                <input type="text" value={phone} onChange={
-                    (e)=>{ setPhone( e.currentTarget.value ) }
-                } readOnly/>
+                <div className='input-wrapper'>
+                    <input type='text' value={phone} placeholder='전화번호 입력' onChange={
+                        (e) => {
+                            setPhone(e.currentTarget.value)
+                        }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>소개</label>
-                <input type="text" value={profilemsg} onChange={
-                    (e)=>{ setProfilemsg( e.currentTarget.value ) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type='text' value={profilemsg} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
+                        (e) => {
+                            setProfilemsg(e.currentTarget.value)
+                        }
+                    }/>
+                </div>
             </div>
-
-            <div className='field'>
-                <label>이전사진</label>
-                <div><img src={oldImgsrc} width="150" /></div>
-            </div>
-
             <div className='field'>
                 <label>사진</label>
-                {/* <input type="file" /> */}
-                <input type="file" onChange={(e)=>{ fileupload(e) }}/>
+                <input type='file' onChange={(e) => {
+                    fileupload(e)
+                }}/>
             </div>
             <div className='field'>
                 <label>사진미리보기</label>
-                <div><img src={imgSrc} style={imgStyle} /></div>
+                <div><img src={imgSrc} style={imgStyle}/></div>
             </div>
 
             <div className='btns'>
-                <button onClick={ ()=>{   onSubmit()    }  }>수정</button>
-                <button onClick={ ()=>{ navigate('/myPage')   }  }>뒤로</button>
+                <button onClick={() => { onSubmit() }}>수정</button>
+                <button onClick={() => { navigate('/myPage') }}>뒤로</button>
             </div>
-
         </div>
     )
 }

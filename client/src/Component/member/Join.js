@@ -12,29 +12,36 @@ const Join = () => {
     const [intro, setIntro] = useState('');
     const [imgSrc, setImgSrc] = useState('');
     const [imgStyle, setImgStyle] = useState({display:"none"});
-
-
+    const [pwdMessage, setPwdMessage] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (pwdChk === pwd) {
+            setPwdMessage('');
+        } else {
+            setPwdMessage('비밀번호 확인이 일치하지 않습니다');
+        }
+    }, [pwd, pwdChk]);
+
     async function onSubmit(){
-        if(!email){ return alert('이메일을 입력하세요');}
-        if(!pwd){ return alert('패스워드를 입력하세요');}
-        if(pwd !== pwdChk){ return alert('패스워드 확인이 일치하지 않습니다');}
-        if(!nickname){ return alert('닉네임을 입력하세요');}
+        if(!email){ return alert('이메일을 입력하세요'); }
+        if(!pwd){ return alert('비밀번호를 입력하세요'); }
+        if(pwd !== pwdChk){ return alert('비밀번호 확인이 일치하지 않습니다'); }
+        if(!nickname){ return alert('닉네임을 입력하세요'); }
 
         try{
-            let result = await axios.post('/api/member/emailcheck', null, {params:{email}} );
+            let result = await axios.post('/api/member/emailCheck', null, {params:{email}} );
             if(result.data.msg == 'no' ){
                 return alert('이메일이 중복됩니다');
             }
 
-            result = await axios.post('/api/member/nicknamecheck', null, {params:{nickname}} );
+            result = await axios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
             if(result.data.msg == 'no' ){
                 return alert('닉네임이 중복됩니다');
             }
 
             result = await axios.post('/api/member/join', {email, pwd, nickname, phone, profilemsg:intro, profileimg:imgSrc });
-            if(result.data.msg=='ok'){
+            if(result.data.msg == 'ok'){
                 alert('회원 가입이 완료되었습니다. 로그인하세요');
                 navigate('/');
             }
@@ -43,10 +50,10 @@ const Join = () => {
         }
     }
 
-    async function fileupload(e){
+    async function fileUpload(e){
         const formData = new FormData();
         formData.append('image',  e.target.files[0]);
-        const result = await axios.post('/api/member/fileupload', formData);
+        const result = await axios.post('/api/member/fileUpload', formData);
         setImgSrc(`http://localhost:8070/uploads/${result.data.filename}`);
         setImgStyle({display:"block", width:"200px"});
     }
@@ -79,7 +86,7 @@ const Join = () => {
                             setPwdChk(e.currentTarget.value)
                         }
                     }/>
-                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                    <div className='message'>{pwdMessage}</div>
                 </div>
             </div>
             <div className='field'>
@@ -115,7 +122,7 @@ const Join = () => {
             <div className='field'>
                 <label>사진</label>
                 <input type='file' onChange={(e) => {
-                    fileupload(e)
+                    fileUpload(e)
                 }}/>
             </div>
             <div className='field'>
@@ -124,10 +131,8 @@ const Join = () => {
             </div>
 
             <div className='btns'>
-                <button onClick={() => { onSubmit() }}>가입
-                </button>
-                <button onClick={() => { navigate('/') }}>뒤로
-                </button>
+                <button onClick={() => { onSubmit() }}>가입</button>
+                <button onClick={() => { navigate('/') }}>뒤로</button>
             </div>
         </div>
     )

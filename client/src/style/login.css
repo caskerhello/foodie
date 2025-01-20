@@ -1,9 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .loginform{
     width:600px;
-    
-    margin-top:200px;
     min-width: 400px; 
     border:2px solid rgb(242, 38, 38);
     background-color: rgb(242, 38, 38);
@@ -15,11 +24,9 @@
 }
 
 .loginform .title{
-
     font-family: "Dongle", serif;
     /* font-weight: 400; */
     font-style: normal;
-
     font-size: 300%;
     /* background-color: white; */
     color: white;
@@ -45,32 +52,32 @@
     display: flex;
     margin:5px 0;
 }
+
 .loginform .field label{
     flex:0;
     font-weight: bold;
     margin:5px 0;
     color : rgb(242, 38, 38)
 }
+
 .loginform .field input{
     flex:4; border-radius: 10px;
     padding: 5px;
 }
-.loginform .field input::placeholder{
 
+.loginform .field input::placeholder{
     font-family: "Dongle", serif;
     /* font-weight: 400; */
     font-style: normal;
-
-    
-
-
     color : rgb(242, 38, 38);
     font-size: 200%;
     text-align: center;
 }
+
 .loginform .field div{
     flex:4; border-radius: 10px;
 }
+
 .loginform .btns, .loginform .snslogin{
     /* border:1px dotted blue;  */
     width:100%; 
@@ -81,8 +88,16 @@
 }
 
 .loginform .btns .btn, .loginform .btns button, .loginform .snslogin button{
-    flex:1;   height:50px;   margin-right:5px;   font-weight: bold; border:none; padding:5px; font-size: 1.1rem; border-radius: 10px;
+    flex:1;
+    height:50px;
+    margin-right:5px;
+    font-weight: bold;
+    border:none;
+    padding:5px;
+    font-size: 1.1rem;
+    border-radius: 10px;
 }
+
 .loginform .btns button:last-child, .loginform .snslogin button:last-child{
     margin-right: 0;
 }
@@ -92,6 +107,7 @@
     /* background-color: rgb(242, 38, 38); */
     /* height: 50px; */
 }
+
 /* .loginform .snslogin button:nth-child(1){background-color: yellow;}
 .loginform .snslogin button:nth-child(2){background-color: rgb(28, 204, 28); color:white}
 .loginform .snslogin button:nth-child(3){background-color: black; color:white}
