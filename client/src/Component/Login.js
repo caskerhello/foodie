@@ -81,7 +81,7 @@ function Login() {
                 
 
                 <button onClick={()=>{
-                    window.location.href='http://localhost:8070/member/kakaostart';
+                    window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
                 }}><img style={{height:"40px"  }} src="images/free-icon-kakao-talk.png"/></button>
             </div>
             {/* <div className='snslogin'>

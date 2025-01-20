@@ -12,7 +12,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import { format, parseISO } from 'date-fns'
+// import { format, parseISO } from 'date-fns'
 
 import MainMenu from '../MainMenu';
 import Post from './Post';
@@ -165,7 +165,7 @@ function PostOne() {
             <div className='post' style={{width:"780px"}}>
                 <div className='writer' style={{display:"flex"}}>
                     <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}><span>#{post.postid}&nbsp;{post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {post.writedate}
+                        {formatDate(post.writedate)}
                         </span><span></span><span><VscFileMedia  />{images.length}</span></div>
                     {/* <div>{post.writer}&nbsp;&nbsp;</div> */}
                     {/* {
@@ -180,7 +180,7 @@ function PostOne() {
                         (images)?(
                             images.map((img, idx)=>{
                                 return (
-                                    <img key={idx} src={`http://localhost:8070/uploads/${img.savefilename}`} width="750" height="900"/>
+                                    <img key={idx} src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="750" height="900"/>
                                 )
                             })
                         ):(null)

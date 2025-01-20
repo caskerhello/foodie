@@ -109,7 +109,7 @@ const MyPage = () => {
                                     ()=>{ navigate(`/postOne/${postList[idx].postid}`) }
                                 }
                                 >
-                                    <img src={`http://localhost:8070/uploads/${imgs}`} />
+                                    <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgs}`} />
                                 </div>
                             )
                         })

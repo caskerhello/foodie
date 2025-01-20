@@ -49,7 +49,7 @@ const Join = () => {
         const formData = new FormData();
         formData.append('image',  e.target.files[0]);
         const result = await axios.post('/api/member/fileupload', formData);
-        setImgSrc(`http://localhost:8070/uploads/${result.data.filename}`);
+        setImgSrc(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
         setImgStyle({display:"block", width:"200px"});
     }
 
