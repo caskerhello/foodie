@@ -5,7 +5,11 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1}) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, SelectionOverlay}) => {
+
+//   function SelectionOverlay(id){
+//     console.log(id)
+// }
 
   const [locationw, setLocationw] = useState();
   const [options, setOptions] = useState({
@@ -122,7 +126,11 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       // 지도 중심좌표를 얻어옵니다 
       var latlng = map.getCenter(); 
 
+       
+
       setMovedLocation2({lat:latlng.getLat(),lng:latlng.getLng()})
+
+      // if(!latlng.getLat()){setMovedLocation2({lat:37.57261013516411,lng:126.99042333710086})}
 
       // console.log({lat:latlng.getLat(),lng:latlng.getLng()})
 
@@ -200,12 +208,29 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       })
 
       kakao.maps.event.addListener(marker, 'mouseover', function () {
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>')
+        const content = `
+        <div style="padding:5px;font-size:12px;">
+            ${place.place_name}
+            <button id="select-btn-${place.id}">선택</button>
+        </div>
+        `;
+
+        infowindow.setContent(content);
         infowindow.open(map, marker)
+
+            const button = document.getElementById(`select-btn-${place.id}`);
+        if (button) {
+            button.addEventListener('click', function() {
+                SelectionOverlay(place);
+                setModalOpen(false); // SelectionOverlay를 컴포넌트 내에서 호출
+            });
+        }
       })
 
       kakao.maps.event.addListener(marker, 'mouseout', function () {
-        infowindow.close();
+        setTimeout(function() {
+          infowindow.close();
+      }, 1000);
       })
     }
   }, [searchPlace, options, options1])
@@ -213,39 +238,67 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
 
   const placeRefs = useRef([]);
 
-  const Selection = (i) => {
+  // const Selection = (i) => {
 
-    // const placeElement = placeRefs.current[i];
     
-    // setPlace_name(placeElement.innerText)
-    // setRoad_address_name()
-    // setPhone()
-    // setPlace_url()
 
-    const placeNameElement = placeRefs.current[`${Places[i].id}-place_name`];
-    const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
-    // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
-    const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
-    const idElement = placeRefs.current[`${Places[i].id}-id`];
-    const xElement = placeRefs.current[`${Places[i].id}-x`];
-    const yElement = placeRefs.current[`${Places[i].id}-y`];
-    const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
+  //   // const placeElement = placeRefs.current[i];
+    
+  //   // setPlace_name(placeElement.innerText)
+  //   // setRoad_address_name()
+  //   // setPhone()
+  //   // setPlace_url()
 
-    const place = {
-      placeName: placeNameElement ? placeNameElement.innerText : '',
-      roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
-      // address: addressElement ? addressElement.innerText : '',
-      phone: phoneElement ? phoneElement.innerText : '',
-      id: idElement? idElement.innerHTML : '',
-      x: xElement? xElement.innerHTML : '',
-      y: yElement? yElement.innerHTML : '',
-      placeUrl: placeurlElement? placeurlElement.innerHTML : '',
-    };
+  //   const placeNameElement = placeRefs.current[`${Places[i].id}-place_name`];
+  //   const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
+  //   // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
+  //   const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
+  //   const categorygroupcodeElement = placeRefs.current[`${Places[i].id}-category_group_code`];
+  //   const categorynameElement = placeRefs.current[`${Places[i].id}-category_name`];
+  //   const idElement = placeRefs.current[`${Places[i].id}-id`];
+  //   const xElement = placeRefs.current[`${Places[i].id}-x`];
+  //   const yElement = placeRefs.current[`${Places[i].id}-y`];
+  //   const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
 
-    setSelectedPlace(place);
+  //   // console.log(phoneElement)
+  //   if(!((categorygroupcodeElement.innerHTML == 'FD6')||(categorygroupcodeElement.innerHTML == 'CE7'))
+
+
+  //   ){return alert("음식점만 선택해주세요") }
+
+  //   const place = {
+  //     placeName: placeNameElement ? placeNameElement.innerText : '',
+  //     roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
+  //     // address: addressElement ? addressElement.innerText : '',
+  //     phone: phoneElement ? phoneElement.innerText : '',
+  //     categoryGroupCode: categorygroupcodeElement? categorygroupcodeElement.innerHTML : '',
+  //     categoryName: categorynameElement? categorynameElement.innerHTML : '',
+  //     id: idElement? idElement.innerHTML : '',
+  //     x: xElement? xElement.innerHTML : '',
+  //     y: yElement? yElement.innerHTML : '',
+  //     placeUrl: placeurlElement? placeurlElement.innerHTML : '',
+  //   };
+
+  //   setSelectedPlace(place);
+
+  //   setModalOpen(false)
+  // }
+
+
+  const Selection1 = (item) => {
+        
+    console.log('item'+item)
+    console.log(JSON.stringify(item))
+    if(!((item.category_group_code == 'FD6')||(item.category_group_code == 'CE7'))
+    ){return alert("음식점만 선택해주세요") }
+
+    
+
+    setSelectedPlace(item);
 
     setModalOpen(false)
   }
+  
 
 
   
@@ -266,6 +319,12 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       
       
       <div id="result-list">
+
+        
+        {/* 위도 {options1.x} 과 경도 {options1.y} 를 기준으로 
+        {options1.radius} m 반경내 검색합니다. */}
+
+
         {Places.map((item, i) => (
           <div key={i} style={{ marginTop: '20px' }}>
             <span>{i + 1}</span>
@@ -279,19 +338,25 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
               ) : (
                 <span>{item.address_name}</span>
               )}
-              <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/>
+              <br/>
+              <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/><br/>
 
-              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-id`] = el} id={`${item.id}-id`}>{item.id}</span><br/>
+              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-category_group_code`] = el} id={`${item.id}-category_group_code`}>{item.category_group_code}</span><br/>
 
-              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-x`] = el} id={`${item.x}-x`}>{item.x}</span><br/>
+              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-category_name`] = el} id={`${item.id}-category_name`}>{item.category_name}</span><br/>
 
-              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-y`] = el} id={`${item.ㅛ}-y`}>{item.y}</span><br/>
+              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-id`] = el} id={`${item.id}-id`}>{item.id}</span><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-place_url`] = el} id={`${item.place_url}-place_url`}>{item.place_url}</span><br/>
+              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-x`] = el} id={`${item.id}-x`}>{item.x}</span><br/>
+
+              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-y`] = el} id={`${item.id}-y`}>{item.y}</span><br/>
+
+              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-place_url`] = el} id={`${item.id}-place_url`}>{item.place_url}</span><br/>
 
               <button onClick={() => window.open(item.place_url, '_blank')}>카카오맵에서 보기</button>
             </div>
-            <button onClick={() => Selection(i)}>선택</button>
+            {/* <button onClick={() => Selection(i)}>선택</button> */}
+            <button onClick={() => Selection1(item)}>선택</button>
           </div>
         ))}
         <div id="pagination"></div>

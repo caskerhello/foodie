@@ -2,6 +2,8 @@ import React, {useState, useEffect, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+
 import MainMenu from '../MainMenu';
 import MapContainer from '../post/MapContainer';
 
@@ -15,6 +17,9 @@ const WritePost = () => {
     const [content, setContent] = useState('');
     const [word, setWord] = useState('')
     const [loginUser, setLoginUser ] = useState({});
+
+    const [stars, setStars] = useState('');
+    const [category, setCategory] = useState('');
     
 
 
@@ -39,6 +44,17 @@ const WritePost = () => {
 
     const [InputText, setInputText] = useState('')
     const [Place, setPlace] = useState('')
+
+    function SelectionOverlay(place){
+        // console.log(place)
+        setSelectedPlace(place);
+        // setModalOpen(false)
+    }
+
+    // const SelectionOverlay = (id) => {
+    //     console.log(id)
+    
+    //   }
   
     const onChange = (e) => {
       setInputText(e.target.value)
@@ -47,13 +63,31 @@ const WritePost = () => {
     const handleSubmit = (e) => {
       e.preventDefault()
 
+        // if(!movedLocation2.lat)console.log(movedLocation2.lat)
+
+        
+        
+
+
 
 
       setOptions1({
-        location: new kakao.maps.LatLng(movedLocation2.lat,movedLocation2.lng),
+        location: new kakao.maps.LatLng(
+            movedLocation2.lat,
+            movedLocation2.lng
+        ),
         radius: 1000,
         sort: kakao.maps.services.SortBy.DISTANCE,
       })
+
+
+      if(!movedLocation2.lat){
+            setOptions1({
+                location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
+                radius: 1000,
+                sort: kakao.maps.services.SortBy.DISTANCE,
+              })
+        }
 
     //   console.log(options1)
 
@@ -82,7 +116,7 @@ const WritePost = () => {
     const [ divStyle9, setDivStyle9 ] = useState({display:'none'});
     const [ divStyle10, setDivStyle10 ] = useState({display:'none'});
 
-    const [imgList, setIimgList] = useState([]);
+    const [imgList, setImgList] = useState([]);
 
     const divStyle1={
         width:"20%", 
@@ -117,49 +151,76 @@ const WritePost = () => {
     )
 
     async function imgUpload(e, n){
-        // let formData = new FormData();
-        // formData.append('image', e.target.files[0] );
-        // const result = await axios.post('/api/post/imgup', formData);
+        let formData = new FormData();
+        formData.append('image', e.target.files[0] );
+        const result = await axios.post('/api/post/imgup', formData);
 
         if( n == 1){
             setDivStyle2( fieldStyle );
-            // setImgsrc1( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc1( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 2){
             setDivStyle3( fieldStyle );
-            // setImgsrc2( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc2( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 3){
             setDivStyle4( fieldStyle );
-            // setImgsrc3( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc3( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 4){
             setDivStyle5( fieldStyle );
-            // setImgsrc4( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc4( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 5){
             setDivStyle6( fieldStyle );
-            // setImgsrc5( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc5( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 6){
             setDivStyle7( fieldStyle );
-            // setImgsrc6( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc6( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 7){
             setDivStyle8( fieldStyle );
-            // setImgsrc7( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc7( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 8){
             setDivStyle9( fieldStyle );
-            // setImgsrc8( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc8( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 9){
             setDivStyle10( fieldStyle );
-            // setImgsrc9( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc9( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }else if( n == 10){
-            // setImgsrc2( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc10( `http://localhost:8070/uploads/${result.data.savefilename}`);
         }
 
-        // let arr = [...imgList];
-        // arr.push(result.data.savefilename);
-        // setIimgList( [...arr] );
+        let arr = [...imgList];
+        arr.push(result.data.savefilename);
+        setImgList( [...arr] );
         // console.log(imgList);
 
     }
 
     async function onSubmit(){
+        if(!content){return alert('내용을 입력하세요');}
+        if(!imgList) {return alert('이미지를 하나이상 선택하세요')}
+        if(!stars) {return alert('별점을 선택하세요')}
+        if(!category) {return alert('카테고리를 선택하세요')}
+        if(!selectedPlace) {return alert('음식점을 선택하세요')}
+
+        // 데이터베이스에 place정보 있는지 조회
+        let placeresult = await axios.post('/api/place/checkPlace', { place_name: selectedPlace.place_name, road_address_name:selectedPlace.road_address_name, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, place_url:selectedPlace.place_url, avestars:stars, category:category } )
+
+        let placeid = placeresult.data.place.placeid
+
+        let memberid = 1
+
+        // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴 
+        // console.log("selectedPlace"+JSON.stringify(selectedPlace))
+
+        let writepostresult = await axios.post('/api/post/writePost', { placeid, content, memberid, stars} )
+        let postid = writepostresult.data.postid;
+
+        
+
+        // 리턴 아이디와  이미지 이름들로  images 테이블에 레코드들을 추가
+        for( let i=0; i<imgList.length; i++){
+            await axios.post('/api/post/writeImages', { postid, savefilename:imgList[i] });
+        }
+        //window.location.href='http://localhost:3000/main
+        navigate('/main');
         
     }
 
@@ -232,26 +293,112 @@ const WritePost = () => {
                 </div>
                 <img src={imgsrc10} />
 
-                <div className='field' >
-                    {/* <input type="text" /> */}
-                    <button onClick={() => setModalOpen(true)}>카카오맵검색</button>
+                <div className='field' id='wpstars'>
+                <div className='title' >별점</div>
+                    
+                    <div className='contents'>
+                        <label>
+                            ★
+                            <input type="radio" name='stars' onClick={()=>{setStars(1)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            ★★
+                            <input type="radio" name='stars' onClick={()=>{setStars(2)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            ★★★
+                            <input type="radio" name='stars' onClick={()=>{setStars(3)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            ★★★★
+                            <input type="radio" name='stars' onClick={()=>{setStars(4)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            ★★★★★
+                            <input type="radio" name='stars' onClick={()=>{setStars(5)}}></input>
+                            &nbsp;
+                        </label>
+                        <br/>
+                        
+                        {stars}점 입니다.
+                    </div>
                 </div>
 
-                <div className='field' style={{width:"30vw",height:"20vh",border:"1px solid black",overflow: "auto"}}>
+                
+
+                <div className='field' >
+                    {/* <input type="text" /> */}
+                    
+                </div>
+
+                <div className='field' >
+                        <div className='title'><button onClick={() => setModalOpen(true)}>카카오맵검색</button></div>
+
+                        <div className='contents' style={{width:"40vw",height:"20vh",border:"1px solid black",overflow: "auto"}} >
                     선택된 장소가 조회될 공간입니다.<br/>
                     {/* <h3>선택된 장소 정보:</h3> */}
-                    장소 이름: {selectedPlace.placeName}<br></br>
-                    도로명 주소: {selectedPlace.roadAddress}<br></br>
+                    장소 이름: {selectedPlace.place_name}<br></br>
+                    도로명 주소: {selectedPlace.road_address_name}<br></br>
                     {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
                     전화번호: {selectedPlace.phone}<br></br>
                     id: {selectedPlace.id}<br></br>
                     x좌표: {selectedPlace.x}<br></br>
                     y좌표: {selectedPlace.y}<br></br>
-                    카카오맵 링크: <a href={selectedPlace.placeUrl} target="_blank" rel="noopener noreferrer">{selectedPlace.placeUrl}</a><br></br>
+                    카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a><br></br>
                     {/* <input type="hidden" name='category'></input>
                     <input type="hidden" name='place_name'></input>
                     <input type="hidden" name='3'></input>
                     <input type="hidden" name='4'></input> */}
+                    </div>
+
+                </div>
+
+
+                <div className='field' id='wpcategory' >
+                    <div className='title' >카테고리</div>
+                    
+                    <div className='contents' >
+                        <label>
+                            한식
+                            <input type="radio" name='category' onClick={()=>{setCategory(1)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            양식
+                            <input type="radio" name='category' onClick={()=>{setCategory(2)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            중식
+                            <input type="radio" name='category' onClick={()=>{setCategory(3)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            일식
+                            <input type="radio" name='category' onClick={()=>{setCategory(4)}}></input>
+                            &nbsp;
+                        </label>
+
+                        <label>
+                            후식
+                            <input type="radio" name='category' onClick={()=>{setCategory(5)}}></input>
+                            &nbsp;
+                        </label>
+                        <br/>                        
+                        
+                        카테고리 {category} 입니다.
+                    </div>
                 </div>
 
                     {
@@ -271,7 +418,7 @@ const WritePost = () => {
                             <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
                             <button type="submit">검색</button>
                         </form>
-                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1}/>
+                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1} SelectionOverlay={SelectionOverlay}/>
                                             
 
                     </div>

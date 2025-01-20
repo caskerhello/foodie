@@ -1,5 +1,6 @@
 import './App.css';
-import {  Routes, Route } from "react-router-dom";
+import {  Routes, Route, ScrollRestoration } from "react-router-dom";
+import ScrollToTop from './Component/ScrollToTop';
 
 import Login from './Component/Login';
 import Main from './Component/Main';
@@ -15,7 +16,10 @@ import EditProfile from './Component/member/EditProfile';
 function App() {
   return (
     <div className="App" style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+            
+            
             <Routes>
+            
                 <Route path="/" element={<Login />} />
                 <Route path="/main" element={<Main />} />
                
@@ -35,8 +39,10 @@ function App() {
                 <Route path="/kakaosaveinfo" element={<Kakaosaveinfo />} />
                 <Route path="/editProfile" element={<EditProfile />} />
                 <Route path="/memberPage/:membernick" element={<MemberPage />} /> */}
-                
+        
             </Routes>
+           
+            
         </div>
   );
 }

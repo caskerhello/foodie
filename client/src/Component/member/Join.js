@@ -33,7 +33,7 @@ const Join = () => {
                 return alert('닉네임이 중복됩니다');
             }
 
-            result = await axios.post('/api/member/join', {email, pwd, nickname, phone, intro, profileimg:imgSrc });
+            result = await axios.post('/api/member/join', {email, pwd, nickname, phone, profilemsg:intro, profileimg:imgSrc });
             if(result.data.msg=='ok'){
                 alert('회원 가입이 완료되었습니다. 로그인하세요');
                 navigate('/');
