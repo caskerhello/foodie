@@ -50,9 +50,9 @@ const EditProfile = () => {
         try{
             const result = await axios.post('/api/member/fileupload', formData);
             console.log("result.data.filename"+result.data.filename)
-            setImgSrc(`http://localhost:8070/uploads/${result.data.filename}`);
+            setImgSrc(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
             setImgStyle({display:"block", width:"200px"});
-            setProfileimg(`http://localhost:8070/uploads/${result.data.filename}`);
+            setProfileimg(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
         }catch(err){ console.error(err) }
     }
 
@@ -73,22 +73,26 @@ const EditProfile = () => {
             }
 
             if( !profileimg ){
-                setProfileimg( setOldImgSrc );
+                setProfileimg( oldImgsrc );
             }
 
             //회원정보수정
-            let result = await axios.post('/api/member/updateProfile', { memberid,email, nickname, pwd, phone, profileimg, profilemsg })
-            if(result.data.msg == 'ok'){
-                alert('회원 수정이 완료되었습니다.');
-                // 로그인유저 조회
-                const res=await axios.get('/api/member/getLoginUser')
-                // 리덕스 수정
-                cookies.set('user', JSON.stringify( res.data.loginUser ) , {path:'/', })
-                dispatch( loginAction(res.data.loginUser) );
-                // dispatch( setFollowers( {followers:res.data.followers} ) );
-                // dispatch( setFollowings( {followings:res.data.followings} ) );
-            }
-            window.location.href='http://localhost:3000/myPage';
+                let result = await axios.post('/api/member/updateProfile', { memberid,email, nickname, pwd, phone,  profileimg, profilemsg })
+                if(result.data.msg=='ok'){
+                    alert('회원 수정이 완료되었습니다.');
+                    // 로그인유저 조회
+                    const res=await axios.get('/api/member/getLoginUser')
+                    // 리덕스 수정
+                    // window.alert(JSON.stringify(res.data.loginUser))
+
+                    cookies.set('user', JSON.stringify( res.data.loginUser ) , {path:'/', })
+                    dispatch( loginAction( res.data.loginUser )  );
+                    // dispatch( setFollowers( {followers:res.data.followers} ) );
+                    // dispatch( setFollowings( {followings:res.data.followings} ) );
+                }
+                window.location.href=`${process.env.REACT_APP_ADDRESS}/myPage`;
+                // window.location.href='http://192.168.0.43:3000/myPage';
+
         }catch(err){console.error(err)}
     }
 

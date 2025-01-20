@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast , Bounce, Slide, Flip} from 'react-toastify';
 
+
+
 import { VscMenu } from "react-icons/vsc";
 import { VscHome } from "react-icons/vsc";
 import { VscEdit } from "react-icons/vsc";
@@ -58,7 +60,7 @@ const MainMenu = (props) => {
     const [menuViewOrNot, setMenuViewOrNot] = useState(false);
     const [viewOrNot, setViewOrNot] = useState(false);
     const [inputStyle, setInputStyle ] = useState({display:"none"})
-    const [imgSrc, setImgSrc]=useState('http://localhost:8070/images/user.png');
+    const [imgSrc, setImgSrc]=useState('${process.env.REACT_APP_ADDRESS2}/images/user.png');
     const dispatch = useDispatch();
     const lUser = useSelector( state=>state.user );
     

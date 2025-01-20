@@ -74,15 +74,16 @@
     width:100%;
     /* border:1px solid black; */
     display: grid;
+    margin-bottom: 100px;
     grid-template-columns:1fr 1fr 1fr; 
 }
 
 .userpost div{
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;    
     border:1px dotted black;
     height:250px;
-    margin-bottom: 100px;
+    /* margin-bottom: 100px; */
 }
 .userpost div img{
     width:250px;

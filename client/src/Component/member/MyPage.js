@@ -25,10 +25,16 @@ const MyPage = () => {
             if( lUser.profileimg ){
                 setImgSrc(lUser.profileimg)
             }
-            // axios.get('/api/member/getMyPost')
-            // .then((result)=>{
-            //     setImgList( [...result.data.imgList] );
-            // }).catch((err)=>{console.error(err)})
+            
+            axios.get('/api/member/getMyPost')
+            .then((result)=>{
+                console.log(result.data.postList)
+
+                console.log(result.data.imgList)
+                setPostList([...result.data.postList])
+
+                setImgList( [...result.data.imgList] );
+            }).catch((err)=>{console.error(err)})
 
         },[]
     )
@@ -90,22 +96,26 @@ const MyPage = () => {
                 <button>북마크</button>
             </div>
             <div className='userpost' >
-                <div style={{width:'800px',height:'900px'}}></div>
+                
                 {/* 한줄에 세개씩 이미지를 적당한 크기로 나열해주세요. 필요하다면  css 수정도 해주세요 */}
-                {/* {
+                {
                     (imgList)?(
                         imgList.map((imgs, idx)=>{
                             return (
-                                <div key={idx} onClick={
-                                    ()=>{ navigate(`/postone/${postList[idx].id}`) }
-                                }>
-                                    <img src={`http://localhost:8070/uploads/${imgs}`} />
+                                <div key={idx} 
+                                
+                                onClick={
+                                    // ()=>{ navigate(`/postOne`) }
+                                    ()=>{ navigate(`/postOne/${postList[idx].postid}`) }
+                                }
+                                >
+                                    <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgs}`} />
                                 </div>
                             )
                         })
                     ):(null)
                     
-                } */}
+                }
             </div>
         </div>
         

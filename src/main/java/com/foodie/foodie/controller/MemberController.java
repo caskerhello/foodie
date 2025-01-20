@@ -1,7 +1,10 @@
 package com.foodie.foodie.controller;
 
+import com.foodie.foodie.entity.Images;
 import com.foodie.foodie.entity.Member;
+import com.foodie.foodie.entity.Post;
 import com.foodie.foodie.service.MemberService;
+import com.foodie.foodie.service.PostService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -129,4 +134,33 @@ public class MemberController {
         result.put("msg", "ok");
         return result;
     }
+
+    @Autowired
+    PostService ps;
+
+    @GetMapping("/getMyPost")
+    public HashMap<String , Object> getMyPost(HttpSession session) {
+        HashMap<String, Object> result = new HashMap<>();
+
+//        List list = null;
+        List list2 = null;
+        int memberid = (int)session.getAttribute("memberid");
+
+        System.out.println(memberid);
+
+        List<Post> list = ps.getPostListByMemberid(memberid);
+        List<String> imglist = new ArrayList<String>();
+        for( Post p : list) {
+            List<Images> imgl = ps.getImgListByPostid( p.getPostid() );
+            String imgname = imgl.get(0).getSavefilename();
+            imglist.add( imgname );
+        }
+
+        result.put("postList", list);
+        result.put("imgList", imglist);
+        return result;
+    }
+
+
+
 }

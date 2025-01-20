@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // import { setFollowings } from '../../store/userSlice';
 
+import { VscHeart } from "react-icons/vsc";
+import { VscHeartFilled } from "react-icons/vsc";
+import { VscFileMedia } from "react-icons/vsc";
+import { VscFeedback } from "react-icons/vsc";
+import { FcComments } from "react-icons/fc";
+
 import { format, parseISO } from 'date-fns'
 
 import Slider from 'react-slick';
@@ -38,8 +44,8 @@ function Post( props ) {
     // const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const date = parseISO(props.post.post_write_date); // ISO 형식을 Date 객체로 변환
-    const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
+    // const date = parseISO(props.post.post_write_date); // ISO 형식을 Date 객체로 변환
+    // const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
 
     const formatDate = (dateString) => {
         const date = new Date(dateString); // ISO 8601 형식의 문자열을 Date 객체로 변환
@@ -153,7 +159,7 @@ function Post( props ) {
         <div className='Post' style={{width:"600px"}}>
             <div className='writer' >
             {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
-                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}</span>&nbsp;&nbsp;<span>{props.post.nickname}</span>&nbsp;&nbsp;<span>{formattedDate}</span><span>{images.length}</span></div>
+                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}&nbsp;{props.post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formatDate(props.post.post_write_date)}</span><span></span><span><VscFileMedia  />{images.length}</span></div>
                 {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
                 {
                     // ( 
@@ -172,7 +178,7 @@ function Post( props ) {
                         images.map((img, idx)=>{
                             return (
                                 <div className='mainimg'>
-                                <img key={idx}  src={`http://localhost:8070/uploads/${img.savefilename}`} width="750" height="900"/>
+                                <img key={idx}  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="750" height="900"/>
                                 </div>
                             )
                         })
@@ -181,28 +187,41 @@ function Post( props ) {
             </Slider>  }
 
             <div className='like' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                <span>{
-                    (likeList)?( 
+                <span style={{width:"80px"}}>{
+                    (likeList)?(
                         likeList.some(
                             (like)=>(lUser.memberid==like.memberid) 
                         )
                         ?
-                        ( <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />)
+                        ( 
+                            <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
+                        // <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />
+                        )
                         :
-                        (<img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />)
+                        (
+                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+
+                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                        )
                     ):(
-                        <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+
+                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
                     )
-                }{likeList.length}
-                
-                <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
+                }{likeList.length}&nbsp;&nbsp;&nbsp;
+                {/* <VscFeedback style={{height:"20px",width:"20px",color:"rgb(242, 38, 38)"}} onClick={()=>{
+                    viewOrNot()}}/> */}
+                <FcComments style={{height:"20px",width:"20px"}} onClick={()=>{
+                    viewOrNot()}} />
+                {/* <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
                     viewOrNot()
-                }}/>{replyList.length}</span>
+                }}/> */}
+                {replyList.length}</span>
                 
                 <span>
                 {props.post.post_content}★{props.post.post_stars}&nbsp;</span> 
                 <span>
-            <div className='content' style={{display:"block"}}>{props.post.place_name}</div>
+            <div className='content' style={{display:"block"}}>{props.post.place_name}★{props.post.place_ave_stars}</div>
             <button style={{flex:"1"}} onClick={
                         ()=>{ 
                             props.findRestorantLocation(props.post.placeid)                               

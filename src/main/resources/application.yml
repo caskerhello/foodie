@@ -6,7 +6,7 @@ server:
 
 #spring.application.name=SP_Server
 #spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-#spring.datasource.url=jdbc:mysql://localhost:3306/board
+#spring.datasource.url=jdbc:mysql://192.168.0.43:3306/board
 #spring.datasource.username=root
 #spring.datasource.password=adminuser
 #spring.jpa.hibernate.ddl-auto=update
@@ -30,4 +30,4 @@ spring:
 
 kakao:
   client_id: 626518f490cdfa8cfb51cdca88122b82
-  redirect_uri: http://localhost:8070/member/kakaoLogin
+  redirect_uri: ${process.env.REACT_APP_ADDRESS2}/member/kakaoLogin

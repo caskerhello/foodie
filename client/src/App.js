@@ -6,6 +6,7 @@ import Login from './Component/Login';
 import Main from './Component/Main';
 import Join from './Component/member/Join';
 import WritePost from './Component/post/WritePost';
+import PostOne from './Component/post/PostOne';
 import MyPage from './Component/member/MyPage';
 import EditProfile from './Component/member/EditProfile';
 // import Kakaosaveinfo from './Component/member/Kakaosaveinfo';
@@ -30,6 +31,10 @@ function App() {
                 <Route path="/join" element={<Join />}></Route>
 
                 <Route path="/editProfile" element={<EditProfile />} />
+
+                <Route path="/postOne/:postid" element={<PostOne />} />
+
+                
                 
                 {/* <Route path="/join" element={<Join />} />
                 <Route path="/main" element={<Main />} />
