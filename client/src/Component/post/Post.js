@@ -200,7 +200,7 @@ function Post( props ) {
                 <span>
                 {props.post.post_content}★{props.post.post_stars}&nbsp;</span> 
                 <span>
-            <div className='content' style={{display:"block"}}>{props.post.place_name}★{props.post.place_ave_stars}</div>
+            <div className='content' style={{display:"block"}}>{props.post.place_name}★{Math.floor(props.post.place_ave_stars * 10) / 10}</div>
             <button style={{flex:"1"}} onClick={
                         ()=>{ 
                             props.findRestorantLocation(props.post.placeid)                               

@@ -50,9 +50,11 @@ const EditProfile = () => {
         try{
             const result = await axios.post('/api/member/fileUpload', formData);
             console.log("result.data.filename"+result.data.filename)
-            setImgSrc(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
+            setImgSrc(result.data.filename);
+            // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
             setImgStyle({display:"block", width:"200px"});
-            setProfileimg(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
+            setProfileimg(result.data.filename);
+            // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
         }catch(err){ console.error(err) }
     }
 
@@ -162,7 +164,8 @@ const EditProfile = () => {
             </div>
             <div className='field'>
                 <label>사진미리보기</label>
-                <div><img src={imgSrc} style={imgStyle}/></div>
+                
+                <div><img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} style={imgStyle}/></div>
             </div>
 
             <div className='btns'>

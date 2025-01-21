@@ -20,9 +20,14 @@ public class PlaceService {
         if( getplace.isPresent() ) {
             System.out.println("isPresent()");
             Place place = getplace.get();
-            place.setReviewamount(place.getReviewamount()+1);
+
 
             double updatestars = (place.getAvestars()*place.getReviewamount()+insertplace.getAvestars())/(place.getReviewamount()+1);
+
+            place.setReviewamount(place.getReviewamount()+1);
+
+            // 소수점 첫째 자리까지 버림 처리
+//            updatestars = Math.floor(updatestars * 10.0) / 10.0;
 
             place.setAvestars(updatestars);
 
