@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from 'react-redux';
 
 
 
@@ -17,6 +18,7 @@ const WritePost = () => {
     const [content, setContent] = useState('');
     const [word, setWord] = useState('')
     const [loginUser, setLoginUser ] = useState({});
+    const lUser = useSelector( state=>state.user );
 
     const [stars, setStars] = useState('');
     const [category, setCategory] = useState('');
@@ -157,33 +159,33 @@ const WritePost = () => {
 
         if( n == 1){
             setDivStyle2( fieldStyle );
-            setImgsrc1( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc1( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 2){
             setDivStyle3( fieldStyle );
-            setImgsrc2( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc2( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 3){
             setDivStyle4( fieldStyle );
-            setImgsrc3( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc3( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 4){
             setDivStyle5( fieldStyle );
-            setImgsrc4( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc4( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 5){
             setDivStyle6( fieldStyle );
-            setImgsrc5( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc5( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 6){
             setDivStyle7( fieldStyle );
-            setImgsrc6( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc6( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 7){
             setDivStyle8( fieldStyle );
-            setImgsrc7( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc7( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 8){
             setDivStyle9( fieldStyle );
-            setImgsrc8( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc8( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 9){
             setDivStyle10( fieldStyle );
-            setImgsrc9( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc9( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }else if( n == 10){
-            setImgsrc10( `http://localhost:8070/uploads/${result.data.savefilename}`);
+            setImgsrc10( `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.savefilename}`);
         }
 
         let arr = [...imgList];
@@ -198,6 +200,8 @@ const WritePost = () => {
         if(!imgList) {return alert('이미지를 하나이상 선택하세요')}
         if(!stars) {return alert('별점을 선택하세요')}
         if(!category) {return alert('카테고리를 선택하세요')}
+        
+        if(!selectedPlace.place_name) {return alert('음식점을 선택하세요')}
         if(!selectedPlace) {return alert('음식점을 선택하세요')}
 
         // 데이터베이스에 place정보 있는지 조회
@@ -205,7 +209,7 @@ const WritePost = () => {
 
         let placeid = placeresult.data.place.placeid
 
-        let memberid = 1
+        let memberid = lUser.memberid
 
         // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴 
         // console.log("selectedPlace"+JSON.stringify(selectedPlace))

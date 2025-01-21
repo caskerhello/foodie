@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
 
-
-
     @Autowired
     MemberService ms;
 
@@ -31,18 +29,13 @@ public class MemberController {
     public HashMap<String , Object> loginlocal(
             @RequestBody Member member,
             HttpSession session ) {
-
         HashMap<String , Object> result = new HashMap<>();
-
-        Member mem = ms.getMember( member.getEmail() );
-//        Member mem = ms.getMember(email);
-
-        if(mem == null ) {
+        Member mem = ms.getMember(member.getEmail());
+        if(mem == null) {
             result.put("msg", "해당 아이디가 없습니다");
-        }else if( !mem.getPwd().equals( member.getPwd() ) ) {
-            result.put("msg", "패스워드가 틀립니다.");
+        }else if(!mem.getPwd().equals(member.getPwd())){
+            result.put("msg", "비밀번호가 일치하지 않습니다.");
         }else {
-
             session.setAttribute("memberid", mem.getMemberid() );
             session.setAttribute("loginUser", mem.getEmail());
             result.put("msg", "ok");
@@ -54,13 +47,10 @@ public class MemberController {
     @GetMapping("/getLoginUser")
     public HashMap<String , Object> getLoginUser(HttpSession session) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println("getLoginUser");
-
         int id = (Integer) session.getAttribute("memberid");
 
         // loginUser 멤버정보 조회
         Member member = ms.getMemberByMemberid(id);
-        System.out.println("getLoginUser Member"+member);
 
         // 로그인 유저의  follower 조회
 //        List<Follow> followers = ms.getFollowers(id);
@@ -76,9 +66,8 @@ public class MemberController {
     }
 
 
-
-    @PostMapping("/emailcheck")
-    public HashMap<String, Object> emailcheck( @RequestParam("email") String email ){
+    @PostMapping("/emailCheck")
+    public HashMap<String, Object> emailCheck(@RequestParam("email") String email){
         HashMap<String, Object> result = new HashMap<String, Object>();
         Member mem = ms.getMember( email );
         if( mem != null ) result.put("msg", "no");
@@ -86,8 +75,8 @@ public class MemberController {
         return result;
     }
 
-    @PostMapping("/nicknamecheck")
-    public HashMap<String, Object> nicknamecheck( @RequestParam("nickname") String nickname){
+    @PostMapping("/nicknameCheck")
+    public HashMap<String, Object> nicknameCheck(@RequestParam("nickname") String nickname){
         HashMap<String, Object> result = new HashMap<String, Object>();
         Member mem = ms.getMemberByNickname( nickname );
         if( mem != null ) result.put("msg", "no");
@@ -105,8 +94,9 @@ public class MemberController {
 
     @Autowired
     ServletContext context;
-    @PostMapping("/fileupload")
-    public HashMap<String, Object> fileup( @RequestParam("image") MultipartFile file){
+
+    @PostMapping("/fileUpload")
+    public HashMap<String, Object> fileUpload( @RequestParam("image") MultipartFile file){
 
         HashMap<String, Object> result = new HashMap<String, Object>();
         String path = context.getRealPath("/uploads");
@@ -136,9 +126,9 @@ public class MemberController {
     }
 
     @PostMapping("/updateProfile")
-    public HashMap<String, Object> updateProfile( @RequestBody Member member, HttpSession session) {
+    public HashMap<String, Object> updateProfile(@RequestBody Member member, HttpSession session) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println("updateProfile:"+member);
+        System.out.println("updateProfile:" + member);
         ms.updateMember( member );
         session.setAttribute("loginUser", member.getEmail() );
         result.put("msg", "ok");
