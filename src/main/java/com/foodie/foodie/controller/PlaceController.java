@@ -30,6 +30,19 @@ public class PlaceController {
         return result;
     }
 
+    @PostMapping("/checkPlaceCategory")
+    public HashMap<String, Object> checkPlaceCategory(@RequestParam("kakaoplaceid") int kakaoplaceid) {
+        HashMap<String, Object> result = new HashMap<>();
+        System.out.println("kakaoplaceid"+kakaoplaceid);
+
+        int category = pcs.checkPlaceCategory(kakaoplaceid);
+
+        result.put("category", category);
+        return result;
+
+    }
+
+
     @GetMapping("/getPlaceInfo")
     public HashMap<String, Object> getPlaceInfo(@RequestParam("placeid") int placeid) {
         HashMap<String, Object> result = new HashMap<String, Object>();

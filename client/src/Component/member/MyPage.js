@@ -48,7 +48,7 @@ const MyPage = () => {
             <div className='userinfo'>
                 
                 <div className='img'>
-                    <img src={imgSrc} />
+                    <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} />
                     {/* <img src={imgSrc} /> */}
                 </div>
                 <div className='profile'>

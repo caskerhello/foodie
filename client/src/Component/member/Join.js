@@ -110,7 +110,8 @@ const Join = () => {
         const formData = new FormData();
         formData.append('image',  e.target.files[0]);
         const result = await axios.post('/api/member/fileUpload', formData);
-        setImgSrc(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
+        setImgSrc(result.data.filename);
+        // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
         setImgStyle({display:"block", width:"200px"});
     }
 
@@ -175,7 +176,7 @@ const Join = () => {
             </div>
             <div className='field'>
                 <label>사진미리보기</label>
-                <div><img src={imgSrc} style={imgStyle}/></div>
+                <div><img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} style={imgStyle}/></div>
             </div>
 
             <div className='btns'>
