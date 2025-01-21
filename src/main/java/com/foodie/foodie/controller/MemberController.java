@@ -67,13 +67,12 @@ public class MemberController {
         return result;
     }
 
-
     @PostMapping("/emailCheck")
     public HashMap<String, Object> emailCheck(@RequestParam("email") String email){
         HashMap<String, Object> result = new HashMap<String, Object>();
-        Member mem = ms.getMember( email );
-        if( mem != null ) result.put("msg", "no");
-        else result.put("msg", "yes");
+        Member member = ms.getMember(email);
+        if(member == null) result.put("msg", "yes");
+        else result.put("msg", "no");
         return result;
     }
 
