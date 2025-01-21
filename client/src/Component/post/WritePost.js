@@ -44,25 +44,25 @@ const WritePost = () => {
     const [InputText, setInputText] = useState('')
     const [Place, setPlace] = useState('')
 
-    async function selectOverlay(place){        
-        if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))
-        ){return alert("음식점만 선택해주세요") }
+    // async function selectOverlay(place){        
+    //     if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))
+    //     ){return alert("음식점만 선택해주세요") }
         
-        console.log("place.id"+place.id)
+    //     // console.log("place.id"+place.id)
 
-        let placeresult = await axios.post('/api/place/checkPlaceCategory', null ,{params: {kakaoplaceid:place.id}  } )
-        setBeforeSetCategory(placeresult.data.category)
+    //     let placeresult = await axios.post('/api/place/checkPlaceCategory', null ,{params: {kakaoplaceid:place.id}  } )
+    //     setBeforeSetCategory(placeresult.data.category)
 
-        setCategory(placeresult.data.category)
-        setSelectedPlace(place);
+    //     setCategory(placeresult.data.category)
+    //     setSelectedPlace(place);
 
-    }    
+    // }    
 
     async function selectButton(place){        
         if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))
         ){return alert("음식점만 선택해주세요") }
         
-        console.log("place.id"+place.id)
+        // console.log("place.id"+place.id)
 
         let placeresult = await axios.post('/api/place/checkPlaceCategory', null ,{params: {kakaoplaceid:place.id}  } )
         setBeforeSetCategory(placeresult.data.category)
@@ -71,6 +71,13 @@ const WritePost = () => {
         setSelectedPlace(place);
 
     } 
+
+    const categories = ["", "한식", "양식", "중식", "일식", "후식"];
+    const categoryName1 = categories[category];
+    const categoryName2 = categories[beforeSetCategory];
+
+    
+    
 
   
     const onChange = (e) => {
@@ -386,10 +393,17 @@ const WritePost = () => {
                         </label>
                         <br/>                        
                         
-                        카테고리 {category} 입니다.
+                        {category ? (
+                            `카테고리 ${categoryName1} 입니다.`
+                        ) : (
+                            "카테고리를 선택해주세요"
+                        )}
+                        
+                        
+                        {/* {category} 입니다. */}
                     </div>
                 </div>
-                ):(`카테고리 ${beforeSetCategory} 입니다.`)}
+                ):(`카테고리 ${categoryName2} 입니다.`)}
 
                     {
                     modalOpen &&
@@ -408,7 +422,7 @@ const WritePost = () => {
                             <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
                             <button type="submit">검색</button>
                         </form>
-                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1} selectOverlay={selectOverlay} selectButton={selectButton}/>
+                        <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1} selectButton={selectButton}/>
                                             
 
                     </div>

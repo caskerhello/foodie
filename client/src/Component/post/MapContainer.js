@@ -5,7 +5,7 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, selectOverlay, selectButton}) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, selectButton}) => {
 
 
   const [locationw, setLocationw] = useState();
@@ -202,8 +202,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
             const button = document.getElementById(`select-btn-${place.id}`);
         if (button) {
             button.addEventListener('click', function() {
-                selectOverlay(place);
-                setModalOpen(false); // SelectionOverlay를 컴포넌트 내에서 호출
+                selectButton(place);
+                setModalOpen(false);
             });
         }
       })
