@@ -21,7 +21,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
+.joinform .logo {
     font-size: 24px;
     font-weight: bold;
     color: rgb(242, 38, 38);
@@ -30,11 +30,11 @@ body {
 }
 
 /* 필드 스타일 */
-.field {
+.joinform .field {
     margin-bottom: 15px;
 }
 
-.field label {
+.joinform .field label {
     display: block;
     font-size: 14px;
     font-weight: bold;
@@ -43,14 +43,14 @@ body {
     text-align: left;
 }
 
-.input-wrapper {
+.joinform .input-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-.input-wrapper input[type="text"],
-.input-wrapper input[type="password"] {
+.joinform .input-wrapper input[type="text"],
+.joinform .input-wrapper input[type="password"] {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -59,11 +59,12 @@ body {
     transition: border-color 0.3s;
 }
 
-.input-wrapper input:focus {
+.joinform .input-wrapper input:focus {
     border-color: rgb(242, 38, 38);
 }
 
-.input-wrapper .message {
+.joinform .message,
+.joinform .input-wrapper .message{
     margin-top: 3px; /* 입력 필드 아래 간격 */
     margin-bottom: 10px;
     text-align: left;
@@ -72,8 +73,9 @@ body {
 }
 
 /* 버튼 스타일 */
-button {
-    width: 100%;
+.joinform .btns button,
+.joinform .input-wrapper button {
+    flex: 2;
     padding: 10px;
     font-size: 16px;
     color: #fff;
@@ -82,29 +84,36 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 10px;
 }
 
-button:hover {
+.joinform .btns button.enabled {
+    background-color: rgb(242, 38, 38);
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.joinform .btns button.disabled {
+    background-color: rgb(238, 238, 238);
+    color: rgb(191, 191, 191);
+    cursor: pointer;
+}
+
+.joinform .btns button.enabled:hover {
     background-color: rgb(200, 30, 30);
 }
 
-.btns {
+.joinform .btns {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
 
-.btns button {
-    flex: 1;
-}
-
 /* 파일 업로드 및 미리보기 */
-input[type="file"] {
+.joinform .field input[type="file"] {
     margin-top: 5px;
 }
 
-.field img {
+.joinform .field img {
     margin-top: 10px;
     max-width: 100%;
     border-radius: 5px;
@@ -117,7 +126,6 @@ input[type="file"] {
     .joinform .field input, 
     .joinform .btns button, 
     .joinform .snslogin button{
-        margin: 5px 0;
-        padding:10px;
+        padding: 10px;
     }
 }
