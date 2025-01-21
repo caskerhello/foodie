@@ -51,4 +51,16 @@ public class PlaceService {
     public Place getPlaceInfo(int placeid) {
         return pr.findByPlaceid(placeid);
     }
+
+    public int checkPlaceCategory(int kakaoplaceid) {
+        Optional<Place> getplace = pr.findByKakaoplaceid((long)kakaoplaceid);
+
+        if( getplace.isPresent() ) {
+            Place place = getplace.get();
+            return place.getCategory();
+        }
+        else{
+            return 0;
+        }
+    }
 }

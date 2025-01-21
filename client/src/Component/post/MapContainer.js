@@ -5,7 +5,7 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, SelectionOverlay}) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, selectOverlay, selectButton}) => {
 
 
   const [locationw, setLocationw] = useState();
@@ -202,7 +202,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
             const button = document.getElementById(`select-btn-${place.id}`);
         if (button) {
             button.addEventListener('click', function() {
-                SelectionOverlay(place);
+                selectOverlay(place);
                 setModalOpen(false); // SelectionOverlay를 컴포넌트 내에서 호출
             });
         }
@@ -217,26 +217,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
   }, [searchPlace, options, options1])
 
 
-  const placeRefs = useRef([]);  
+  // const placeRefs = useRef([]);  
 
-
-  const Selection1 = (item) => {
-        
-    console.log('item'+item)
-    console.log(JSON.stringify(item))
-    if(!((item.category_group_code == 'FD6')||(item.category_group_code == 'CE7'))
-    ){return alert("음식점만 선택해주세요") }
-
-    
-
-    setSelectedPlace(item);
-
-    setModalOpen(false)
-  }
-  
-
-
-  
 
   return (
     <div id='MapContainer'>
@@ -264,34 +246,34 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
           <div key={i} style={{ marginTop: '20px' }}>
             <span>{i + 1}</span>
             <div>
-              <h5 ref={(el) => placeRefs.current[`${item.id}-place_name`] = el} id={`${item.id}-place_name`}>{item.place_name}</h5>
+              <h5>{item.place_name}</h5>
               {item.road_address_name ? (
                 <div>
-                  <span ref={(el) => placeRefs.current[`${item.id}-road_address_name`] = el} id={`${item.id}-road_address_name`}>{item.road_address_name}</span><br></br>
+                  <span>{item.road_address_name}</span><br></br>
                   <span>({item.address_name})</span>
                 </div>
               ) : (
                 <span>{item.address_name}</span>
               )}
               <br/>
-              <span ref={(el) => placeRefs.current[`${item.id}-phone`] = el} id={`${item.id}-phone`}>{item.phone}</span><br/><br/>
+              <span>{item.phone}</span><br/><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-category_group_code`] = el} id={`${item.id}-category_group_code`}>{item.category_group_code}</span><br/>
+              <span style={{display:"none"}}>{item.category_group_code}</span><br/>
 
-              <span style={{display:"block"}} ref={(el) => placeRefs.current[`${item.id}-category_name`] = el} id={`${item.id}-category_name`}>{item.category_name}</span><br/>
+              <span style={{display:"block"}}>{item.category_name}</span><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-id`] = el} id={`${item.id}-id`}>{item.id}</span><br/>
+              <span style={{display:"none"}}>{item.id}</span><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-x`] = el} id={`${item.id}-x`}>{item.x}</span><br/>
+              <span style={{display:"none"}}>{item.x}</span><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-y`] = el} id={`${item.id}-y`}>{item.y}</span><br/>
+              <span style={{display:"none"}}>{item.y}</span><br/>
 
-              <span style={{display:"none"}} ref={(el) => placeRefs.current[`${item.id}-place_url`] = el} id={`${item.id}-place_url`}>{item.place_url}</span><br/>
+              <span style={{display:"none"}}>{item.place_url}</span><br/>
 
               <button onClick={() => window.open(item.place_url, '_blank')}>카카오맵에서 보기</button>
             </div>
-            {/* <button onClick={() => Selection(i)}>선택</button> */}
-            <button onClick={() => Selection1(item)}>선택</button>
+            
+            <button onClick={() => { selectButton(item); setModalOpen(false); }}>선택</button>
           </div>
         ))}
         <div id="pagination"></div>
