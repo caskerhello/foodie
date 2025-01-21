@@ -21,7 +21,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
+.editform .logo {
     font-size: 24px;
     font-weight: bold;
     color: rgb(242, 38, 38);
@@ -30,11 +30,11 @@ body {
 }
 
 /* 필드 스타일 */
-.field {
+.editform .field {
     margin-bottom: 15px;
 }
 
-.field label {
+.editform .field label {
     display: block;
     font-size: 14px;
     font-weight: bold;
@@ -43,14 +43,14 @@ body {
     text-align: left;
 }
 
-.input-wrapper {
+.editform .input-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-.input-wrapper input[type="text"],
-.input-wrapper input[type="password"] {
+.editform .input-wrapper input[type="text"],
+.editform .input-wrapper input[type="password"] {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -59,11 +59,11 @@ body {
     transition: border-color 0.3s;
 }
 
-.input-wrapper input:focus {
+.editform .input-wrapper input:focus {
     border-color: rgb(242, 38, 38);
 }
 
-.input-wrapper .message {
+.editform .input-wrapper .message {
     margin-top: 3px; /* 입력 필드 아래 간격 */
     margin-bottom: 10px;
     text-align: left;
@@ -72,7 +72,7 @@ body {
 }
 
 /* 버튼 스타일 */
-button {
+.editform button {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -85,26 +85,26 @@ button {
     margin-top: 10px;
 }
 
-button:hover {
+.editform button:hover {
     background-color: rgb(200, 30, 30);
 }
 
-.btns {
+.editform .btns {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
 
-.btns button {
+.editform .btns button {
     flex: 1;
 }
 
 /* 파일 업로드 및 미리보기 */
-input[type="file"] {
+.editform input[type="file"] {
     margin-top: 5px;
 }
 
-.field img {
+.editform .field img {
     margin-top: 10px;
     max-width: 100%;
     border-radius: 5px;
