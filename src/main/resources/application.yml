@@ -27,7 +27,13 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 kakao:
   client_id: 626518f490cdfa8cfb51cdca88122b82
   redirect_uri: ${process.env.REACT_APP_ADDRESS2}/member/kakaoLogin
+
+

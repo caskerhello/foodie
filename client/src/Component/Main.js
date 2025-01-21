@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useMemo} from 'react'
-import { ToastContainer, toast , Bounce, Slide, Flip} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import MainMenu from './MainMenu';
@@ -8,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
 import { Map, MapMarker ,ZoomControl  } from "react-kakao-maps-sdk";
-// import useWatchLocation from '@utils/hooks/useCurrentLocation'
+
 
 
 
@@ -45,9 +44,7 @@ const Main = () => {
 
       axios.get(`/api/post/getPostList`, {params:{page:1,word}})
             .then((result)=>{
-              console.log("result.data.postList:",result.data.postList)
-              // console.log("result.data.postList.content:",result.data.postList.content)
-              // console.log("result.data.postList.pageable.pageNumber:"+result.data.postList.pageable.pageNumber)
+              console.log("result.data.postList:",result.data.postList)              
                 setPostList( result.data.postList.content );
                 setPaging( result.data.postList.pageable.pageNumber+1 );
             }).catch((err)=>{console.error(err)})     
@@ -70,88 +67,48 @@ const Main = () => {
         const scrollTop = document.documentElement.scrollTop;  // 현재 위치
         const clientHeight = document.documentElement.clientHeight; // 내용물의 크기
         if( scrollTop + clientHeight >= scrollHeight ) {
-          // console.log("Number(paging) + 1 :"+ (paging + 1))
+          
             onPageMove( paging + 1 );
         }
     }
 
       async function onPageMove( page ){
-        // console.log("onPageMove( page )"+page)
+        
 
         
 
         const result = await axios.get(`/api/post/getPostList`, {params:{page:page,word}})
         .then((result)=>{
           console.log("result.data.postList.content"+result.data.postList.content)
-        // console.log("result.data.postList.pageable.pageNumber(move):"+result.data.postList.pageable.pageNumber);
+        
         setPaging( result.data.postList.pageable.pageNumber+1 );
         let posts = [];
         posts = [...postList];
         posts = [...posts, ...result.data.postList.content ];
 
-        // console.log("moveposts:"+posts)
+        
         setPostList([...posts]);
         }).catch((err)=>{console.error(err)})     
       }
 
-
-
-
-
-
     function findRestorantLocation(placeid) {
-      // console.log(placeid)
+      
       axios.get(`/api/place/getPlaceInfo`, {params:{placeid}})
             .then((result)=>{
-              // console.log("result.data.place:",result.data.place)
-              // console.log("result.data.place.x:",result.data.place.x)
-              // console.log("result.data.place.y:",result.data.place.y)
+              
               setLocation({lat:result.data.place.y, lng:result.data.place.x});
-                //setPaging( result.data.paging );
-              // console.log("location"+JSON.stringify(location))
+
             }).catch((err)=>{console.error(err)})
-
-      // console.log("placeInfo"+placeInfo);
-      // console.log("placeInfo",placeInfo.x,placeInfo.y)
-
-
+      
       setLocation(placeInfo);
       
     }
     
-
     const navigate = useNavigate();   
     
     function onChangeMapView(){
         setViewMapOrNot( !viewMapOrNot );
-    }
-
-    // function setMapCurrent(){
-    //     const fetchLocation = async () => {
-    //         try {
-    //           const { lan, lon } = await getCurrentLocation(); // 위치 정보 받아오기
-  
-    //           console.log("lan, lon",lan, lon);
-  
-    //           setLocation({lan,lon});
-  
-    //           setLat(lan);
-    //           setLng(lon);
-  
-    //           // setLocation({ lat:lan, lng:lon }); // 상태에 위치 정보 저장
-              
-    //         } catch (err) {
-    //           window.alert('위치 정보를 가져오는 데 실패했습니다. 종로3가역 기준으로 탐색을 시작합니다.');
-    //           setLocation(37.57261013516411);
-    //           setLat(37.57261013516411);
-    //           setLng(126.99042333710086);
-              
-    //           // setError('위치 정보를 가져오는 데 실패했습니다.'); // 오류 처리
-    //         }
-    //       };
-      
-    //       fetchLocation();
-    // }
+    }   
 
         // 위치 정보를 가져오는 함수
     const getLocation = () => {
@@ -164,21 +121,14 @@ const Main = () => {
             setLat(position.coords.latitude);
             setLng(position.coords.longitude);
             setLocation({lat:position.coords.latitude, lng:position.coords.longitude});
-            // Map.setCenter({lat:position.coords.latitude, lng:position.coords.longitude});  
+            
         },
         (err) => {
             window.alert("위치 정보 접근을 허용해주세요");  
             setLocation({lat:37.57261013516411,lng:126.99042333710086});          
         }
         );
-    };    
-
-    // useEffect(() => {
-    //     if (location.lat && location.lng) {
-    //         // 위치 정보가 업데이트되었을 때만 실행되는 코드
-    //         console.log('위치 정보가 갱신되었습니다:', location);
-    //     }
-    // }, [location]);
+    };      
 
 
     const [viewMapOrNot, setViewMapOrNot] = useState(false);
@@ -223,7 +173,7 @@ const Main = () => {
           try {
             const { lan, lon } = await getCurrentLocation(); // 위치 정보 받아오기
 
-            // console.log("lan, lon",lan, lon);
+            
 
             setLocation({lat:lan,lng:lon});
 
@@ -231,7 +181,7 @@ const Main = () => {
             setLng(lon);
             setPosition({lan,lon});
 
-            // setLocation({ lat:lan, lng:lon }); // 상태에 위치 정보 저장
+            
             
           } catch (err) {
             if (!sessionStorage.getItem('alertShown')) {
@@ -241,9 +191,7 @@ const Main = () => {
               }
             setLocation({lat:37.57261013516411,lng:126.99042333710086});
             setLat(37.57261013516411);
-            setLng(126.99042333710086);
-            
-            // setError('위치 정보를 가져오는 데 실패했습니다.'); // 오류 처리
+            setLng(126.99042333710086);   
           }
         };
     
@@ -262,26 +210,20 @@ const Main = () => {
             <div className='MainPosts'>
 
                 <div className='title'>
-                    {/* <h1>현재 위치 정보</h1> */}
-            
-      {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
-
+                    {/* <h1>현재 위치 정보</h1> */}         
+      
       {location ? (
-        <div>
-            {/* {location} */}         
+        <div>            
             
             <Map                
                 center={location}   // 지도의 중심 좌표
                 style={inputMapStyle} // 지도 크기
-                level={4} // 지도 확대 레벨s  
-                // onCenterChanged={updateCenterWhenMapMoved}
+                level={4} // 지도 확대 레벨s                  
                 onDragEnd={(map) => {
                     const {lat,lng} = map.getCenter()
                     
                     setMovedLocation({lat:lat,lng:lng});
-                    // setResult(
-                    //   `변경된 지도 중심좌표는 ${latlng.getLat()} 이고, 경도는 ${latlng.getLng()} 입니다`,
-                    // )
+                    
                   }}
             >
 
@@ -314,10 +256,6 @@ const Main = () => {
       )     } 
         </div> 
 
-
-
-
-
                 {
                     (postList)?(
                         postList.map((post, idx)=>{
@@ -335,13 +273,7 @@ const Main = () => {
             </div>
             </div>
 
-            <div >
-            {/* <Map 
-                center={{ lat: 37.5718987, lng: 126.9872482 }}   // 지도의 중심 좌표
-                style={{ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' }} // 지도 크기
-                level={4}                                   // 지도 확대 레벨s
-            >
-            </Map> */}                 
+            <div >                            
         
             <CiGps style={{ position: 'fixed', top:'2%',right:'4%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocation()}}/>
 
@@ -349,25 +281,8 @@ const Main = () => {
                        
             </div>
 
-            <div>
-            {/* <button onClick={notify}>토스트 알림 보기</button>  */}
-
-            {/* <ToastContainer
-            position="top-right"
-            autoClose={1000}        // 알림이 자동으로 닫히는 시간 (ms)
-            hideProgressBar={false} // 진행바 숨기기
-            newestOnTop={false}     // 새 알림이 위에 표시될지 여부
-            closeOnClick={false}    // 알림 클릭 시 닫히게 할지 여부
-            rtl={false}             // 오른쪽에서 왼쪽으로 표시할지 여부 (right-to-left)
-            pauseOnFocusLoss       // 페이지에서 포커스를 잃으면 알림 멈추기
-            draggable={true}            // 알림을 드래그할 수 있게 할지 여부
-            pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
-            theme="light"          // 알림의 테마 (light/dark)
-            transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
-            /> */}
-              
-
-              
+            <div>        
+             
             </div>
             
 

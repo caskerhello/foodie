@@ -91,7 +91,7 @@ function PostOne() {
         try{
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
-            await axios.post('/api/post/addlike', {postid:postid, memberid:loginUser.memberid} );
+            await axios.post('/api/post/addLike', {postid:postid, memberid:loginUser.memberid} );
 
             // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
             const result = await axios.get(`/api/post/getLikeList/${postid}` )
@@ -143,19 +143,7 @@ function PostOne() {
         }
 
     }
-
-    // async function onFollow( writer ){
-    //     try{
-    //         await axios.post('/api/member/follow', {ffrom:loginUser.nickname, fto:writer} );
-    //         const result = await axios.get('/api/member/getFollowings');
-    //         setFollowings( result.data );
-    //     }catch(err){
-    //         console.error(err);
-    //     }
-    // }
-    // const date = parseISO(post.writedate); // ISO 형식을 Date 객체로 변환
-    // const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
-
+    
 
     return (
         <div>
@@ -167,13 +155,7 @@ function PostOne() {
                     <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}><span>#{post.postid}&nbsp;{post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {formatDate(post.writedate)}
                         </span><span></span><span><VscFileMedia  />{images.length}</span></div>
-                    {/* <div>{post.writer}&nbsp;&nbsp;</div> */}
-                    {/* {
-                        ( 
-                            ( post.writer != loginUser.nickname) &&  
-                            ( !followings.includes( post.writer) )
-                        )?( <button onClick={()=>{onFollow(post.writer)}}>FOLLOW</button> ): (null)
-                    } */}
+                    
                 </div>
                 { <Slider {...settings} >
                     {
@@ -187,26 +169,7 @@ function PostOne() {
                     }
                 </Slider>  }
 
-                {/* <div className='like'>
-                    {
-                        (likeList)?( 
-                            likeList.some(
-                                (like)=>(loginUser.nickname==like.likenick) 
-                            )
-                            ?
-                            ( <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />)
-                            :
-                            (<img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />)
-                        ):(
-                            <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
-                        )
-                    }
-
-                    &nbsp;&nbsp;
-                    <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
-                        viewOrNot()
-                    }}/>
-                </div> */}
+                
 
                 <div className='like' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                                 <span>{
@@ -217,32 +180,26 @@ function PostOne() {
                                         ?
                                         ( 
                                             <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
-                                        // <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />
+                                        
                                         )
                                         :
                                         (
-                                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
-                
-                                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>                                                     
                                         )
                                     ):(
-                                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
-                
-                                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>                                                    
                                     )
                                 }{likeList.length}&nbsp;&nbsp;&nbsp;
                                 <VscFeedback style={{height:"20px",width:"20px"}} onClick={()=>{
                                     viewOrNot()}}/>
-                                {/* <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
-                                    viewOrNot()
-                                }}/> */}
+                                
                                 {replyList.length}</span>
                                 
                                 <span>
                                 {post.content}★{post.stars}&nbsp;</span> 
                                 <span>
                             <div className='content' style={{display:"block"}}>
-                                {/* {post.place_name} */}
+                                
                                 </div></span></div>
                 <div className='content' style={{fontWeight:"bold",marginBottom:"50px"}}></div>
                 <div className='reply'> 

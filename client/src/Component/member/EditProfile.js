@@ -48,7 +48,7 @@ const EditProfile = () => {
         const formData = new FormData();
         formData.append('image',  e.target.files[0]);
         try{
-            const result = await axios.post('/api/member/fileupload', formData);
+            const result = await axios.post('/api/member/fileUpload', formData);
             console.log("result.data.filename"+result.data.filename)
             setImgSrc(`${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`);
             setImgStyle({display:"block", width:"200px"});
@@ -64,11 +64,11 @@ const EditProfile = () => {
 
         try{
             if( email != lUser.email ){
-                let result = await axios.post('/api/member/emailcheck', null, {params:{email}} );
+                let result = await axios.post('/api/member/emailCheck', null, {params:{email}} );
                 if(result.data.msg == 'no' ){ return alert('이메일이 중복됩니다'); }
             }
             if( nickname != lUser.nickname ){
-                let result = await axios.post('/api/member/nicknamecheck', null, {params:{nickname}} );
+                let result = await axios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
                 if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
 

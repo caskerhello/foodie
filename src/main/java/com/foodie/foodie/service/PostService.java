@@ -1,8 +1,6 @@
 package com.foodie.foodie.service;
 
 import com.foodie.foodie.dto.Paging;
-import com.foodie.foodie.dto.PostMemberDTO;
-import com.foodie.foodie.dto.ReplyMemberDTO;
 import com.foodie.foodie.entity.*;
 import com.foodie.foodie.repository.*;
 import jakarta.transaction.Transactional;

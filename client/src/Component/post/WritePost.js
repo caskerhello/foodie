@@ -47,33 +47,18 @@ const WritePost = () => {
     const [InputText, setInputText] = useState('')
     const [Place, setPlace] = useState('')
 
-    function SelectionOverlay(place){
-        // console.log(place)
+    function SelectionOverlay(place){        
         setSelectedPlace(place);
-        // setModalOpen(false)
-    }
-
-    // const SelectionOverlay = (id) => {
-    //     console.log(id)
-    
-    //   }
+    }    
   
     const onChange = (e) => {
       setInputText(e.target.value)
     }
   
     const handleSubmit = (e) => {
-      e.preventDefault()
+      e.preventDefault()     
 
-        // if(!movedLocation2.lat)console.log(movedLocation2.lat)
-
-        
-        
-
-
-
-
-      setOptions1({
+     setOptions1({
         location: new kakao.maps.LatLng(
             movedLocation2.lat,
             movedLocation2.lng
@@ -90,8 +75,6 @@ const WritePost = () => {
                 sort: kakao.maps.services.SortBy.DISTANCE,
               })
         }
-
-    //   console.log(options1)
 
       setPlace(InputText)
       setInputText('')
@@ -137,25 +120,12 @@ const WritePost = () => {
         justifyContent: "space-between",
         border:"0px solid black",
     }
-
-    useEffect(
-        ()=>{
-            // axios.get('/api/member/getLoginUser')
-            // .then((result)=>{
-            //     if(!result.data.loginUser){
-            //         alert('로그인이 필요합니다');
-            //         navigate('/');
-            //     }
-            //     setLoginUser( result.data.loginUser );
-            // })
-            // .catch((err)=>{console.error(err)})
-        },[]
-    )
+    
 
     async function imgUpload(e, n){
         let formData = new FormData();
         formData.append('image', e.target.files[0] );
-        const result = await axios.post('/api/post/imgup', formData);
+        const result = await axios.post('/api/post/imgUp', formData);
 
         if( n == 1){
             setDivStyle2( fieldStyle );
@@ -211,8 +181,7 @@ const WritePost = () => {
 
         let memberid = lUser.memberid
 
-        // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴 
-        // console.log("selectedPlace"+JSON.stringify(selectedPlace))
+        // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴         
 
         let writepostresult = await axios.post('/api/post/writePost', { placeid, content, memberid, stars} )
         let postid = writepostresult.data.postid;
@@ -245,15 +214,13 @@ const WritePost = () => {
 
                 <div className='field' id='img1'style={divStyle1}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 1) }} />
-                    {/* <label htmlFor="fileInput" className="custom-file-label">파일1 선택하기</label>
-                    <input type="file" id="fileInput" style={{display: 'none'}} onChange={(e)=>{ imgUpload(e, 1) }} /> */}
+                    
                 </div>
                 <img src={imgsrc1} />
 
                 <div className='field' id='img2' style={divStyle2}>
                     <input type="file" onChange={(e)=>{ imgUpload(e, 2) }} />
-                    {/* <label htmlFor="fileInput" className="custom-file-label">파일2 선택하기</label>
-                    <input type="file" id="fileInput" style={{display: 'none'}} onChange={(e)=>{ imgUpload(e, 2) }} /> */}
+                    
                 </div>
                 <img src={imgsrc2} />
 
@@ -356,11 +323,7 @@ const WritePost = () => {
                     id: {selectedPlace.id}<br></br>
                     x좌표: {selectedPlace.x}<br></br>
                     y좌표: {selectedPlace.y}<br></br>
-                    카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a><br></br>
-                    {/* <input type="hidden" name='category'></input>
-                    <input type="hidden" name='place_name'></input>
-                    <input type="hidden" name='3'></input>
-                    <input type="hidden" name='4'></input> */}
+                    카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a><br></br>                    
                     </div>
 
                 </div>

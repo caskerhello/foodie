@@ -1,14 +1,10 @@
 package com.foodie.foodie.controller;
 
-import com.foodie.foodie.dto.ReplyMemberDTO;
 import com.foodie.foodie.entity.*;
-import com.foodie.foodie.service.PlaceService;
 import com.foodie.foodie.service.PostService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +25,7 @@ public class PostController {
 
     @Autowired
     ServletContext context;
-    @PostMapping("/imgup")
+    @PostMapping("/imgUp")
     public HashMap<String, Object> fileup(
             @RequestParam("image") MultipartFile file ){
         HashMap<String, Object> result = new HashMap<String, Object>();
@@ -83,11 +79,8 @@ public class PostController {
             @RequestParam(value="word", required = false) String word) {
         HashMap<String,Object> result = new HashMap<>();
 
-        System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★page:"+page);
-
         result.put("postList", ps.getPostList( word , page ) );
 
-        System.out.println("ps.getPostList( word , page ) : "+ps.getPostList( word , page ));
         return result;
     }
 
@@ -102,16 +95,14 @@ public class PostController {
     @GetMapping("/getLikeList/{postid}")
     public HashMap<String,Object> getLikeList(@PathVariable("postid") int postid) {
         HashMap<String,Object> result = new HashMap<>();
-        System.out.println("likeList######################################"+ps.getLikeList( postid ));
         result.put("likeList", ps.getLikeList( postid ) );
         return result;
     }
 
 
-    @PostMapping("/addlike")
+    @PostMapping("/addLike")
     public HashMap<String,Object> addLike(@RequestBody Likes likes) {
         HashMap<String,Object> result = new HashMap<>();
-        System.out.println("addlikes"+likes);
 
         ps.insertLikes(likes);
         result.put("msg", "ok");
@@ -131,7 +122,6 @@ public class PostController {
 
     @GetMapping("/getReplyList/{postid}")
     public HashMap<String,Object> getReplyList(@PathVariable("postid") int postid) {
-        System.out.println("getReplyList postid: "+postid);
         HashMap<String,Object> result = new HashMap<>();
         List<ReplyMemberView> list = ps.getReplyList( postid );
         result.put("replyList", list );
