@@ -1,4 +1,7 @@
 .postWrite{
+    position: absolute;
+    top: 5%;
+    left: 15%;
     width:800px;
     /* height: 80vh; */
     border:0px solid black;
