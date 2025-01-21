@@ -31,7 +31,8 @@ const MainMenu = (props) => {
         padding:"10px 0",
         marginBottom:"10px",
         boxSizing:"border-box",
-        zIndex: "1"
+        zIndex: "1",
+        backdropFilter: "blur(5px)",
     }
 
     const topMenuOff = {
@@ -109,9 +110,7 @@ const MainMenu = (props) => {
             dispatch( logoutAction() );
             cookies.remove('user', {path:'/',} )
             navigate('/')
-        }).catch((err)=>{console.error(err)})
-        // window.alert("로그아웃 되었습니다.")
-
+        }).catch((err)=>{console.error(err)})       
         
             }, 800); 
     }
@@ -146,18 +145,10 @@ const MainMenu = (props) => {
                 <VscAccount style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
                 } />
-               
-                {/* <VscExport style={iconstyle} onClick={
-                    ()=>{ onLogout() }}/>     */}
+                               
 
                 <VscExport style={iconstyle} onClick={
-                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
-
-                    // ()=>{ 
-                    //     navigate('/') ; 
-                    //     sessionStorage.setItem('loginAlertShown', '');
-
-                    // }}
+                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}                    
                     />  
                 
             </div>

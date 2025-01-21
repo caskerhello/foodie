@@ -43,10 +43,7 @@ function Post( props ) {
     const [followings, setFollowings2] = useState([]);
     // const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // const date = parseISO(props.post.post_write_date); // ISO 형식을 Date 객체로 변환
-    // const formattedDate = format(date, 'yy-MM-dd HH시 mm분'); // 원하는 포맷으로 변환
-
+    
     const formatDate = (dateString) => {
         const date = new Date(dateString); // ISO 8601 형식의 문자열을 Date 객체로 변환
       
@@ -61,26 +58,18 @@ function Post( props ) {
       }
 
     
-    // const date1 = parseISO(replyList); // ISO 형식을 Date 객체로 변환
-    // const formattedDate1 = format(date1, 'yyMMdd HH/mm분'); // 원하는 포맷으로 변환
-
     useEffect(
         ()=>{
-            //console.log("Post.js")
-            // setFollowings2([...lUser.Followings]);
-
-            // console.log("post:",props.post)
-            // console.log("poststring",JSON.stringify(props.post.postid))
-
+            
             axios.get(`/api/post/getImages/${props.post.postid}` )
             .then((result)=>{ 
-                // console.log("result.data.images"+result.data.imgList);
+                
                 setImages( result.data.imgList ); })
             .catch((err)=>{console.error(err)})            
 
             axios.get(`/api/post/getLikeList/${props.post.postid}`)
             .then((result)=>{
-                // console.log("result.data.likeList:"+result.data.likeList)
+                
                  setLikeList( [...result.data.likeList ] );
             }).catch((err)=>{console.error(err)})
 
@@ -101,8 +90,8 @@ function Post( props ) {
         try{
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
-            // console.log(props.post.postid,lUser.nickname, lUser.memberid)
-            await axios.post('/api/post/addlike', { postid:props.post.postid, memberid:lUser.memberid});
+            
+            await axios.post('/api/post/addLike', { postid:props.post.postid, memberid:lUser.memberid});
 
             // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
             const result = await axios.get(`/api/post/getLikeList/${props.post.postid}`)
@@ -143,7 +132,8 @@ function Post( props ) {
         setReplyContent('');
     }
     async function deleteReply(id){
-        // console.log("deleteReplyid"+id);
+        
+        if(window.confirm("댓글을 삭제하시겠습니까?")){
         try{
             // 댓글을 삭제하고 댓글 리스트를 재조회 및 갱신하세요
             await axios.delete(`/api/post/deleteReply/${id}`)
@@ -152,6 +142,7 @@ function Post( props ) {
         }catch(err){
             console.error(err);
         }
+        }
 
     }
 
@@ -159,15 +150,8 @@ function Post( props ) {
         <div className='Post' style={{width:"600px"}}>
             <div className='writer' >
             {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
-                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}&nbsp;{props.post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formatDate(props.post.post_write_date)}</span><span></span><span><VscFileMedia  />{images.length}</span></div>
-                {/* <div onClick={()=>{navigate(`/memberPage/${props.post.writer}`)}}>{props.post.writer}&nbsp;&nbsp;</div> */}
-                {
-                    // ( 
-                    //     ( props.post.writer != lUser.nickname) 
-                    //     &&  
-                    //     ( !followings.some( (following)=>{  return following.fto == props.post.writer  } ) )
-                    // )?( <button onClick={()=>{ onFollow(props.post.writer)} }>FOLLOW</button> ): (null)
-                }
+                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}&nbsp;{props.post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formatDate(props.post.post_write_date)}</span><span></span><span><VscFileMedia  />{images.length}</span></div>                
+                
                 {/* 객체.some( (변수)=>{} ) : 객체의 요소 하나하나를 한번씩  '변수'에 저장하고 익명함수를 반복실행합니다.
                 대개는 익명함수에서 비교연산의 결과를 리턴하는데, 그결과가 모두 false 라면 최종 결과 false 이며, 리턴값중 하나라도  true 가 있으면 최종 결과는  true 입니다.  위 명령은 내가 팔로잉 하는 사람들들 현재 post 의 작성자가 있다면 true , 없다면 false 가 결과가 됩니다. */}
                 {/* 글쓴이가 나이거나, 나의 팔로잉중에  글쓴이가 없다면..... */}
@@ -195,27 +179,22 @@ function Post( props ) {
                         ?
                         ( 
                             <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
-                        // <img src={`http://localhost:8070/images/delike.png`} onClick={ ()=>{ onLike() } } />
+                        
                         )
                         :
                         (
                         <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
-
-                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                        
                         )
                     ):(
                         <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
-
-                        // <img src={`http://localhost:8070/images/like.png`} onClick={ ()=>{ onLike() } }  />
+                        
                     )
                 }{likeList.length}&nbsp;&nbsp;&nbsp;
-                {/* <VscFeedback style={{height:"20px",width:"20px",color:"rgb(242, 38, 38)"}} onClick={()=>{
-                    viewOrNot()}}/> */}
+                
                 <FcComments style={{height:"20px",width:"20px"}} onClick={()=>{
                     viewOrNot()}} />
-                {/* <img src={`http://localhost:8070/images/reply.png`} onClick={()=>{
-                    viewOrNot()
-                }}/> */}
+                
                 {replyList.length}</span>
                 
                 <span>
@@ -228,25 +207,7 @@ function Post( props ) {
                         }
                     }>위치</button></span>
             </div>
-            {/* <div className='like'>
-                {
-                    (likeList && likeList.length>=1)?(
-                        <span>{likeList.length} 명이 좋아합니다</span>
-                    ):(
-                        <span>아직 "좋아요"가 없어요</span>
-                    )
-                }
-                
-            </div> */}
-
-            {/* <div className='content'>{props.post.content} ★{props.post.stars}&nbsp;
-            <button style={{flex:"1"}} onClick={
-                        ()=>{ 
-                            props.findRestorantLocation(props.post.placeid)                               
-                        }
-                    }>음식점 위치</button>
-
-            </div> */}
+                        
             <div className='content'></div>
             
             <div className='content'> 

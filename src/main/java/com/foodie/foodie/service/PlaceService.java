@@ -13,10 +13,10 @@ import java.util.Optional;
 public class PlaceService {
 
     @Autowired
-    PlaceRepository PR;
+    PlaceRepository pr;
 
     public Place getPlace(int id, Place insertplace) {
-       Optional<Place> getplace = PR.findByKakaoplaceid((long)id);
+       Optional<Place> getplace = pr.findByKakaoplaceid((long)id);
         if( getplace.isPresent() ) {
             System.out.println("isPresent()");
             Place place = getplace.get();
@@ -36,7 +36,7 @@ public class PlaceService {
             System.out.println("isEmpty()");
             insertplace.setReviewamount(insertplace.getReviewamount()+1);
 
-            Place place = PR.save(insertplace);
+            Place place = pr.save(insertplace);
             System.out.println("isEmpty()"+place);
             return place;
         }
@@ -44,6 +44,6 @@ public class PlaceService {
 
 
     public Place getPlaceInfo(int placeid) {
-        return PR.findByPlaceid(placeid);
+        return pr.findByPlaceid(placeid);
     }
 }

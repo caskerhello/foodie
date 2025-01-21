@@ -13,26 +13,26 @@ import java.util.Optional;
 public class MemberService {
 
     @Autowired
-    MemberRepository MR;
+    MemberRepository mr;
 
 
-    public Member getMember(String email) {        return MR.findByEmail(email);
+    public Member getMember(String email) {        return mr.findByEmail(email);
     }
 
     public Member getMemberByNickname(String nickname) {
-        return MR.getMemberByNickname( nickname );
+        return mr.getMemberByNickname( nickname );
     }
 
     public void insertMember(Member member) {
-        MR.save(member);
+        mr.save(member);
     }
 
     public Member getMemberByMemberid(int id) {
-        return MR.getMemberByMemberid(id);
+        return mr.getMemberByMemberid(id);
     }
 
     public void updateMember(Member member) {
-        Optional<Member> memberOptional = MR.findByMemberid(member.getMemberid());
+        Optional<Member> memberOptional = mr.findByMemberid(member.getMemberid());
         if(memberOptional.isPresent()) {
             Member updateMember = memberOptional.get();
             updateMember.setNickname(member.getNickname());

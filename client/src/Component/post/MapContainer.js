@@ -7,39 +7,27 @@ const { kakao } = window
 
 const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, SelectionOverlay}) => {
 
-//   function SelectionOverlay(id){
-//     console.log(id)
-// }
 
   const [locationw, setLocationw] = useState();
   const [options, setOptions] = useState({
     center: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
-    // center: new kakao.maps.LatLng(33.450701, 126.570667),
+    
     level: 3,
   });
-  // const [options1, setOptions1] = useState(
-  //   {      
-  //   location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
-  //   radius: 1000,
-  //   sort: kakao.maps.services.SortBy.DISTANCE,
-  // });
+  
   const [lanw, setLanw] = useState(37.57261013516411);
   const [lonw, setLonw] = useState(126.99042333710086);
 
   const getLocationw = () => {
 
-    // setLocation(movedLocation);    
+    
 
     navigator.geolocation.getCurrentPosition(
     (position) => {
-        // setLocationw({lat:position.coords.latitude, lng:position.coords.longitude});
-        console.log(position.coords.latitude)
-        console.log(position.coords.longitude)
-
+        
+        
         setOptions({
-          center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          // center: new kakao.maps.LatLng(37.56586697223271, 127.02862994446544),
-          // center: new kakao.maps.LatLng(33.450701, 126.570667),
+          center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),          
           level: 3,
         });
 
@@ -52,18 +40,17 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
           sort: kakao.maps.services.SortBy.DISTANCE,
         })  
         setPlace('')
-        // setInputText('')
+        
     },
     (err) => {
         window.alert("위치 정보 접근을 허용해주세요");  
         setOptions({
           center: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
-          // center: new kakao.maps.LatLng(33.450701, 126.570667),
           level: 3,
         });
         setLanw(37.57261013516411)
         setLonw(126.99042333710086)
-        // setLocationw({lat:37.57261013516411,lng:126.99042333710086});          
+               
     }
     );
 };    
@@ -142,13 +129,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       
   });
       
-    // var options1 = {
-      
-    //   location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),     
-    //   radius: 1000,
-    //   sort: kakao.maps.services.SortBy.DISTANCE,
-    // };
-
+    
     ps.keywordSearch(searchPlace, placesSearchCB, options1)
 
     function placesSearchCB(data, status, pagination) {
@@ -236,53 +217,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
   }, [searchPlace, options, options1])
 
 
-  const placeRefs = useRef([]);
-
-  // const Selection = (i) => {
-
-    
-
-  //   // const placeElement = placeRefs.current[i];
-    
-  //   // setPlace_name(placeElement.innerText)
-  //   // setRoad_address_name()
-  //   // setPhone()
-  //   // setPlace_url()
-
-  //   const placeNameElement = placeRefs.current[`${Places[i].id}-place_name`];
-  //   const roadAddressElement = placeRefs.current[`${Places[i].id}-road_address_name`];
-  //   // const addressElement = placeRefs.current[`${Places[i].id}-address_name`];
-  //   const phoneElement = placeRefs.current[`${Places[i].id}-phone`];
-  //   const categorygroupcodeElement = placeRefs.current[`${Places[i].id}-category_group_code`];
-  //   const categorynameElement = placeRefs.current[`${Places[i].id}-category_name`];
-  //   const idElement = placeRefs.current[`${Places[i].id}-id`];
-  //   const xElement = placeRefs.current[`${Places[i].id}-x`];
-  //   const yElement = placeRefs.current[`${Places[i].id}-y`];
-  //   const placeurlElement = placeRefs.current[`${Places[i].id}-place_url`];
-
-  //   // console.log(phoneElement)
-  //   if(!((categorygroupcodeElement.innerHTML == 'FD6')||(categorygroupcodeElement.innerHTML == 'CE7'))
-
-
-  //   ){return alert("음식점만 선택해주세요") }
-
-  //   const place = {
-  //     placeName: placeNameElement ? placeNameElement.innerText : '',
-  //     roadAddress: roadAddressElement ? roadAddressElement.innerText : '',
-  //     // address: addressElement ? addressElement.innerText : '',
-  //     phone: phoneElement ? phoneElement.innerText : '',
-  //     categoryGroupCode: categorygroupcodeElement? categorygroupcodeElement.innerHTML : '',
-  //     categoryName: categorynameElement? categorynameElement.innerHTML : '',
-  //     id: idElement? idElement.innerHTML : '',
-  //     x: xElement? xElement.innerHTML : '',
-  //     y: yElement? yElement.innerHTML : '',
-  //     placeUrl: placeurlElement? placeurlElement.innerHTML : '',
-  //   };
-
-  //   setSelectedPlace(place);
-
-  //   setModalOpen(false)
-  // }
+  const placeRefs = useRef([]);  
 
 
   const Selection1 = (item) => {

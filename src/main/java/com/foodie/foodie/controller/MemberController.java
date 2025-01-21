@@ -25,10 +25,12 @@ public class MemberController {
     @Autowired
     MemberService ms;
 
-    @PostMapping("/loginlocal")
-    public HashMap<String , Object> loginlocal(
+    @PostMapping("/loginLocal")
+    public HashMap<String , Object> loginLocal(
             @RequestBody Member member,
             HttpSession session ) {
+
+        System.out.println("loginLocal");
         HashMap<String , Object> result = new HashMap<>();
         Member mem = ms.getMember(member.getEmail());
         if(mem == null) {
