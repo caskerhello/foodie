@@ -1,4 +1,7 @@
 .mypage{
+    position: absolute;
+    top: 5%;
+    left: 15%;
     width:800px;
     border:0px solid black;
     margin:2px;
