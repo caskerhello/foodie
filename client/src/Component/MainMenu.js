@@ -67,10 +67,18 @@ const MainMenu = (props) => {
     
     useEffect(()=>{
         if(!sessionStorage.getItem('loginAlertShown'))
-            {toast.success(`${lUser.nickname}님 로그인 완료!`, {
-              position: "top-right",  // 알림 위치 설정
-              autoClose: 500,         // 자동으로 닫히는 시간 (2초)
-            });}
+            {toast.success(
+                <>
+                  <span style={{ color: "rgb(242, 38, 38)" }}>
+                    {lUser.nickname}
+                  </span>
+                  님 로그인 완료!
+                </>,
+                {
+                  position: "top-right",  // 알림 위치 설정
+                  autoClose: 1000,         // 자동으로 닫히는 시간 (500ms)
+                }
+              );}
             sessionStorage.setItem('loginAlertShown', 'true');
     },[])
 
@@ -100,10 +108,18 @@ const MainMenu = (props) => {
     },[menuViewOrNot])
 
     function onLogout(){
-        {toast.success(`${lUser.nickname}님 로그아웃 완료!`, {
-            position: "top-right",  // 알림 위치 설정
-            autoClose: 500,         // 자동으로 닫히는 시간 (2초)
-          });}
+        toast.success(
+            <>
+              <span style={{ color: "rgb(242, 38, 38)" }}>
+                {lUser.nickname}
+              </span>
+              님 로그아웃 완료!
+            </>,
+            {
+              position: "top-right",  // 알림 위치 설정
+              autoClose: 700,         // 자동으로 닫히는 시간 (500ms)
+            }
+          );
         setTimeout(() => {
         axios.get('/api/member/logout')
         .then((result)=>{
@@ -112,7 +128,7 @@ const MainMenu = (props) => {
             navigate('/')
         }).catch((err)=>{console.error(err)})       
         
-            }, 800); 
+            }, 1200); 
     }
 
     function onSearch(){
