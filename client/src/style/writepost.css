@@ -1,10 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+
+.postWriteContainer{
+    /* position: relative;
+    top:0%; */
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .postWrite{
-    position: absolute;
-    top: 5%;
-    left: 15%;
+    /* position: absolute; */
+    
+
     width:800px;
     /* height: 80vh; */
-    border:0px solid black;
+    border:2px solid black;
     border-radius : 0px;
     padding:15px;
     display: flex;
@@ -14,14 +29,25 @@
     margin-bottom: 100px;
 }
 .postWrite .title{
-    font-size: 200%;
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 300%;
+    /* font-size: 200%; */
+    /* margin: 50px; */
 }
 
 .postWrite .field{
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 150%;
+
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 80%;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -30,6 +56,7 @@
 }
 
 .postWrite .field .contents{
+    margin-left: 50px;
     flex:6
 }
 
@@ -48,7 +75,7 @@
     font-size: 150%;
 }
 .postWrite .field textarea{
-    flex:6; 
+    width: 100%; 
     border-radius: 10px;
     border: 1px solid rgb(242, 38, 38); 
     resize: none;
@@ -108,7 +135,12 @@
 
 
 
-.btns button{
+.postWrite .btns button{
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 150%;
+
     border: 0px;
     border-radius: 10px;
     color:white;
@@ -117,11 +149,16 @@
     width: 150px;
     height: 40px;
     font-weight: bold;
-    font-size: 1.0rem;
+    
     margin:2px;
 }
 
 .postWrite .field input[type="file"]::file-selector-button {
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 150%;
+
     content: "파일 선택";  /* 버튼의 텍스트 변경 */
     background-color: rgb(242, 38, 38); /* 배경색 */
     color: white; /* 글자 색 */ 
@@ -131,6 +168,11 @@
 }
 
 .custom-file-label {
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 150%;
+
     display: inline-block;
     padding: 2px 2px;
     background-color: rgb(242, 38, 38);

@@ -211,7 +211,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       kakao.maps.event.addListener(marker, 'mouseout', function () {
         setTimeout(function() {
           infowindow.close();
-      }, 1000);
+        }, 2000);
       })
     }
   }, [searchPlace, options, options1])

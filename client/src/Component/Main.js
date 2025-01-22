@@ -6,7 +6,7 @@ import Post from './post/Post';
 import { useSelector } from 'react-redux';
 import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
-import { Map, MapMarker ,ZoomControl  } from "react-kakao-maps-sdk";
+import { Map, MapMarker ,ZoomControl, CustomOverlayMap  } from "react-kakao-maps-sdk";
 
 
 
@@ -72,10 +72,7 @@ const Main = () => {
         }
     }
 
-      async function onPageMove( page ){
-        
-
-        
+      async function onPageMove( page ){        
 
         const result = await axios.get(`/api/post/getPostList`, {params:{page:page,word}})
         .then((result)=>{
@@ -97,10 +94,13 @@ const Main = () => {
             .then((result)=>{
               
               setLocation({lat:result.data.place.y, lng:result.data.place.x});
+              
+              setPlaceInfo(result.data.place.place_url)
+              console.log(result.data.place.place_url)
 
             }).catch((err)=>{console.error(err)})
       
-      setLocation(placeInfo);
+      // setLocation(placeInfo);
       
     }
     
@@ -198,6 +198,12 @@ const Main = () => {
         fetchLocation(); // 컴포넌트 로드 시 위치 정보 가져오기    
 
       }, []); // 빈 배열을 두어 컴포넌트가 마운트될 때 한 번만 실행
+
+
+
+      function handleMouseOver(){
+        
+      }
       
  
   return (
@@ -228,15 +234,34 @@ const Main = () => {
             >
 
                 <MapMarker image={{
-                src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
-                
-                size: {
-                width: 24,
-                height: 35
-                }, // 마커이미지의 크기입니다
-                }}
+                  src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다                
+                  size: {
+                  width: 24,
+                  height: 35
+                  }, // 마커이미지의 크기입니다
+                  }}
+                  
+                  onMouseOver={()=>{handleMouseOver()}}
+                  position={location}>
+                    {/* <div
+                        style={{ backgroundColor: "white", padding: "0.1px" }}
+                        // onMouseOver={handleMouseOver}  // 마우스 오버 시 이벤트
+                        // onMouseOut={handleMouseOut}    // 마우스 아웃 시 이벤트
+                    ></div> */}
 
-                position={location}/>
+                </MapMarker>
+
+                {/* <CustomOverlayMap position={location} >
+                  <div>
+                    {placeInfo?(<button onClick={() => { 
+                      window.open(`${placeInfo}`, '_blank')}}
+                      
+                      >
+                      상세정보
+                    </button>):("현재위치")}
+                    
+                  </div>
+                </CustomOverlayMap> */}
 
               <ZoomControl position={"RIGHT"} />
 
@@ -264,6 +289,9 @@ const Main = () => {
                                 <Post key={idx} post={post} loginUser={loginUser} setFindLocation={setFindLocation} 
                                 findLocation={findLocation}
                                 findRestorantLocation={findRestorantLocation}
+                                setViewMapOrNot={setViewMapOrNot}
+                                viewMapOrNot={viewMapOrNot}
+                                onChangeMapView={onChangeMapView}
                                 />
 
                             )
