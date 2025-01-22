@@ -1,0 +1,13 @@
+.rating-stars path{
+    fill: rgb(216, 216, 216);
+}
+
+.rating-star-over path{
+    cursor: pointer;
+    fill: rgb(242, 38, 38);
+}
+
+.rating-star-out path{
+    cursor: pointer;
+    fill: rgb(216, 216, 216);
+}

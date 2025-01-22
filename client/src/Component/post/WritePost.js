@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 import MainMenu from '../MainMenu';
 import MapContainer from '../post/MapContainer';
+import RatingStar from './RatingStars';
 
 import '../../style/mapcontainer.css'
 import '../../style/writepost.css'
@@ -19,9 +20,11 @@ const WritePost = () => {
     const [word, setWord] = useState('')
     const [loginUser, setLoginUser ] = useState({});
     const lUser = useSelector( state=>state.user );
-    const [stars, setStars] = useState('');
+    const [stars, setStars] = useState();
+    const [isHover, setIsHover] = useState([false, false, false, false, false]);
     const [beforeSetCategory, setBeforeSetCategory] = useState(0);
     const [category, setCategory] = useState('');
+    
 
     const [modalOpen, setModalOpen] = useState(false);
     const modalBackground = useRef();
@@ -30,7 +33,7 @@ const WritePost = () => {
     const [road_address_name,setRoad_address_name] = useState();
     const [phone,setPhone] = useState();
     const [place_url,setPlace_url] = useState();
-    const [selectedPlace,setSelectedPlace] = useState({});
+    const [selectedPlace,setSelectedPlace] = useState();
 
     const [options1, setOptions1] = useState(
         {
@@ -227,7 +230,9 @@ const WritePost = () => {
     }
 
     return (
-        <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+        <div className='postWriteContainer' 
+        // style={{display:"flex", flexDirection:"column", alignItems:"center"}}
+        >
             
             <MainMenu setWord={setWord}/>
 
@@ -235,10 +240,11 @@ const WritePost = () => {
                 <div className='title' >포스팅</div>
                 <br></br>
                 <div className='field' id='wpcontent'>
-                    <label>내용</label>
-                    <textarea rows="7" value={content} onChange={
+                <div className='title' >내용</div>
+                <div className='contents' ><textarea rows="7" value={content} onChange={
                         (e)=>{ setContent( e.currentTarget.value ) }
-                    }></textarea>
+                    }></textarea></div>
+                    
                 </div>
 
                 <div className='field' id='img1'style={divStyle1}>
@@ -294,10 +300,12 @@ const WritePost = () => {
                 <img src={imgsrc10} />
 
                 <div className='field' id='wpstars'>
+                    <br/>
+
                 <div className='title' >별점</div>
                     
                     <div className='contents'>
-                        <label>
+                        {/* <label>
                             ★
                             <input type="radio" name='stars' onClick={()=>{setStars(1)}}></input>
                             &nbsp;
@@ -329,7 +337,16 @@ const WritePost = () => {
                         <br/>
                         
                         {stars}점 입니다.
+
+                        <br/> */}
+                        <br/>
+                    <RatingStar setStars={setStars} isHover={isHover} setIsHover={setIsHover}></RatingStar>
+                        
+                        {stars?(`${stars}`+"점입니다."):("별점을 선택해주세요")}   
+
+                        
                     </div>
+
                 </div>
 
                 
@@ -340,19 +357,41 @@ const WritePost = () => {
                 </div>
 
                 <div className='field' >
-                        <div className='title'><button onClick={() => setModalOpen(true)}>카카오맵검색</button></div>
+                        <div className='title'>
+                            장소검색
+                            {/* <button onClick={() => setModalOpen(true)}>검색</button> */}
+                        </div>
 
-                        <div className='contents' style={{width:"40vw",height:"20vh",border:"1px solid black",overflow: "auto"}} >
-                    선택된 장소가 조회될 공간입니다.<br/>
-                    {/* <h3>선택된 장소 정보:</h3> */}
-                    장소 이름: {selectedPlace.place_name}<br></br>
-                    도로명 주소: {selectedPlace.road_address_name}<br></br>
-                    {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
-                    전화번호: {selectedPlace.phone}<br></br>
-                    id: {selectedPlace.id}<br></br>
-                    x좌표: {selectedPlace.x}<br></br>
-                    y좌표: {selectedPlace.y}<br></br>
-                    카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a><br></br>                    
+                        <div className='contents' style={{width:"100%",height:"20vh",border:"1px solid rgb(242, 38, 38)",borderRadius:"10px",overflow: "auto"}} >
+                    
+
+                    {selectedPlace? (
+                        
+                            <div>
+                            <p>장소 이름: {selectedPlace.place_name}</p>
+                            <p>도로명 주소: {selectedPlace.road_address_name}</p>
+                            {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
+                            <p>전화번호: {selectedPlace.phone}</p>
+                            <p>id: {selectedPlace.id}</p>
+                            <p>x좌표: {selectedPlace.x}</p>
+                            <p>y좌표: {selectedPlace.y}</p>
+                            <p>카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a></p>
+
+                            <button onClick={() => setModalOpen(true)}>재검색</button>
+                            </div>
+                            
+                        
+                        ) : (
+                        <p>장소를 검색해주세요<br/>
+
+                            <button onClick={() => setModalOpen(true)}>검색</button>
+                        </p>
+                    )}      
+
+
+
+
+                                     
                     </div>
 
                 </div>
@@ -414,7 +453,7 @@ const WritePost = () => {
                     }}>
                     <div className={'modal-content'}>
                         
-                        <p>카카오맵 검색 결과가 조회됩니다<button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
+                        <p>검색 결과가 조회됩니다<button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
                         모달 닫기
                         </button></p>
                         
