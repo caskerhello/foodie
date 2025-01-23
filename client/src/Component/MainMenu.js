@@ -137,6 +137,8 @@ const MainMenu = (props) => {
 
     function onChangeMenuView(){
         setMenuViewOrNot( !menuViewOrNot );
+        if(viewOrNot)
+        {setViewOrNot( !viewOrNot )};
     }
 
     function onChangeView(){

@@ -1,16 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+.mypageContainer{
+    /* position: relative;
+    top:0%; */
+    width: 100vw;
+    height: 100vh;
+    /* border: 1px solid red; */
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+
+}
+
 .mypage{
-    position: absolute;
-    top: 5%;
-    left: 15%;
-    width:800px;
-    border:0px solid black;
+    
+    /* position: absolute; */
+    /* top: 5%; */
+    /* left: 15%; */
+    width:850px;
+    border:2px solid black;
+    border-radius : 10px;
     margin:2px;
     display: flex;
     flex-direction: column;
     margin-top: 50px;
 }
 .mypage .title{
-    font-size: 200%;
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 300%;
 }
 .mypage .userinfo{
     width:100%;
@@ -25,11 +45,13 @@
     width:250px;
     height:250px;
     border-radius: 50%;
-    border:1px dotted black;
+    border:2px solid black;
+    
 }
 .mypage .userinfo .profile{
     flex:1;
-    border:1px solid black;
+    /* border:2px solid black; */
+    border-radius : 10px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -48,6 +70,10 @@
     font-size: 150%;
 }
 .mypage .userinfo .profile .field .content{
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 150%;
     flex :4;
 }
 /* .mypage .userinfo .profile .field label{
@@ -62,15 +88,22 @@
 .mypage .btns{ 
     display: flex;
     margin:10px 0;
+    
 }
 .mypage .btns button{
     flex: 1;
     padding:10px;
     background-color: rgb(242, 38, 38);
     color:white;
-    font-weight: bold;
-    font-size: 1.0rem;
+    
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+
     margin:2px;
+    border-radius: 10px;
+    border: 0px;
 }
 
 .userpost{
@@ -84,12 +117,16 @@
 .userpost div{
     /* overflow: hidden; */
     display: flex;    
-    border:1px dotted black;
+    /* border:2px solid black; */
+    justify-content: center;
     height:250px;
     /* margin-bottom: 100px; */
+    
+
 }
 .userpost div img{
     width:250px;
     height: 250px;
+    border-radius: 50%;
 }
 

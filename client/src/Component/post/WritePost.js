@@ -362,23 +362,33 @@ const WritePost = () => {
                             {/* <button onClick={() => setModalOpen(true)}>검색</button> */}
                         </div>
 
-                        <div className='contents' style={{width:"100%",height:"20vh",border:"1px solid rgb(242, 38, 38)",borderRadius:"10px",overflow: "auto"}} >
+                        <div className='contents' 
+                        style={{width:"100%",height:"30vh",
+                            // border:"1px solid rgb(242, 38, 38)",
+                            // borderRadius:"10px",overflow: "auto", 
+                            display:"flex", justifyContent: "center",alignItems: "center"
+                        }}
+                        >
                     
 
                     {selectedPlace? (
                         
-                            <div>
-                            <p>장소 이름: {selectedPlace.place_name}</p>
-                            <p>도로명 주소: {selectedPlace.road_address_name}</p>
-                            {/* <h3>기본 주소: {selectedPlace.placeUrl}</h3> */}
-                            <p>전화번호: {selectedPlace.phone}</p>
-                            <p>id: {selectedPlace.id}</p>
+                        <div style={{width:"100%",height:"100%",
+                            // border:"1px solid rgb(242, 38, 38)",borderRadius:"10px",
+                            overflow: "auto", 
+                            display:"flex", flexDirection: "column" ,justifyContent: "center"
+                            // ,alignItems: "center"
+                        }} >
+                            장소 이름: {selectedPlace.place_name}<br/>
+                            도로명 주소: {selectedPlace.road_address_name}<br/>                            
+                            전화번호: {selectedPlace.phone}<br/>
+                            {/* <p>id: {selectedPlace.id}</p>
                             <p>x좌표: {selectedPlace.x}</p>
-                            <p>y좌표: {selectedPlace.y}</p>
-                            <p>카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a></p>
+                            <p>y좌표: {selectedPlace.y}</p> */}
+                            카카오맵 링크: <a href={selectedPlace.place_url} target="_blank" rel="noopener noreferrer">{selectedPlace.place_url}</a><br/>
 
                             <button onClick={() => setModalOpen(true)}>재검색</button>
-                            </div>
+                        </div>
                             
                         
                         ) : (
@@ -472,6 +482,8 @@ const WritePost = () => {
                     <button onClick={ ()=>{ onSubmit() } }>작성완료</button>
                     <button onClick={ ()=>{ navigate('/main') } }>Main으로</button>
                 </div>
+
+                <div style={{width:"800px",height:"100px"}}></div>
 
             </div>
         </div>
