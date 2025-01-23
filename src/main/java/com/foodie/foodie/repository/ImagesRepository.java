@@ -9,5 +9,6 @@ public interface ImagesRepository extends JpaRepository<Images, Integer> {
 
     List<Images> findByPostid(int postid);
 
+    List<Images> findByPostidOrderByPostidDesc(int postid);
 }
 

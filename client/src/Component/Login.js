@@ -51,6 +51,7 @@ function Login() {
     }
 
     return (
+    <div className="loginContainer">
         <div className="loginform">
             <br></br>
             <div className='title'> 즐거운 미식 생활의 시작 <span>식신</span> </div>
@@ -82,7 +83,8 @@ function Login() {
                     ><img style={{height:"40px"  }} src="images/free-icon-kakao-talk.png"/></button>
                 </div>
             
-            </div>
+        </div>
+    </div>
     )
 }
 
