@@ -161,15 +161,16 @@ public class PostService {
 //    }
 
     public List<Post> getPostListByMemberid(int memberid) {
-        return pr.findAllByMemberid(memberid);
+        return pr.findAllByMemberidOrderByPostidDesc(memberid);
     }
 
-    public List<Images> getImgListByPostid(int id) {
-        return ir.findByPostid( id );
+    public List<Images> getImgListByPostidOrderByPostidDesc(int id) {
+        return ir.findByPostidOrderByPostidDesc( id );
     }
 
     public Post getPost(int id) {
         Optional<Post> p = pr.findByPostid(id);
+
         if( p.isPresent() ){
             return p.get();
         }else{

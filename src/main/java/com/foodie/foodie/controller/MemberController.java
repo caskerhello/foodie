@@ -152,7 +152,7 @@ public class MemberController {
         List<Post> list = ps.getPostListByMemberid(memberid);
         List<String> imglist = new ArrayList<String>();
         for( Post p : list) {
-            List<Images> imgl = ps.getImgListByPostid( p.getPostid() );
+            List<Images> imgl = ps.getImgListByPostidOrderByPostidDesc( p.getPostid() );
             String imgname = imgl.get(0).getSavefilename();
             imglist.add( imgname );
         }
