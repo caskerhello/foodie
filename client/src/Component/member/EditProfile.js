@@ -73,13 +73,18 @@ const EditProfile = () => {
                 let result = await axios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
                 if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
+            alert("profileimg"+profileimg)
 
-            if( !profileimg ){
-                setProfileimg( oldImgsrc );
-            }
+            let currentProfileImg = profileimg;
+            if( !profileimg ) {
+                alert("!profileimg oldImgsrc : " + oldImgsrc);
+                currentProfileImg = oldImgsrc; // 상태가 비어 있으면 oldImgsrc를 사용
+            }            
+
+            alert("profileimg"+profileimg)
 
             //회원정보수정
-                let result = await axios.post('/api/member/updateProfile', { memberid,email, nickname, pwd, phone,  profileimg, profilemsg })
+                let result = await axios.post('/api/member/updateProfile', { memberid, email, nickname, pwd, phone,  profileimg:currentProfileImg, profilemsg })
                 if(result.data.msg=='ok'){
                     alert('회원 수정이 완료되었습니다.');
                     // 로그인유저 조회
