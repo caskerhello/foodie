@@ -1,8 +1,10 @@
-import React, {useState, useEffect, useMemo} from 'react'
+import React, {useState, useEffect, useMemo, useRef} from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import MainMenu from '../MainMenu';
 import { useNavigate } from "react-router-dom";
+
+import '../../style/getcategoryplace.css'
 
 const GetCategoryPlace = () => {
 const { category } = useParams();
@@ -15,6 +17,9 @@ const [postListLength, setPostListLength] = useState();
 
 const [word, setWord] = useState('')
 const navigate=useNavigate();
+
+const [modalOpen, setModalOpen] = useState(false);
+const modalBackground = useRef();
 
 
 useEffect(() => {
@@ -39,9 +44,10 @@ async function findPostList(placeid){
     await axios.get(`/api/post/findPost`,{params:{placeid}})
     .then((result)=>{
         console.log("result.data.postList : ", result.data.postList)   
-        console.log("result.data.postList.length : ", result.data.postList.length)
-          setPostList( result.data.postList );
-          setPostListLength(result.data.postList.length);
+        // console.log("result.data.postList.length : ", result.data.postList.length)
+        setPostList( result.data.postList );
+        setPostListLength(result.data.postList.length);
+        setModalOpen(true)
     }
 
     ).catch((err)=>{console.error(err)}) }
@@ -83,7 +89,65 @@ async function findPostList(placeid){
 
 
 
-            {
+
+{
+                    modalOpen &&
+                    <div className={'getPlaceByCategoryModalContainer'} ref={modalBackground} onClick={e => {
+                    if (e.target === modalBackground.current) {
+                        setModalOpen(false);
+                    }
+                    }}>
+                    <div className={'getPlaceByCategoryModalContent'}>
+                        
+                        <p>검색 결과가 조회됩니다<button className={'modalCloseBtn'} onClick={() => setModalOpen(false)}>
+                        창닫기
+                        </button></p>
+                        
+                        {
+                (postListLength)?
+                (
+                    postList.map((post, idx)=>{
+                        return (
+                            <div key={idx}
+                            
+                            
+                            >
+                                닉네임: {post.nickname} <br/>
+                                포스팅내용 : {post.post_content} <br/>
+                                평균별점 : {post.post_stars} <br/>
+                                포스팅일자 : {post.post_write_date}<br/>
+                                
+                                <button
+                                onClick={
+                                    // ()=>{ navigate(`/postOne`) }
+                                    ()=>{ navigate(`/postOne/${postList[idx].postid}`) }
+                                }
+                                >리뷰상세보기</button><br/>
+                            </div>
+                        )
+                    })
+
+                )   :
+
+                ("?")
+            }
+
+
+                                              
+                                            
+
+                    </div>
+                    </div>
+                    }
+
+
+
+
+            
+
+
+
+            {/* {
                 (postListLength)?
                 (
                     postList.map((post, idx)=>{
@@ -105,7 +169,7 @@ async function findPostList(placeid){
                 )   :
 
                 ("?")
-            }
+            } */}
 
 
 

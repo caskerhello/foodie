@@ -1,8 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams  } from "react-router-dom";
 import MainMenu from '../MainMenu';
+import PostFromMypage from '../post/PostFromMypage';
 import { useSelector } from 'react-redux';
+
+import { VscHeart } from "react-icons/vsc";
+import { VscHeartFilled } from "react-icons/vsc";
+import { VscFileMedia } from "react-icons/vsc";
+import { VscFeedback } from "react-icons/vsc";
+
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import '../../style/mypage.css'
 
@@ -16,7 +26,16 @@ const MyPage = () => {
     const lUser = useSelector( state=>state.user );
     const [ word, setWord ] = useState('');
 
+    const [ post, setPost ] =useState({});
+    const [ modalPost, setModalPost ] =useState({});
+    const [ images, setImages] =useState([]);
+    const [ likeList, setLikeList ] = useState([]);
+    const [ replyList, setReplyList] = useState([]);
+
     const navigate=useNavigate();
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const modalBackground = useRef();
 
     useEffect(
         ()=>{
@@ -26,7 +45,7 @@ const MyPage = () => {
                 setImgSrc(lUser.profileimg)
             }
             
-            axios.get('/api/member/getMyPost')
+            axios.get('/api/member/getMyPost', {params:{memberid:lUser.memberid}})
             .then((result)=>{
                 console.log(result.data.postList)
 
@@ -39,6 +58,18 @@ const MyPage = () => {
         },[]
     )
 
+    async function myPageModalOpen(postid) {
+    
+        try {
+            const result = await axios.get(`/api/post/getPost/${postid}`);
+            console.log(result.data);
+            setModalPost(result.data);
+        } catch (err) {
+            console.error(err);
+        }
+
+        setModalOpen(true);
+    }
 
     return (
         <div className='mypageContainer'>
@@ -52,7 +83,7 @@ const MyPage = () => {
                     
                     <div className='img'>
                         <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} />
-                        {/* <img src={imgSrc} /> */}
+                        
                     </div>
                     <div className='profile'>
                         <div className='field'>
@@ -65,25 +96,9 @@ const MyPage = () => {
                             <div className='title'><label>닉네임</label></div>
                             
                             <div className='content'><div>{lUser.nickname}</div></div>
-                            {/* <label>닉네임</label>
-                            <div>{lUser.nickname}</div> */}
-                        </div>
-                        {/* <div className='field'>
-                            <div className='title'><label>팔로워</label></div>
                             
-                            <div className='content'><div>{lUser.nickname}</div></div>
-
-                            <label>팔로워</label>
-                            <div>{ (lUser.Followers)?(lUser.Followers.length):(0) }</div>
                         </div>
-                        <div className='field'>
-                            <div className='title'><label>팔로잉</label></div>
-                            
-                            <div className='content'><div>{lUser.nickname}</div></div>
-
-                            <label>팔로잉</label>
-                            <div>{ (lUser.Followings)?(lUser.Followings.length):(0) }</div>
-                        </div> */}
+                        
                         <div className='field'>
                             <div className='title'><label>소개</label></div>
                             
@@ -109,7 +124,7 @@ const MyPage = () => {
                                     
                                     onClick={
                                         // ()=>{ navigate(`/postOne`) }
-                                        ()=>{ navigate(`/postOne/${postList[idx].postid}`) }
+                                        ()=>{ myPageModalOpen(`${postList[idx].postid}`) }
                                     }
                                     >
                                         <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgs}`} />
@@ -120,8 +135,31 @@ const MyPage = () => {
                         
                     }
                 </div>
+
+                {
+                    modalOpen &&
+                    <div className={'getMypageModalContainer'} ref={modalBackground} onClick={e => {
+                        if (e.target === modalBackground.current) {
+                            setModalOpen(false); }
+                    }}>
+                        <div className={'getMypageModalContent'}>
+                            
+                            <div>
+                            검색 결과가 조회됩니다
+                                <button className={'modalCloseBtn'} onClick={() => setModalOpen(false)}>
+                                창닫기</button>
+                            <br/>
+                            </div>
+                                <PostFromMypage modalPost={modalPost} 
+                                // images={images}
+                                // replyList={replyList}   likeList={likeList}
+                                />
+
+                        </div>
+                    </div>
+                }
             </div>
-       </div> 
+       </div>
     )
     
 }

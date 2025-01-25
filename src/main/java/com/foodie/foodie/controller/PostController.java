@@ -139,7 +139,7 @@ public class PostController {
 
     //여기 id는 postid
     @GetMapping("/getPost/{id}")
-    public Post getPost( @PathVariable("id") int id){
+    public PostMemberPlaceView getPost( @PathVariable("id") int id){
         return ps.getPost(id);
     }
 

@@ -456,15 +456,15 @@ const WritePost = () => {
 
                     {
                     modalOpen &&
-                    <div className={'modal-container'} ref={modalBackground} onClick={e => {
+                    <div className={'writePostModalContainer'} ref={modalBackground} onClick={e => {
                     if (e.target === modalBackground.current) {
                         setModalOpen(false);
                     }
                     }}>
-                    <div className={'modal-content'}>
+                    <div className={'writePostModalContent'}>
                         
                         <p>검색 결과가 조회됩니다<button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
-                        모달 닫기
+                        창닫기
                         </button></p>
                         
                         <form className="inputForm" onSubmit={handleSubmit}>

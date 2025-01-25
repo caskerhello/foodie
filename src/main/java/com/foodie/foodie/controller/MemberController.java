@@ -140,12 +140,12 @@ public class MemberController {
     PostService ps;
 
     @GetMapping("/getMyPost")
-    public HashMap<String , Object> getMyPost(HttpSession session) {
+    public HashMap<String , Object> getMyPost(@RequestParam("memberid") int memberid,HttpSession session) {
         HashMap<String, Object> result = new HashMap<>();
 
 //        List list = null;
         List list2 = null;
-        int memberid = (int)session.getAttribute("memberid");
+//        int memberid = (int)session.getAttribute("memberid");
 
         System.out.println(memberid);
 
@@ -155,6 +155,7 @@ public class MemberController {
             List<Images> imgl = ps.getImgListByPostidOrderByPostidDesc( p.getPostid() );
             String imgname = imgl.get(0).getSavefilename();
             imglist.add( imgname );
+
         }
 
         result.put("postList", list);
