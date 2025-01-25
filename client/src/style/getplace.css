@@ -1,0 +1,23 @@
+.modal-open-button, .modalCloseBtn {
+    cursor: pointer;
+    margin-left: auto;
+  }
+  
+  .getPlaceByNameModalContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .getPlaceByNameModalContent {
+    background-color: #ffffff;
+    width: 500px;
+    height: 500px;
+    padding: 15px;
+  }
