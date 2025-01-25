@@ -40,10 +40,12 @@ const [options1, setOptions1] = useState(
     sort: kakao.maps.services.SortBy.DISTANCE,
 });
 
+const [currentLocation, setCurrentLocation] = useState({})
+
 const [movedLocation2,setMovedLocation2] =useState({})
 
 const [InputText, setInputText] = useState('')
-const [Place, setPlace] = useState('')    
+const [Place, setPlace] = useState('')
 
 async function selectButton(place){
     if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))
@@ -57,7 +59,7 @@ async function selectButton(place){
     setCategory(placeresult.data.category)
     setSelectedPlace(place);
 
-} 
+}
 
 const categories = ["", "한식", "양식", "중식", "일식", "후식"];
 const categoryName1 = categories[category];
@@ -68,7 +70,7 @@ const onChange = (e) => {
 }
 
 const handleSubmit = (e) => {
-    e.preventDefault()     
+    e.preventDefault()
 
     setOptions1({
     location: new kakao.maps.LatLng(
@@ -81,16 +83,69 @@ const handleSubmit = (e) => {
 
 
     if(!movedLocation2.lat){
+
+        if(currentLocation){
+            setOptions1(
+                currentLocation
+            )
+
+        }
+
+
+        else{
         setOptions1({
             location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
             radius: 1000,
             sort: kakao.maps.services.SortBy.DISTANCE,
             })
+        }
     }
 
     setPlace(InputText)
     setInputText('')
-    }
+}
+
+// const onSubmitEnter = (e) => {
+//     // if(e.key === 'Enter' || e.keyCode === 13) {
+//     if(e.key === 'Enter') {
+//       // 엔터 키 입력 후 발생하는 이벤트 작성
+//     console.log('enter 입력');
+    
+//     setOptions1({
+//         location: new kakao.maps.LatLng(
+//             movedLocation2.lat,
+//             movedLocation2.lng
+//         ),
+//         radius: 1000,
+//         sort: kakao.maps.services.SortBy.DISTANCE,
+//         })
+    
+    
+//         if(!movedLocation2.lat){
+    
+//             if(currentLocation){
+//                 setOptions1(
+//                     currentLocation
+//                 )
+    
+//             }
+    
+    
+//             else{
+//             setOptions1({
+//                 location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
+//                 radius: 1000,
+//                 sort: kakao.maps.services.SortBy.DISTANCE,
+//                 })
+//             }
+//         }
+    
+//         setPlace(InputText)
+//         setInputText('')
+
+
+//     }
+// }
 
 const [ imgsrc1, setImgsrc1 ] = useState('');
 const [ imgsrc2, setImgsrc2 ] = useState('');
@@ -208,6 +263,8 @@ async function onSubmit(){
     navigate('/main');
     
 }
+
+
 
 return (
     <div className='writePostContainer'
@@ -367,19 +424,22 @@ return (
             <div className={'writePostModalContainer'} ref={modalBackground} onClick={e => {
             if (e.target === modalBackground.current) {
                 setModalOpen(false);
+                setPlace('');
             }
             }}>
             <div className={'writePostModalContent'}>
-                <p>검색 결과가 조회됩니다<button className={'modalCloseBtn'} onClick={() => setModalOpen(false)}>
-                창닫기
-                </button></p>
+                <div className='writePostTitle'><button className={'modalCloseBtn'} onClick={() => { setModalOpen(false); setPlace(''); } }>
+                X
+                </button></div>
                 
                 <form className="inputForm" onSubmit={handleSubmit}>
-                    <input placeholder="검색어를 입력하세요" onChange={onChange} value={InputText} />
-                    <button type="submit">검색</button>
+                    <input placeholder="장소 검색" onChange={onChange} value={InputText} autoFocus/>
+                    <button type="submit" className='modalCloseBtn'>검색</button>
+                    <br/>
+                    <br/>
                 </form>
 
-                <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1} selectButton={selectButton}/>
+                <MapContainer searchPlace={Place} setPlace={setPlace} setPlace_name={setPlace_name} setRoad_address_name={setRoad_address_name} setPhone={setPhone} setPlace_url={setPlace_url} setModalOpen={setModalOpen} setSelectedPlace={setSelectedPlace} movedLocation2={movedLocation2} setMovedLocation2={setMovedLocation2} options1={options1} setOptions1={setOptions1} selectButton={selectButton} setCurrentLocation={setCurrentLocation}/>
                                     
 
             </div>

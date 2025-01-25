@@ -5,7 +5,7 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, selectButton}) => {
+const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, selectButton, onSubmitEnter, setCurrentLocation}) => {
 
 
   const [locationw, setLocationw] = useState();
@@ -18,7 +18,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
   const [lanw, setLanw] = useState(37.57261013516411);
   const [lonw, setLonw] = useState(126.99042333710086);
 
-  const getLocationw = () => {
+  const getLocationW = () => {
 
     
 
@@ -34,11 +34,17 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         setLanw(position.coords.latitude)
         setLonw(position.coords.longitude)
 
-        setOptions1({      
-          location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),    
+        setCurrentLocation({
+          location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
           radius: 1000,
           sort: kakao.maps.services.SortBy.DISTANCE,
-        })  
+        })
+
+        setOptions1({
+          location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          radius: 1000,
+          sort: kakao.maps.services.SortBy.DISTANCE,
+        })
         setPlace('')
         
     },
@@ -50,7 +56,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         });
         setLanw(37.57261013516411)
         setLonw(126.99042333710086)
-               
+
     }
     );
 };    
@@ -217,25 +223,26 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
   }, [searchPlace, options, options1])
 
 
-  // const placeRefs = useRef([]);  
+  // const placeRefs = useRef([]);
 
 
   return (
-    <div id='MapContainer'>
-      <CiGps style={{ width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocationw()}}/>
-
-      {/* <CiGps style={{ position: 'fixed', top:'2%',right:'4%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocation()}}/> */}
+    <div id='mapContainer'>
       
       <div
         id="myMap"
         style={{
-          width: '500px',
+          width: '600px',
           height: '500px',
+          borderRadius:"20px",
+          boxShadow:"0px 0px 5px",
         }}
       ></div>
+
+      <CiGps style={{position:"absolute",zIndex:"1", width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocationW()}}/>
       
       
-      <div id="result-list">
+      <div id="resultList">
 
         
         {/* 위도 {options1.x} 과 경도 {options1.y} 를 기준으로 
@@ -243,37 +250,37 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
 
 
         {Places.map((item, i) => (
-          <div key={i} style={{ marginTop: '20px' }}>
-            <span>{i + 1}</span>
-            <div>
-              <h5>{item.place_name}</h5>
-              {item.road_address_name ? (
-                <div>
-                  <span>{item.road_address_name}</span><br></br>
-                  <span>({item.address_name})</span>
-                </div>
-              ) : (
-                <span>{item.address_name}</span>
-              )}
-              <br/>
-              <span>{item.phone}</span><br/><br/>
-
-              <span style={{display:"none"}}>{item.category_group_code}</span><br/>
-
-              <span style={{display:"block"}}>{item.category_name}</span><br/>
-
-              <span style={{display:"none"}}>{item.id}</span><br/>
-
-              <span style={{display:"none"}}>{item.x}</span><br/>
-
-              <span style={{display:"none"}}>{item.y}</span><br/>
-
-              <span style={{display:"none"}}>{item.place_url}</span><br/>
-
-              <button onClick={() => window.open(item.place_url, '_blank')}>카카오맵에서 보기</button>
-            </div>
+          <div key={i} style={{ marginBottom: '20px' }} className='mapContainerResult'>
+            <div className='mapContainerResultTitle'>{i + 1} {item.place_name}</div><br/>
+            <div className='mapContainerResultContents'>{item.category_name}</div><br/>
             
-            <button onClick={() => { selectButton(item); setModalOpen(false); }}>선택</button>
+            {/* <div></div> */}
+
+            {item.road_address_name ? (
+              <div className='mapContainerResultContents'>
+                <span>{item.road_address_name}</span><br></br>
+                {/* <span>({item.address_name})</span> */}
+              </div>
+            ) : (
+              <span>{item.address_name}</span>
+            )}<br/>
+
+            <div className='mapContainerResultContents'>{item.phone}</div><br/>
+
+            <span style={{display:"none"}}>{item.category_group_code}</span>
+
+            <span style={{display:"none"}}>{item.id}</span>
+
+            <span style={{display:"none"}}>{item.x}</span>
+
+            <span style={{display:"none"}}>{item.y}</span>
+
+            <span style={{display:"none"}}>{item.place_url}</span>
+
+            <div className='btns'>
+              <button onClick={() => window.open(item.place_url, '_blank')}>카카오맵에서 보기</button> &nbsp;
+              <button onClick={() => { selectButton(item); setModalOpen(false); }}>선택</button>
+            </div>
           </div>
         ))}
         <div id="pagination"></div>

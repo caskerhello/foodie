@@ -59,9 +59,9 @@ return (
                         return (
                             <div key={idx}>
                                 장소명 : {place.placeName} <br/>
+                                카테고리 : {place.category} <br/>
                                 리뷰수 : {place.reviewamount} <br/>
                                 평균별점 : {place.avestars} <br/>
-                                카테고리 : {place.category} <br/>
                                 도로명주소 : {place.road_address_name} <br/>
                                 전화번호 : {place.phone} <br/>
                                 <button
