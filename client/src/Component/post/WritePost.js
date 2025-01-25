@@ -356,7 +356,7 @@ const WritePost = () => {
                     
                 </div>
 
-                <div className='field' >
+                <div className='field' id='wpFindPlace' >
                         <div className='title'>
                             장소검색
                             {/* <button onClick={() => setModalOpen(true)}>검색</button> */}
@@ -456,15 +456,15 @@ const WritePost = () => {
 
                     {
                     modalOpen &&
-                    <div className={'modal-container'} ref={modalBackground} onClick={e => {
+                    <div className={'writePostModalContainer'} ref={modalBackground} onClick={e => {
                     if (e.target === modalBackground.current) {
                         setModalOpen(false);
                     }
                     }}>
-                    <div className={'modal-content'}>
+                    <div className={'writePostModalContent'}>
                         
                         <p>검색 결과가 조회됩니다<button className={'modal-close-btn'} onClick={() => setModalOpen(false)}>
-                        모달 닫기
+                        창닫기
                         </button></p>
                         
                         <form className="inputForm" onSubmit={handleSubmit}>
@@ -477,11 +477,12 @@ const WritePost = () => {
                     </div>
                     </div>
                     }
-
+            {/* <div className='field' > */}
                 <div className='btns'>
                     <button onClick={ ()=>{ onSubmit() } }>작성완료</button>
                     <button onClick={ ()=>{ navigate('/main') } }>Main으로</button>
                 </div>
+            {/* </div> */}
 
                 <div style={{width:"800px",height:"100px"}}></div>
 

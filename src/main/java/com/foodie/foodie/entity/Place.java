@@ -14,7 +14,9 @@ public class Place {
     private double avestars;
     private int kakaoplaceid;
     private int category;
-    private String place_name;
+
+    @Column(name = "place_name")  // DB 컬럼명과 매핑
+    private String placeName;
     private String road_address_name;
     private String phone;
     private String place_url;

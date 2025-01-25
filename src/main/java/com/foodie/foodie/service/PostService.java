@@ -168,13 +168,28 @@ public class PostService {
         return ir.findByPostidOrderByPostidDesc( id );
     }
 
-    public Post getPost(int id) {
-        Optional<Post> p = pr.findByPostid(id);
+//    public Post getPost(int id) {
+//        Optional<Post> p = pr.findByPostid(id);
+//
+//        if( p.isPresent() ){
+//            return p.get();
+//        }else{
+//            return null;
+//        }
+//    }
+
+    public PostMemberPlaceView getPost(int id) {
+        Optional<PostMemberPlaceView> p = pmpv.findByPostid(id);
 
         if( p.isPresent() ){
             return p.get();
         }else{
             return null;
         }
+    }
+
+    public List<PostMemberPlaceView> getPostListByPlaceid(int placeid) {
+//        return pr.findAllByPlaceid(placeid);
+        return pmpv.findAllByPlaceid(placeid);
     }
 }

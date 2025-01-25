@@ -33,6 +33,7 @@ const MainMenu = (props) => {
         boxSizing:"border-box",
         zIndex: "1",
         backdropFilter: "blur(5px)",
+        
     }
 
     const topMenuOff = {
@@ -47,6 +48,7 @@ const MainMenu = (props) => {
         padding:"10px 0",
         marginBottom:"10px",
         boxSizing:"border-box",
+
     }
 
     const cookies = new Cookies()
@@ -55,7 +57,7 @@ const MainMenu = (props) => {
     const [loginUser, setLoginUser] = useState({});
     const [iconstyle, setIconstyle] = useState({width:'30px',height:'30px'});
 
-    const [searchTag, setSearchTag] = useState('');
+    const [searchPlace, setSearchPlace] = useState('');
     
     const [topMenuCss, setTopMenuCss] = useState(topMenuOn);
     const [menuViewOrNot, setMenuViewOrNot] = useState(false);
@@ -90,7 +92,7 @@ const MainMenu = (props) => {
         }else{
             setInputStyle({display:"none"})
             props.setWord('');
-            setSearchTag('');
+            setSearchPlace('');
         }
     },[viewOrNot])
 
@@ -103,7 +105,7 @@ const MainMenu = (props) => {
             setTopMenuCss(topMenuOn)
             
             props.setWord('');
-            setSearchTag('');
+            setSearchPlace('');
         }
     },[menuViewOrNot])
 
@@ -126,13 +128,23 @@ const MainMenu = (props) => {
             dispatch( logoutAction() );
             cookies.remove('user', {path:'/',} )
             navigate('/')
-        }).catch((err)=>{console.error(err)})       
+        }).catch((err)=>{console.error(err)})
         
-            }, 1200); 
+            }, 1200);
     }
 
-    function onSearch(){
-        props.setWord( searchTag );
+    function onSearch() {
+        if(!searchPlace){return alert("한글자이상 입력해주세요!")}
+        props.setWord(searchPlace);  
+        console.log(searchPlace);
+        navigate(`/getPlace/${searchPlace}`, { replace: true });
+        setViewOrNot( !viewOrNot );
+    }
+
+    function onCategorySearch(category) {
+        
+        navigate(`/getCategoryPlace/${category}`, { replace: true });
+        setViewOrNot( !viewOrNot );
     }
 
     function onChangeMenuView(){
@@ -143,6 +155,16 @@ const MainMenu = (props) => {
 
     function onChangeView(){
         setViewOrNot( !viewOrNot );
+    }
+
+    const onSubmitEnter = (e) => {
+        // if(e.key === 'Enter' || e.keyCode === 13) {
+        if(e.key === 'Enter') {
+          // 엔터 키 입력 후 발생하는 이벤트 작성
+          console.log('enter 입력');
+          onSearch()
+          setViewOrNot( !viewOrNot );
+        }    
     }
     
     return (
@@ -166,43 +188,45 @@ const MainMenu = (props) => {
                                
 
                 <VscExport style={iconstyle} onClick={
-                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}                    
-                    />  
+                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
+                />
                 
             </div>
 
             <div className='search' style={inputStyle}>
-                <input type="text" value={searchTag} style={{flex:"4",height:'20px' ,padding:"3px"}} onChange={
-                    (e)=>{ setSearchTag( e.currentTarget.value) } 
-                } />
+                <input type="text" value={searchPlace} style={{flex:"4",height:'20px' ,padding:"3px"}} onChange={
+                    (e)=>{ setSearchPlace( e.currentTarget.value) } 
+                } 
+                onKeyDown={onSubmitEnter}
+                />
                 
                 <button style={{flex:"1.2", padding:"3px"}} onClick={
                     ()=>{ onSearch() }
                 }>음식점 <br></br>검색</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
-                    ()=>{ onSearch() }
+                    ()=>{ onCategorySearch(1) }
                 }>한식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
-                    ()=>{ onSearch() }
+                    ()=>{ onCategorySearch(2) }
                 }>양식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
-                    ()=>{ onSearch() }
+                    ()=>{ onCategorySearch(3) }
                 }>중식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
-                    ()=>{ onSearch() }
+                    ()=>{ onCategorySearch(4) }
                 }>일식 <br></br>조회</button>
 
                 <button style={{flex:"1", padding:"3px"}} onClick={
-                    ()=>{ onSearch() }
+                    ()=>{ onCategorySearch(5) }
                 }>후식 <br></br>조회</button>
             </div>
 
 
-            <ToastContainer
+        <ToastContainer
             position="top-right"
             autoClose={1000}        // 알림이 자동으로 닫히는 시간 (ms)
             hideProgressBar={false} // 진행바 숨기기
@@ -214,7 +238,7 @@ const MainMenu = (props) => {
             pauseOnHover={true}           // 알림을 호버했을 때 멈추게 할지 여부
             theme="light"          // 알림의 테마 (light/dark)
             transition={Slide}    // 알림 표시 애니메이션 (Bounce, Fade, Flip 등)
-            />
+        />
         </div>
 
         
