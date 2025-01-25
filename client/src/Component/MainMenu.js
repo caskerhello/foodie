@@ -33,6 +33,8 @@ const MainMenu = (props) => {
         boxSizing:"border-box",
         zIndex: "1",
         backdropFilter: "blur(5px)",
+        borderRadius:"10px",
+        boxShadow: "0px 0px 5px",
         
     }
 
@@ -88,7 +90,9 @@ const MainMenu = (props) => {
 
     useEffect(()=>{
         if(viewOrNot){
-            setInputStyle({position:'fixed' , bottom:'8%',right:'35%' ,display:"flex",justifyContents:'center',alignItems:'center',border:'1px dotted black' ,marginBottom:"10px",width:"700px",zIndex: "1"});
+            setInputStyle({position:'fixed' , bottom:'8%',right:'35%' ,display:"flex",justifyContents:'center',alignItems:'center',
+                // border:'1px dotted black' ,
+                marginBottom:"10px",width:"700px",zIndex: "1"});
         }else{
             setInputStyle({display:"none"})
             props.setWord('');

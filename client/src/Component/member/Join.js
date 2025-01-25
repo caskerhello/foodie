@@ -111,6 +111,8 @@ const Join = () => {
     }
 
     return (
+        <div className='joinformContainer'>
+
         <div className='joinform'>
             <div className='logo'>회원가입</div>
             <div className='field'>
@@ -181,6 +183,8 @@ const Join = () => {
                 >가입</button>
                 <button onClick={() => { navigate('/') }}>뒤로</button>
             </div>
+        </div>
+
         </div>
     )
 }

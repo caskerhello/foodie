@@ -13,13 +13,12 @@
 
 }
 
-.mypage{
-    
+.mypage{    
     /* position: absolute; */
     /* top: 5%; */
     /* left: 15%; */
     width:850px;
-    border:2px solid black;
+    border:0px solid black;
     border-radius : 10px;
     margin:2px;
     display: flex;
@@ -45,8 +44,8 @@
     width:250px;
     height:250px;
     border-radius: 50%;
-    border:2px solid black;
-    
+    border:0px solid black;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);    
 }
 .mypage .userinfo .profile{
     flex:1;
@@ -67,13 +66,14 @@
 }
 .mypage .userinfo .profile .field .title{
     flex: 1;
-    font-size: 150%;
+    /* font-weight: bold; */
+    font-size: 200%;
 }
 .mypage .userinfo .profile .field .content{
     font-family: "Dongle", serif;
     /* font-weight: 400; */
     font-style: normal;
-    font-size: 150%;
+    font-size: 180%;
     flex :4;
 }
 /* .mypage .userinfo .profile .field label{
@@ -98,7 +98,9 @@
     font-family: "Dongle", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 150%;
+    font-size: 200%;
+
+    line-height: 0.7;
 
     margin:2px;
     border-radius: 10px;
@@ -140,20 +142,29 @@
     /* border:2px solid black; */
     justify-content: center;
     height:250px;
+    margin: 10px;
     /* margin-bottom: 100px; */
     
-
 }
+
 .userpost div img{
     width:250px;
     height: 250px;
     border-radius: 50%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);   
 }
 
 
 .modal-open-button, .modalCloseBtn {
     cursor: pointer;
     margin-left: auto;
+
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 100%;
+
+    line-height: 0.7;
 }
 
 .getMypageModalContainer {
@@ -178,4 +189,51 @@
     width: 650px;
     height: 730px;
     padding: 15px;
+    
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.getMypageModalTitle{
+    width: 100%;
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+    display: flex;
+    justify-content: right;
+}
+
+.getMypageModalContent .mainImg{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.getMypageModalContent img{
+    
+    width: 500px;
+    height: 500px;
+    border-radius: 40px;
+}
+
+.postFromMypage .postProfile span{
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 200%;
+}
+
+.postFromMypage .postButtonsAndContents span{
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 150%;
+}
+
+.postFromMypage .postReply .postReplyContents{
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 150%;
 }

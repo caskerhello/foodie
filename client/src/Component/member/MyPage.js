@@ -123,13 +123,11 @@ return (
                         setModalOpen(false); }
                 }}>
                     <div className={'getMypageModalContent'}>
-                        <div>
-                        검색 결과가 조회됩니다
-                            <button className={'modalCloseBtn'} onClick={() => setModalOpen(false)}>
-                            창닫기</button>
+                        <div className='getMypageModalTitle'>                        
+                            
                         <br/>
                         </div>
-                            <PostFromMypage modalPost={modalPost}
+                            <PostFromMypage modalPost={modalPost} setModalOpen={setModalOpen}
                             />
                     </div>
                 </div>
