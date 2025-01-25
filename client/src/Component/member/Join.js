@@ -28,30 +28,25 @@ const Join = () => {
     const pwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*])[A-Za-z\d~!@#$%^&*]{8,15}$/;
 
     /* 비밀번호 유효성 검사 */
-    useEffect(
-        () => {
-            if (!pwd) {
-                setPwdMessage('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
-                setIsPwdValid(false);
-            } else if (!pwdRegex.test(pwd)) {
-                setPwdMessage('비밀번호 형식이 올바르지 않습니다');
-                setIsPwdValid(false);
-            } else {
-                setPwdMessage('');
-                setIsPwdValid(false);
-            }
-
-            if (pwd === pwdCheck) {
-                setPwdCheckMessage('');
-                setIsPwdValid(true);
-            } else {
-                setPwdCheckMessage('비밀번호 확인이 일치하지 않습니다');
-                setIsPwdValid(false);
-            }
-
-
-        }, [pwd, pwdCheck]
-    );
+    useEffect(() => {
+        if (!pwd) {
+            setPwdMessage('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
+            setPwdCheckMessage('');
+            setIsPwdValid(false);
+        } else if (!pwdRegex.test(pwd)) {
+            setPwdMessage('비밀번호 형식이 올바르지 않습니다');
+            setPwdCheckMessage('');
+            setIsPwdValid(false);
+        } else if (pwd !== pwdCheck) {
+            setPwdMessage('');
+            setPwdCheckMessage('비밀번호 확인이 일치하지 않습니다');
+            setIsPwdValid(false);
+        } else {
+            setPwdMessage('');
+            setPwdCheckMessage('');
+            setIsPwdValid(true);
+        }
+    }, [pwd, pwdCheck]);
 
     /* 이메일 형식 검증 정규식 */
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
