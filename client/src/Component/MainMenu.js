@@ -71,16 +71,16 @@ const MainMenu = (props) => {
         if(!sessionStorage.getItem('loginAlertShown'))
             {toast.success(
                 <>
-                  <span style={{ color: "rgb(242, 38, 38)" }}>
-                    {lUser.nickname}
-                  </span>
-                  님 로그인 완료!
+                <span style={{ color: "rgb(242, 38, 38)" }}>
+                {lUser.nickname}
+                </span>
+                님 로그인 완료!
                 </>,
                 {
                   position: "top-right",  // 알림 위치 설정
                   autoClose: 1000,         // 자동으로 닫히는 시간 (500ms)
                 }
-              );}
+            );}
             sessionStorage.setItem('loginAlertShown', 'true');
     },[])
 
@@ -112,16 +112,16 @@ const MainMenu = (props) => {
     function onLogout(){
         toast.success(
             <>
-              <span style={{ color: "rgb(242, 38, 38)" }}>
-                {lUser.nickname}
-              </span>
-              님 로그아웃 완료!
+            <span style={{ color: "rgb(242, 38, 38)" }}>
+            {lUser.nickname}
+            </span>
+            님 로그아웃 완료!
             </>,
             {
               position: "top-right",  // 알림 위치 설정
               autoClose: 700,         // 자동으로 닫히는 시간 (500ms)
             }
-          );
+        );
         setTimeout(() => {
         axios.get('/api/member/logout')
         .then((result)=>{
@@ -161,9 +161,9 @@ const MainMenu = (props) => {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-          console.log('enter 입력');
-          onSearch()
-          setViewOrNot( !viewOrNot );
+        console.log('enter 입력');
+        onSearch()
+        setViewOrNot( !viewOrNot );
         }    
     }
     
@@ -174,18 +174,17 @@ const MainMenu = (props) => {
                 
                 <VscHome style={iconstyle}onClick={ 
                     ()=>{   navigate('/main') }
-                }/>                
+                }/>
 
                 <VscEdit style={iconstyle} onClick={
                     ()=>{ navigate('/writePost')}} />
-               
+
                 <VscSearch style={iconstyle} onClick={
                     ()=>{ onChangeView()  }} />
-              
+
                 <VscAccount style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
                 } />
-                               
 
                 <VscExport style={iconstyle} onClick={
                     ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
