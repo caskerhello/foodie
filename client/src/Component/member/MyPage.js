@@ -17,150 +17,126 @@ import 'slick-carousel/slick/slick-theme.css'
 import '../../style/mypage.css'
 
 const MyPage = () => {
-    const [ imgSrc, setImgSrc ]=useState();
-    const [ followers, setFollowers] = useState([]);  // 나를 follow 하는 사람들
-    const [ followings, setFollowings ] = useState([]);   // 내가 following 하는 사람들
-    const [ postList, setPostList ] = useState([]);  // 로그인 유저가 작성한 포스트들
-    const [ imgList, setImgList] = useState([]);   // 하단에 포스트를 대변할 수 있는 이미지들
-    // const [loginUser, setLoginUser] = useState({});
-    const lUser = useSelector( state=>state.user );
-    const [ word, setWord ] = useState('');
+const [ imgSrc, setImgSrc ]=useState();
+const [ followers, setFollowers] = useState([]);  // 나를 follow 하는 사람들
+const [ followings, setFollowings ] = useState([]);   // 내가 following 하는 사람들
+const [ postList, setPostList ] = useState([]);  // 로그인 유저가 작성한 포스트들
+const [ imgList, setImgList] = useState([]);   // 하단에 포스트를 대변할 수 있는 이미지들
+// const [loginUser, setLoginUser] = useState({});
+const lUser = useSelector( state=>state.user );
+const [ word, setWord ] = useState('');
 
-    const [ post, setPost ] =useState({});
-    const [ modalPost, setModalPost ] =useState({});
-    const [ images, setImages] =useState([]);
-    const [ likeList, setLikeList ] = useState([]);
-    const [ replyList, setReplyList] = useState([]);
+const [ post, setPost ] =useState({});
+const [ modalPost, setModalPost ] =useState({});
+const [ images, setImages] =useState([]);
+const [ likeList, setLikeList ] = useState([]);
+const [ replyList, setReplyList] = useState([]);
 
-    const navigate=useNavigate();
+const navigate=useNavigate();
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const modalBackground = useRef();
+const [modalOpen, setModalOpen] = useState(false);
+const modalBackground = useRef();
 
-    useEffect(
-        ()=>{
-            // console.log("loginUser.profileimg :"+lUser.profileimg)
-
-            if( lUser.profileimg ){
-                setImgSrc(lUser.profileimg)
-            }
-            
-            axios.get('/api/member/getMyPost', {params:{memberid:lUser.memberid}})
-            .then((result)=>{
-                console.log(result.data.postList)
-
-                console.log(result.data.imgList)
-                setPostList([...result.data.postList])
-
-                setImgList( [...result.data.imgList] );
-            }).catch((err)=>{console.error(err)})
-
-        },[]
-    )
-
-    async function myPageModalOpen(postid) {
-    
-        try {
-            const result = await axios.get(`/api/post/getPost/${postid}`);
-            console.log(result.data);
-            setModalPost(result.data);
-        } catch (err) {
-            console.error(err);
+useEffect(
+    ()=>{
+        if( lUser.profileimg ){
+            setImgSrc(lUser.profileimg)
         }
+        
+        axios.get('/api/member/getMyPost', {params:{memberid:lUser.memberid}})
+        .then((result)=>{
+        setPostList([...result.data.postList])
+        setImgList( [...result.data.imgList] );
+        }).catch((err)=>{console.error(err)})
+    },[]
+)
 
-        setModalOpen(true);
+async function myPageModalOpen(postid) {
+    try {
+        const result = await axios.get(`/api/post/getPost/${postid}`);
+        console.log(result.data);
+        setModalPost(result.data);
+    } catch (err) {
+        console.error(err);
     }
+    setModalOpen(true);
+}
 
-    return (
-        <div className='mypageContainer'>
-            <div className='mypage'>
-                <MainMenu setWord={setWord} />
+return (
+    <div className='mypageContainer'>
+        <div className='mypage'>
+            <MainMenu setWord={setWord} />
 
-                <div className='title'>내 정보</div>
+            <div className='title'>내 정보</div>
+
+            <div className='userinfo'>
+                <div className='img'>
+                    <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} />
+                    
+                </div>
+                <div className='profile'>
+                    <div className='field'>
+                        <div className='title'><label>이메일</label></div>
+                        <div className='content'><div>{lUser.email}</div></div>
+                    </div>
+                    <div className='field'>
+                        <div className='title'><label>닉네임</label></div>
+                        <div className='content'><div>{lUser.nickname}</div></div>
+                    </div>
+                    
+                    <div className='field'>
+                        <div className='title'><label>소개</label></div>
+                        <div className='content'><div>{lUser.profilemsg}</div></div>
+                    </div>
+                </div>
+            </div>
+            <div className='btns' >
+                <button onClick={()=>{navigate('/editProfile')}}>프로필 수정</button>
+                {/* <button>팔로우/팔로워</button> */}
+                <button>북마크</button>
+            </div>
+            <div className='userpost' >
                 
-
-                <div className='userinfo'>
-                    
-                    <div className='img'>
-                        <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} />
-                        
-                    </div>
-                    <div className='profile'>
-                        <div className='field'>
-                            <div className='title'><label>이메일</label></div>
-                            
-                            <div className='content'><div>{lUser.email}</div></div>
-                            
-                        </div>
-                        <div className='field'>
-                            <div className='title'><label>닉네임</label></div>
-                            
-                            <div className='content'><div>{lUser.nickname}</div></div>
-                            
-                        </div>
-                        
-                        <div className='field'>
-                            <div className='title'><label>소개</label></div>
-                            
-                            <div className='content'><div>{lUser.profilemsg}</div></div>
-
-                            
-                        </div>
-                    </div>
-                </div>
-                <div className='btns' >
-                    <button onClick={()=>{navigate('/editProfile')}}>프로필 수정</button>
-                    {/* <button>팔로우/팔로워</button> */}
-                    <button>북마크</button>
-                </div>
-                <div className='userpost' >
-                    
-                    {/* 한줄에 세개씩 이미지를 적당한 크기로 나열해주세요. 필요하다면  css 수정도 해주세요 */}
-                    {
-                        (imgList)?(
-                            imgList.map((imgs, idx)=>{
-                                return (
-                                    <div key={idx} 
-                                    
-                                    onClick={
-                                        // ()=>{ navigate(`/postOne`) }
-                                        ()=>{ myPageModalOpen(`${postList[idx].postid}`) }
-                                    }
-                                    >
-                                        <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgs}`} />
-                                    </div>
-                                )
-                            })
-                        ):(null)
-                        
-                    }
-                </div>
-
+                {/* 한줄에 세개씩 이미지를 적당한 크기로 나열해주세요. 필요하다면  css 수정도 해주세요 */}
                 {
-                    modalOpen &&
-                    <div className={'getMypageModalContainer'} ref={modalBackground} onClick={e => {
-                        if (e.target === modalBackground.current) {
-                            setModalOpen(false); }
-                    }}>
-                        <div className={'getMypageModalContent'}>
-                            
-                            <div>
-                            검색 결과가 조회됩니다
-                                <button className={'modalCloseBtn'} onClick={() => setModalOpen(false)}>
-                                창닫기</button>
-                            <br/>
-                            </div>
-                                <PostFromMypage modalPost={modalPost} 
-                                // images={images}
-                                // replyList={replyList}   likeList={likeList}
-                                />
-
-                        </div>
-                    </div>
+                    (imgList)?(
+                        imgList.map((imgs, idx)=>{
+                            return (
+                                <div key={idx}
+                                onClick={
+                                    ()=>{ myPageModalOpen(`${postList[idx].postid}`) }
+                                }
+                                >
+                                    <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgs}`} />
+                                </div>
+                            )
+                        })
+                    ):(null)
+                    
                 }
             </div>
-       </div>
-    )
+
+            {
+                modalOpen &&
+                <div className={'getMypageModalContainer'} ref={modalBackground} onClick={e => {
+                    if (e.target === modalBackground.current) {
+                        setModalOpen(false); }
+                }}>
+                    <div className={'getMypageModalContent'}>
+                        <div>
+                        검색 결과가 조회됩니다
+                            <button className={'modalCloseBtn'} onClick={() => setModalOpen(false)}>
+                            창닫기</button>
+                        <br/>
+                        </div>
+                            <PostFromMypage modalPost={modalPost}
+                            />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+)
     
 }
 
