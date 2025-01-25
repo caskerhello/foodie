@@ -356,7 +356,7 @@ const WritePost = () => {
                     
                 </div>
 
-                <div className='field' >
+                <div className='field' id='wpFindPlace' >
                         <div className='title'>
                             장소검색
                             {/* <button onClick={() => setModalOpen(true)}>검색</button> */}
@@ -477,11 +477,12 @@ const WritePost = () => {
                     </div>
                     </div>
                     }
-
+            {/* <div className='field' > */}
                 <div className='btns'>
                     <button onClick={ ()=>{ onSubmit() } }>작성완료</button>
                     <button onClick={ ()=>{ navigate('/main') } }>Main으로</button>
                 </div>
+            {/* </div> */}
 
                 <div style={{width:"800px",height:"100px"}}></div>
 

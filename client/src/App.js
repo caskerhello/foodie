@@ -9,6 +9,8 @@ import WritePost from './Component/post/WritePost';
 import PostOne from './Component/post/PostOne';
 import MyPage from './Component/member/MyPage';
 import EditProfile from './Component/member/EditProfile';
+import GetPlace from './Component/place/GetPlace';
+import GetCategoryPlace from './Component/place/GetCategoryPlace';
 // import Kakaosaveinfo from './Component/member/Kakaosaveinfo';
 // import MemberPage from './Component/member/MemberPage';
 
@@ -33,6 +35,10 @@ function App() {
                 <Route path="/editProfile" element={<EditProfile />} />
 
                 <Route path="/postOne/:postid" element={<PostOne />} />
+
+                <Route path="/getPlace/:searchPlace" element={<GetPlace />} />
+
+                <Route path="/getCategoryPlace/:category" element={<GetCategoryPlace />} />
 
                 
                 

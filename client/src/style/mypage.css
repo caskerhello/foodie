@@ -87,8 +87,7 @@
 }
 .mypage .btns{ 
     display: flex;
-    margin:10px 0;
-    
+    margin:10px 0;    
 }
 .mypage .btns button{
     flex: 1;
@@ -104,7 +103,28 @@
     margin:2px;
     border-radius: 10px;
     border: 0px;
+
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
+
+/* .editform button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgb(242, 38, 38);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    margin-top: 10px;
+} */
+
+.mypage .btns button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
 
 .userpost{
     width:100%;

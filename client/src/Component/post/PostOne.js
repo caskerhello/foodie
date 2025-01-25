@@ -143,6 +143,10 @@ function PostOne() {
         }
 
     }
+
+    const handleGoBack = () => {
+        navigate(-1); // -1은 이전 페이지로 돌아가는 의미
+      };
     
 
     return (
@@ -234,6 +238,9 @@ function PostOne() {
                 </div>
             </div>
             </div>
+            <button onClick={handleGoBack}>
+            뒤로 가기
+            </button>
         </div>
     )
 }

@@ -177,4 +177,8 @@ public class PostService {
             return null;
         }
     }
+
+    public List<Post> getPostListByPlaceid(int placeid) {
+        return pr.findAllByPlaceid(placeid);
+    }
 }
