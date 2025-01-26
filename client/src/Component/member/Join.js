@@ -1,9 +1,14 @@
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import Cropper from 'react-easy-crop'; // 사진 크롭 기능
+
 import '../../style/join.css'
 
 const Join = () => {
+    const inputRef = useRef(); // 버튼 입력과 동시에 input 작동을 위함
+
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [pwdCheck, setPwdCheck] = useState('');
@@ -81,6 +86,10 @@ const Join = () => {
         }catch(err){ console.error(err) }
     }
 
+    /* 버튼 클릭 시 input 태그 작동을 위한 트리거 */
+    const triggerFileSelectPopup = () => inputRef.current.click();
+
+    /* 회원가입 진행 */
     async function onSubmit(){
         if(!nickname){ return alert('닉네임을 입력하세요'); }
 
@@ -100,95 +109,91 @@ const Join = () => {
         }
     }
 
+    /* 프로필 사진 업로드 */
     async function fileUpload(e){
         const formData = new FormData();
-        formData.append('image',  e.target.files[0]);
+        formData.append('image', e.target.files[0]);
         const result = await axios.post('/api/member/fileUpload', formData);
         setImgSrc(result.data.filename);
-        // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
     }
 
     return (
         <div className='joinformContainer'>
-
-        <div className='joinform'>
-            <div className='logo'>회원가입</div>
-            <div className='field'>
-                <label>이메일</label>
-                <div className='input-wrapper' style={{flexDirection: "row"}}>
-                    <input type='text' style={{flex: "5", marginRight: "10px"}} value={email} placeholder='이메일 입력'
-                           onChange={handleEmailChange}/>
-                    <button style={buttonStyle} onClick={() => { onEmailCheck() }}>중복확인</button>
+            <div className='joinform'>
+                <div className='logo'>회원가입</div>
+                <div className='field'>
+                    <label>이메일</label>
+                    <div className='input-wrapper' style={{flexDirection: "row"}}>
+                        <input type='text' style={{flex: "5", marginRight: "10px"}} value={email} placeholder='이메일 입력'
+                               onChange={handleEmailChange}/>
+                        <button style={buttonStyle} onClick={() => { onEmailCheck() }}>중복확인</button>
+                    </div>
+                    <div className='message' style={{
+                        color: isEmailValid ? "blue" : "rgb(242, 38, 38)"
+                    }}>{emailMessage}</div>
                 </div>
-                <div className='message' style={{
-                    color: isEmailValid ? "blue" : "rgb(242, 38, 38)"
-                }}>{emailMessage}</div>
-            </div>
-            <div className='field' style={{margin: "5px 0"}}>
-            <label>비밀번호</label>
-                <div className='input-wrapper'>
-                    <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
-                        (e) => { setPwd(e.currentTarget.value) }
-                    }/>
-                    <div className='message'>{pwdMessage}</div>
+                <div className='field' style={{margin: "5px 0"}}>
+                <label>비밀번호</label>
+                    <div className='input-wrapper'>
+                        <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
+                            (e) => { setPwd(e.currentTarget.value) }
+                        }/>
+                        <div className='message'>{pwdMessage}</div>
+                    </div>
+                    <div className='input-wrapper'>
+                        <input type='password' value={pwdCheck} placeholder='비밀번호 확인' onChange={
+                            (e) => { setPwdCheck(e.currentTarget.value) }
+                        }/>
+                        <div className='message'>{pwdCheckMessage}</div>
+                    </div>
                 </div>
-                <div className='input-wrapper'>
-                    <input type='password' value={pwdCheck} placeholder='비밀번호 확인' onChange={
-                        (e) => { setPwdCheck(e.currentTarget.value) }
-                    }/>
-                    <div className='message'>{pwdCheckMessage}</div>
+                <div className='field'>
+                    <label>별명</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={nickname} placeholder='별명 입력' onChange={
+                            (e) => { setNickname(e.currentTarget.value) }
+                        }/>
+                    </div>
+                </div>
+                <div className='field'>
+                    <label>전화번호</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={phone} placeholder='전화번호 입력' onChange={
+                            (e) => { setPhone(e.currentTarget.value) }
+                        }/>
+                    </div>
+                </div>
+                <div className='field'>
+                    <label>소개</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={intro} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
+                            (e) => { setIntro(e.currentTarget.value) }
+                        }/>
+                    </div>
+                </div>
+                <div className='field'>
+                    <label>사진</label>
+                    <div className='input-wrapper'>
+                        <input type='file' accept='image/*' ref={inputRef} style={{display: 'none'}}/>
+                        <button onClick={triggerFileSelectPopup}>사진선택</button>
+                    </div>
+                </div>
+                <div className='field'>
+                    <label>사진미리보기</label>
+                    <div><img src={
+                        (imgSrc)?
+                            (`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`)
+                            :(`${process.env.REACT_APP_ADDRESS2}/images/user.png`)
+                    } alt='프로필사진'/></div>
+                </div>
+                <div className='btns'>
+                    <button onClick={() => { onSubmit() }}
+                            disabled={!isEmailValid || !isPwdValid}
+                            className={(!isEmailValid || !isPwdValid) ? "disabled" : "enabled"}
+                    >가입</button>
+                    <button onClick={() => { navigate('/') }}>뒤로</button>
                 </div>
             </div>
-            <div className='field'>
-                <label>별명</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={nickname} placeholder='별명 입력' onChange={
-                        (e) => { setNickname(e.currentTarget.value) }
-                    }/>
-                </div>
-            </div>
-            <div className='field'>
-                <label>전화번호</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={phone} placeholder='전화번호 입력' onChange={
-                        (e) => { setPhone(e.currentTarget.value) }
-                    }/>
-                </div>
-            </div>
-            <div className='field'>
-                <label>소개</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={intro} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
-                        (e) => { setIntro(e.currentTarget.value) }
-                    }/>
-                </div>
-            </div>
-            <div className='field'>
-                <label>사진</label>
-                <div className='input-wrapper'>
-                    <input type='file' onChange={
-                        (e) => { fileUpload(e) }
-                    }/>
-                </div>
-            </div>
-            <div className='field'>
-                <label>사진미리보기</label>
-                <div><img src={
-                    (imgSrc)?
-                        (`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`)
-                        :(`${process.env.REACT_APP_ADDRESS2}/images/user.png`)
-                } alt='프로필사진'/></div>
-            </div>
-
-            <div className='btns'>
-                <button onClick={() => { onSubmit() }}
-                        disabled={!isEmailValid || !isPwdValid}
-                        className={(!isEmailValid || !isPwdValid) ? "disabled" : "enabled"}
-                >가입</button>
-                <button onClick={() => { navigate('/') }}>뒤로</button>
-            </div>
-        </div>
-
         </div>
     )
 }
