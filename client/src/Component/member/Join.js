@@ -13,7 +13,6 @@ const Join = () => {
     const [imgSrc, setImgSrc] = useState('');
 
     const [buttonStyle, setButtonStyle] = useState({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
-    const [imgStyle, setImgStyle] = useState({display:"none"});
 
     const [emailMessage, setEmailMessage] = useState('');
     const [pwdMessage, setPwdMessage] = useState('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
@@ -107,7 +106,6 @@ const Join = () => {
         const result = await axios.post('/api/member/fileUpload', formData);
         setImgSrc(result.data.filename);
         // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
-        setImgStyle({display:"block", width:"200px"});
     }
 
     return (
@@ -126,7 +124,7 @@ const Join = () => {
                     color: isEmailValid ? "blue" : "rgb(242, 38, 38)"
                 }}>{emailMessage}</div>
             </div>
-            <div className='field'>
+            <div className='field' style={{margin: "5px 0"}}>
             <label>비밀번호</label>
                 <div className='input-wrapper'>
                     <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
@@ -167,13 +165,19 @@ const Join = () => {
             </div>
             <div className='field'>
                 <label>사진</label>
-                <input type='file' onChange={
-                    (e) => { fileUpload(e) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type='file' onChange={
+                        (e) => { fileUpload(e) }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>사진미리보기</label>
-                <div><img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} style={imgStyle}/></div>
+                <div><img src={
+                    (imgSrc)?
+                        (`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`)
+                        :(`${process.env.REACT_APP_ADDRESS2}/images/user.png`)
+                } alt='프로필사진'/></div>
             </div>
 
             <div className='btns'>

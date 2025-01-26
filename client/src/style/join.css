@@ -110,7 +110,9 @@
 }
 
 .joinform .field img {
+    display: block;
     margin-top: 10px;
+    width: 150px;
     max-width: 100%;
     border-radius: 5px;
 }
@@ -122,6 +124,6 @@
     .joinform .field input, 
     .joinform .btns button, 
     .joinform .snslogin button{
-        padding: 10px;
+        /*padding: 10px;*/
     }
 }
