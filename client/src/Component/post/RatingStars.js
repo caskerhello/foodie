@@ -3,7 +3,7 @@ import { FaStar } from 'react-icons/fa'
 
 import { PiStarFill } from "react-icons/pi";
 
-import '../../style/ratingstars.css';
+import '../../style/ratingStars.css';
 
 
 // import './RatingStar.css'
