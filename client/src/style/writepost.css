@@ -19,7 +19,7 @@
 
     width:850px;
     /* height: 80vh; */
-    border:2px solid black;
+    border:0px solid black;
     border-radius : 10px;
     padding:15px;
     display: flex;
@@ -58,7 +58,8 @@
 
 .writePost .field .contents{
     margin-left: 50px;
-    flex:6
+    flex:6;
+    text-align: center;
 }
 
 .writePost #wpContent{
@@ -81,6 +82,7 @@
     border: 1px solid rgb(242, 38, 38); 
     resize: none;
     padding: 10px;
+    background-color: #f9f9f9;
 }
 
 .writePost .field textarea:focus {
@@ -184,7 +186,9 @@
     font-family: "Dongle", serif;
     /* font-weight: 400; */
     font-style: normal;
-    font-size: 150%;
+    font-size: 200%;
+
+    line-height: 0.7;
 
     border: 0px;
     border-radius: 10px;
