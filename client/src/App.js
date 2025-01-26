@@ -9,8 +9,8 @@ import WritePost from './Component/post/WritePost';
 import PostOne from './Component/post/PostOne';
 import MyPage from './Component/member/MyPage';
 import EditProfile from './Component/member/EditProfile';
-import GetPlace from './Component/place/GetPlace';
-import GetCategoryPlace from './Component/place/GetCategoryPlace';
+import GetPlaceByName from './Component/place/GetPlaceByName';
+import GetPlaceByCategory from './Component/place/GetPlaceByCategory';
 // import Kakaosaveinfo from './Component/member/Kakaosaveinfo';
 // import MemberPage from './Component/member/MemberPage';
 
@@ -25,7 +25,7 @@ function App() {
             
                 <Route path="/" element={<Login />} />
                 <Route path="/main" element={<Main />} />
-               
+              
                 <Route path="/writePost" element={<WritePost />} />
 
                 <Route path="/myPage" element={<MyPage />} />
@@ -36,23 +36,16 @@ function App() {
 
                 <Route path="/postOne/:postid" element={<PostOne />} />
 
-                <Route path="/getPlace/:searchPlace" element={<GetPlace />} />
+                <Route path="/getPlaceByName/:searchPlace" element={<GetPlaceByName />} />
 
-                <Route path="/getCategoryPlace/:category" element={<GetCategoryPlace />} />
+                <Route path="/getPlaceByCategory/:category" element={<GetPlaceByCategory />} />
 
                 
                 
-                {/* <Route path="/join" element={<Join />} />
-                <Route path="/main" element={<Main />} />
-                <Route path="/writePost" element={<WritePost />} />
-                <Route path="/myPage" element={<MyPage />} />
-                <Route path="/postone/:postid" element={<Postone />} />
-                <Route path="/kakaosaveinfo" element={<Kakaosaveinfo />} />
-                <Route path="/editProfile" element={<EditProfile />} />
-                <Route path="/memberPage/:membernick" element={<MemberPage />} /> */}
+                
         
             </Routes>
-           
+          
             
         </div>
   );

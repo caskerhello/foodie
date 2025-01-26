@@ -141,13 +141,13 @@ const MainMenu = (props) => {
         if(!searchPlace){return alert("한글자이상 입력해주세요!")}
         props.setWord(searchPlace);  
         console.log(searchPlace);
-        navigate(`/getPlace/${searchPlace}`, { replace: true });
+        navigate(`/getPlaceByName/${searchPlace}`, { replace: true });
         setViewOrNot( !viewOrNot );
     }
 
     function onCategorySearch(category) {
         
-        navigate(`/getCategoryPlace/${category}`, { replace: true });
+        navigate(`/getPlaceByCategory/${category}`, { replace: true });
         setViewOrNot( !viewOrNot );
     }
 

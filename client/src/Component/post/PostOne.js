@@ -17,6 +17,8 @@ import 'slick-carousel/slick/slick-theme.css'
 import MainMenu from '../MainMenu';
 import Post from './Post';
 
+import '../../style/postone.css';
+
 
 const settings = {
     dot:false,
@@ -75,7 +77,7 @@ function PostOne() {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString); // ISO 8601 형식의 문자열을 Date 객체로 변환
-      
+    
         const day = String(date.getDate()).padStart(2, '0'); // 일 (2자리로 맞추기)
         const month = String(date.getMonth() + 1).padStart(2, '0'); // 월 (0부터 시작하므로 +1)
         const year = String(date.getFullYear()).slice(-2); // 년 (끝 두 자리만 사용)
@@ -83,8 +85,8 @@ function PostOne() {
         const hours = String(date.getHours()).padStart(2, '0'); // 시간
         const minutes = String(date.getMinutes()).padStart(2, '0'); // 분
         
-        return `${year}/${month}/${day} ${hours}h${minutes}m`;
-      }
+        return `${year}/${month}/${day} ${hours}:${minutes}`;
+    }
 
 
     async function onLike(){
@@ -109,7 +111,7 @@ function PostOne() {
             if( !viewVal ){
                 setReplyStyle({display:"none"})
             }else{
-                setReplyStyle({display:"flex", margin:"5px 5px",marginBottom:"100px"})
+                setReplyStyle({display:"flex", margin:"5px 5px",marginBottom:"10px"})
             }
         },[viewVal]
     );
@@ -146,101 +148,115 @@ function PostOne() {
 
     const handleGoBack = () => {
         navigate(-1); // -1은 이전 페이지로 돌아가는 의미
-      };
+    };
     
 
     return (
-        <div>
+        <div className='postOneContainer'>
             <MainMenu setWord={setWord}/>
-            {/* 해당 포스트 한개만  Main 에서 표시된 것처럼 표시하세요 */}
-            
-            <div className='post' style={{width:"780px"}}>
-                <div className='writer' style={{display:"flex"}}>
-                    <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}><span>#{post.postid}&nbsp;{post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {formatDate(post.writedate)}
-                        </span><span></span><span><VscFileMedia  />{images.length}</span></div>
+
+            <div className='postOne'>
+                <div className='title'>
                     
+                        <span>#{post.postid}&nbsp;{post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {formatDate(post.post_write_date)}
+                        </span>
+
+                        <span><VscFileMedia style={{width:'0.8em'}} />{images.length}</span>
                 </div>
+
                 { <Slider {...settings} >
                     {
                         (images)?(
                             images.map((img, idx)=>{
                                 return (
-                                    <img key={idx} src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="750" height="900"/>
+                                    <div>
+                                        <div className='imgs' >
+                                            <img key={idx} src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`}/>
+                                        </div>
+                                    </div>
                                 )
                             })
                         ):(null)
                     }
                 </Slider>  }
+                <div className='contents1'>
+                {post.post_content}
 
+                </div>
                 
-
-                <div className='like' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                                <span>{
-                                    (likeList)?( 
-                                        likeList.some(
-                                            (like)=>(lUser.memberid==like.memberid) 
-                                        )
-                                        ?
-                                        ( 
-                                            <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
-                                        
-                                        )
-                                        :
-                                        (
-                                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>                                                     
-                                        )
-                                    ):(
-                                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>                                                    
-                                    )
-                                }{likeList.length}&nbsp;&nbsp;&nbsp;
-                                <VscFeedback style={{height:"20px",width:"20px"}} onClick={()=>{
-                                    viewOrNot()}}/>
-                                
-                                {replyList.length}</span>
-                                
-                                <span>
-                                {post.content}★{post.stars}&nbsp;</span> 
-                                <span>
-                            <div className='content' style={{display:"block"}}>
-                                
-                                </div></span></div>
-                <div className='content' style={{fontWeight:"bold",marginBottom:"50px"}}></div>
-                <div className='reply'> 
-
-                {
-                    (replyList && replyList.length>=1)?(
-                        replyList.map((reply, idx)=>{
-                            return (
-                                <div key={idx} style={replyStyle}>
-                                    <div style={{flex:"1", fontWeight:"bold"}}>{reply.nickname}&nbsp;</div>
-                                    <div style={{flex:"3"}}>{reply.reply_content}</div>
-                                    <div style={{flex:"1", fontWeight:"bold"}}>{formatDate(reply.writedate)}&nbsp;</div>
-                                    <div style={{flex:"1", textAlign:"right"}}>
-                                        {
-                                             (reply.memberid==lUser.memberid)?(
-                                                 <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:"100%"}}>삭제</button>
-                                             ):(null)
-                                        }
-                                    </div>
-                                </div>
+                <div className='contents2'>
+                    <span>{
+                        (likeList)?( 
+                            likeList.some(
+                                (like)=>(lUser.memberid==like.memberid) 
                             )
-                        })
-                    ):(<div style={replyStyle}>아직 댓글이 없습니다</div>)
-                }
-                <div style={replyStyle}>
-                    <input type="text" style={{flex:"5"}} value={replyContent} onChange={
-                        (e)=>{ setReplyContent( e.currentTarget.value) }
-                    }/>
-                    <button style={{flex:"1"}} onClick={
-                        ()=>{  addReply() }
-                    }>댓글입력</button>
+                            ?
+                            (
+                                <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
+                            
+                            )
+                            :
+                            (
+                            <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+                            )
+                        ):(
+                            <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+                        )
+                        }{likeList.length}&nbsp;&nbsp;&nbsp;
+                        <VscFeedback style={{height:"20px",width:"20px"}} onClick={()=>{
+                            viewOrNot()}}/>
+                        
+                        {replyList.length}&nbsp;
+                    </span>
+                    
+                    <span>
+                        <span style={{fontSize:'1.4em'}}>★</span>
+                        <span>{post.post_stars}</span>&nbsp;
+                    </span>
+
+                    <span>
+                        <div className='content' style={{display:"block"}}></div>
+                    </span>
+                </div>
+            
+                <div className='reply'>
+
+                    {
+                        (replyList && replyList.length>=1)?(
+                            replyList.map((reply, idx)=>{
+                                return (
+                                    <div key={idx} style={replyStyle}>
+                                        <div style={{flex:"1", fontWeight:"bold"}}>{reply.nickname}&nbsp;</div>
+                                        <div style={{flex:"3"}}>{reply.reply_content}</div>
+                                        <div style={{flex:"1", fontWeight:"bold"}}>{formatDate(reply.writedate)}&nbsp;</div>
+                                        <div style={{flex:"1", textAlign:"right"}}>
+                                            {
+                                                (reply.memberid==lUser.memberid)?(
+                                                    <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:"100%"}}>삭제</button>
+                                                ):(null)
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        ):(<div style={replyStyle}>아직 댓글이 없습니다</div>)
+                    }
+                    <div style={replyStyle}>
+                        <input type="text" style={{flex:"5"}} value={replyContent} onChange={
+                            (e)=>{ setReplyContent( e.currentTarget.value) }
+                        }/>
+                        <button style={{flex:"1"}} onClick={
+                            ()=>{  addReply() }
+                        }>댓글입력</button>
+                    </div>
                 </div>
             </div>
-            </div>
+            <div className='postOneBottom'>
             <button onClick={handleGoBack}>
             뒤로 가기
             </button>
+            </div>
         </div>
     )
 }
