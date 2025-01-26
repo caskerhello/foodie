@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+.postOneContainer{
+    font-family: "Dongle", serif;
+    font-size: 200%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100%;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.postOneContainer .postOne{
+    width: 55vw;
+    /* height: 80vh; */
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px;
+}
+
+.postOneContainer .postOne .title{
+    width: 45vw;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    
+
+}
+
+.postOneContainer .postOne .imgs{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.postOneContainer .postOne .imgs img{
+    width: 60%;
+    /* height: 500px; */
+    border-radius: 10px;
+
+}
+.postOneContainer .postOne .contents1{
+    line-height: 0.8;
+    margin-bottom: 10px;
+
+}
+
+.postOneContainer .postOne .contents2{
+    line-height: 0.8;
+}
+
+.postOneContainer .postOne .reply{
+    width: 90%;
+    font-size: 90%;
+    line-height: 0.8;
+}
+
+.postOneContainer input{
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.postOneContainer button{
+    height: 30px;
+    background-color: rgba(242, 38, 38);
+    border: #f9f9f9;
+    border-radius: 10px;
+    color: white;
+    font-family: "Dongle", serif;
+    font-size: 100%;
+    line-height: 0.8;
+    padding: 5px;
+}
+
+.postOneBottom{
+    margin: 10px;
+}

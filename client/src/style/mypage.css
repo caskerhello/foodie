@@ -30,6 +30,8 @@
     font-weight: 400;
     font-style: normal;
     font-size: 300%;
+
+    text-align: center;
 }
 .mypage .userinfo{
     width:100%;
