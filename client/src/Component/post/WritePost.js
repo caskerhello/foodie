@@ -242,7 +242,7 @@ async function onSubmit(){
     if(!selectedPlace) {return alert('음식점을 선택하세요')}
 
     // 데이터베이스에 place정보 있는지 조회
-    let placeresult = await axios.post('/api/place/checkPlace', { place_name: selectedPlace.place_name, road_address_name:selectedPlace.road_address_name, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, place_url:selectedPlace.place_url, avestars:stars, category:category } )
+    let placeresult = await axios.post('/api/place/checkPlace', { placeName: selectedPlace.place_name, road_address_name:selectedPlace.road_address_name, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, place_url:selectedPlace.place_url, avestars:stars, category:category } )
 
     let placeid = placeresult.data.place.placeid
 
