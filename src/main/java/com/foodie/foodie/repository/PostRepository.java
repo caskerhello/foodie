@@ -20,4 +20,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findByPostidOrderByPostidDesc(int id);
 
     List<Post> findAllByMemberidOrderByPostidDesc(int memberid);
+
+    List<Post> findAllByPlaceid(int placeid);
 }

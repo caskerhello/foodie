@@ -13,7 +13,6 @@ const Join = () => {
     const [imgSrc, setImgSrc] = useState('');
 
     const [buttonStyle, setButtonStyle] = useState({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
-    const [imgStyle, setImgStyle] = useState({display:"none"});
 
     const [emailMessage, setEmailMessage] = useState('');
     const [pwdMessage, setPwdMessage] = useState('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
@@ -28,30 +27,25 @@ const Join = () => {
     const pwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*])[A-Za-z\d~!@#$%^&*]{8,15}$/;
 
     /* 비밀번호 유효성 검사 */
-    useEffect(
-        () => {
-            if (!pwd) {
-                setPwdMessage('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
-                setIsPwdValid(false);
-            } else if (!pwdRegex.test(pwd)) {
-                setPwdMessage('비밀번호 형식이 올바르지 않습니다');
-                setIsPwdValid(false);
-            } else {
-                setPwdMessage('');
-                setIsPwdValid(false);
-            }
-
-            if (pwd === pwdCheck) {
-                setPwdCheckMessage('');
-                setIsPwdValid(true);
-            } else {
-                setPwdCheckMessage('비밀번호 확인이 일치하지 않습니다');
-                setIsPwdValid(false);
-            }
-
-
-        }, [pwd, pwdCheck]
-    );
+    useEffect(() => {
+        if (!pwd) {
+            setPwdMessage('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
+            setPwdCheckMessage('');
+            setIsPwdValid(false);
+        } else if (!pwdRegex.test(pwd)) {
+            setPwdMessage('비밀번호 형식이 올바르지 않습니다');
+            setPwdCheckMessage('');
+            setIsPwdValid(false);
+        } else if (pwd !== pwdCheck) {
+            setPwdMessage('');
+            setPwdCheckMessage('비밀번호 확인이 일치하지 않습니다');
+            setIsPwdValid(false);
+        } else {
+            setPwdMessage('');
+            setPwdCheckMessage('');
+            setIsPwdValid(true);
+        }
+    }, [pwd, pwdCheck]);
 
     /* 이메일 형식 검증 정규식 */
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -112,10 +106,11 @@ const Join = () => {
         const result = await axios.post('/api/member/fileUpload', formData);
         setImgSrc(result.data.filename);
         // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
-        setImgStyle({display:"block", width:"200px"});
     }
 
     return (
+        <div className='joinformContainer'>
+
         <div className='joinform'>
             <div className='logo'>회원가입</div>
             <div className='field'>
@@ -129,7 +124,7 @@ const Join = () => {
                     color: isEmailValid ? "blue" : "rgb(242, 38, 38)"
                 }}>{emailMessage}</div>
             </div>
-            <div className='field'>
+            <div className='field' style={{margin: "5px 0"}}>
             <label>비밀번호</label>
                 <div className='input-wrapper'>
                     <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
@@ -170,13 +165,19 @@ const Join = () => {
             </div>
             <div className='field'>
                 <label>사진</label>
-                <input type='file' onChange={
-                    (e) => { fileUpload(e) }
-                }/>
+                <div className='input-wrapper'>
+                    <input type='file' onChange={
+                        (e) => { fileUpload(e) }
+                    }/>
+                </div>
             </div>
             <div className='field'>
                 <label>사진미리보기</label>
-                <div><img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} style={imgStyle}/></div>
+                <div><img src={
+                    (imgSrc)?
+                        (`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`)
+                        :(`${process.env.REACT_APP_ADDRESS2}/images/user.png`)
+                } alt='프로필사진'/></div>
             </div>
 
             <div className='btns'>
@@ -186,6 +187,8 @@ const Join = () => {
                 >가입</button>
                 <button onClick={() => { navigate('/') }}>뒤로</button>
             </div>
+        </div>
+
         </div>
     )
 }

@@ -1,15 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
-/* 기본 스타일 */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
+.joinformContainer{
+    width: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .joinform {
@@ -114,7 +110,9 @@ body {
 }
 
 .joinform .field img {
+    display: block;
     margin-top: 10px;
+    width: 150px;
     max-width: 100%;
     border-radius: 5px;
 }
@@ -126,6 +124,6 @@ body {
     .joinform .field input, 
     .joinform .btns button, 
     .joinform .snslogin button{
-        padding: 10px;
+        /*padding: 10px;*/
     }
 }

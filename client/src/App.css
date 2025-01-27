@@ -38,10 +38,10 @@
 }
 
 :root {
-  --toastify-color-light: #fff;
+  --toastify-color-light: (249, 249, 249, .7);
   --toastify-color-dark: #121212;
   --toastify-color-info: #3498db;
-  --toastify-color-success: rgb(242, 38, 38);
+  --toastify-color-success: rgb(242, 38, 38, .7);
   --toastify-color-warning: #f1c40f;
   --toastify-color-error: hsl(6, 78%, 57%);
   --toastify-color-transparent: rgba(255, 255, 255, .7);
@@ -79,4 +79,16 @@
   --toastify-color-progress-warning: var(--toastify-color-warning);
   --toastify-color-progress-error: var(--toastify-color-error);
   --toastify-color-progress-bgo: .2;
+}
+
+/* 기본 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; */
 }

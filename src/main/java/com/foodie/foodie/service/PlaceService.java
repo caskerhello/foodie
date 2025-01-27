@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,5 +63,13 @@ public class PlaceService {
         else{
             return 0;
         }
+    }
+
+    public List<Place> getPlaceList(String searchPlace) {
+        return pr.findByPlaceNameContaining(searchPlace);
+    }
+
+    public List<Place> getPlaceListByCategory(int category) {
+        return pr.findByCategory(category);
     }
 }

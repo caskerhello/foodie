@@ -73,13 +73,18 @@ const EditProfile = () => {
                 let result = await axios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
                 if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
+            alert("profileimg"+profileimg)
 
-            if( !profileimg ){
-                setProfileimg( oldImgsrc );
-            }
+            let currentProfileImg = profileimg;
+            if( !profileimg ) {
+                alert("!profileimg oldImgsrc : " + oldImgsrc);
+                currentProfileImg = oldImgsrc; // 상태가 비어 있으면 oldImgsrc를 사용
+            }            
+
+            alert("profileimg"+profileimg)
 
             //회원정보수정
-                let result = await axios.post('/api/member/updateProfile', { memberid,email, nickname, pwd, phone,  profileimg, profilemsg })
+                let result = await axios.post('/api/member/updateProfile', { memberid, email, nickname, pwd, phone,  profileimg:currentProfileImg, profilemsg })
                 if(result.data.msg=='ok'){
                     alert('회원 수정이 완료되었습니다.');
                     // 로그인유저 조회
@@ -99,79 +104,83 @@ const EditProfile = () => {
     }
 
     return (
-        <div className='editform'>
-            <div className='logo'>내 정보 수정</div>
-            <div className='field'>
-                <label>이메일</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={email} readOnly/>
+        <div className='editformContainer'>
+
+            <div className='editform'>
+                <div className='logo'>내 정보 수정</div>
+                <div className='field'>
+                    <label>이메일</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={email} readOnly/>
+                    </div>
                 </div>
-            </div>
-            <div className='field'>
-                <label>비밀번호</label>
-                <div className='input-wrapper'>
-                    <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
-                        (e) => {
-                            setPwd(e.currentTarget.value)
-                        }
-                    }/>
-                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                <div className='field'>
+                    <label>비밀번호</label>
+                    <div className='input-wrapper'>
+                        <input type='password' value={pwd} placeholder='비밀번호 입력' onChange={
+                            (e) => {
+                                setPwd(e.currentTarget.value)
+                            }
+                        }/>
+                        <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                    </div>
+                    <div className='input-wrapper'>
+                        <input type='password' value={pwdChk} placeholder='비밀번호 확인' onChange={
+                            (e) => {
+                                setPwdChk(e.currentTarget.value)
+                            }
+                        }/>
+                        <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                    </div>
                 </div>
-                <div className='input-wrapper'>
-                    <input type='password' value={pwdChk} placeholder='비밀번호 확인' onChange={
-                        (e) => {
-                            setPwdChk(e.currentTarget.value)
-                        }
-                    }/>
-                    <div className='message'>영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리</div>
+                <div className='field'>
+                    <label>별명</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={nickname} placeholder='별명 입력' onChange={
+                            (e) => {
+                                setNickname(e.currentTarget.value)
+                            }
+                        }/>
+                    </div>
                 </div>
-            </div>
-            <div className='field'>
-                <label>별명</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={nickname} placeholder='별명 입력' onChange={
-                        (e) => {
-                            setNickname(e.currentTarget.value)
-                        }
-                    }/>
+                <div className='field'>
+                    <label>전화번호</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={phone} placeholder='전화번호 입력' onChange={
+                            (e) => {
+                                setPhone(e.currentTarget.value)
+                            }
+                        }/>
+                    </div>
                 </div>
-            </div>
-            <div className='field'>
-                <label>전화번호</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={phone} placeholder='전화번호 입력' onChange={
-                        (e) => {
-                            setPhone(e.currentTarget.value)
-                        }
-                    }/>
+                <div className='field'>
+                    <label>소개</label>
+                    <div className='input-wrapper'>
+                        <input type='text' value={profilemsg} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
+                            (e) => {
+                                setProfilemsg(e.currentTarget.value)
+                            }
+                        }/>
+                    </div>
                 </div>
-            </div>
-            <div className='field'>
-                <label>소개</label>
-                <div className='input-wrapper'>
-                    <input type='text' value={profilemsg} placeholder='예시) 맛집은 저에게 맡기세요!' onChange={
-                        (e) => {
-                            setProfilemsg(e.currentTarget.value)
-                        }
-                    }/>
+                <div className='field'>
+                    <label>사진</label>
+                    <input type='file' onChange={(e) => {
+                        fileupload(e)
+                    }}/>
                 </div>
-            </div>
-            <div className='field'>
-                <label>사진</label>
-                <input type='file' onChange={(e) => {
-                    fileupload(e)
-                }}/>
-            </div>
-            <div className='field'>
-                <label>사진미리보기</label>
-                
-                <div><img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} style={imgStyle}/></div>
+                <div className='field'>
+                    <label>사진미리보기</label>
+                    
+                    <div><img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`} style={imgStyle}/></div>
+                </div>
+
+                <div className='btns'>
+                    <button onClick={() => { onSubmit() }}>수정</button>
+                    <button onClick={() => { navigate('/myPage') }}>뒤로</button>
+                </div>
             </div>
 
-            <div className='btns'>
-                <button onClick={() => { onSubmit() }}>수정</button>
-                <button onClick={() => { navigate('/myPage') }}>뒤로</button>
-            </div>
         </div>
     )
 }

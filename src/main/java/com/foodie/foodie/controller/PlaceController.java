@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/place")
@@ -58,7 +59,27 @@ public class PlaceController {
         return result;
     }
 
+    @GetMapping("/getPlaceList")
+    public HashMap<String, Object> getPlaceList(@RequestParam("searchPlace") String searchPlace) {
+        HashMap<String, Object> result = new HashMap<>();
 
+        System.out.println("searchPlace"+searchPlace);
+        List<Place> list = pcs.getPlaceList(searchPlace);
+        result.put("placeList", list);
+        return result;
+    }
+
+
+
+    @GetMapping("/getPlaceListByCategory")
+    public HashMap<String, Object> getPlaceListByCategory(@RequestParam("category") int category) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        System.out.println("category"+category);
+        List<Place> list = pcs.getPlaceListByCategory(category);
+        result.put("placeList", list);
+        return result;
+    }
 
 
 

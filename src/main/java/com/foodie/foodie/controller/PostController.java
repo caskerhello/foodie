@@ -137,14 +137,21 @@ public class PostController {
 
     }
 
-
+    //여기 id는 postid
     @GetMapping("/getPost/{id}")
-    public Post getPost( @PathVariable("id") int id){
+    public PostMemberPlaceView getPost( @PathVariable("id") int id){
         return ps.getPost(id);
     }
 
 
+    @GetMapping("/findPost")
+    public HashMap<String, Object> findPost(@RequestParam("placeid") int placeid) {
+        HashMap<String, Object> result = new HashMap<>();
+        System.out.println("placeid:"+placeid);
 
+        result.put("postList", ps.getPostListByPlaceid(placeid));
+        return result;
+    }
 
 
 
