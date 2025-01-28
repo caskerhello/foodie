@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useSelector } from 'react-redux';
-import { loginAction, setFollowers, setFollowings } from '../store/userSlice';
+import { loginAction } from '../store/userSlice';
 import { useDispatch } from 'react-redux';
 import {Cookies} from 'react-cookie'
 
 import '../../style/editprofile.css'
+
+import jaxios from '../../util/jwtUtil';
 
 const EditProfile = () => {
     const [memberid, setMemberid] = useState('');
@@ -18,13 +20,17 @@ const EditProfile = () => {
     const [phone, setPhone] = useState('');
     const [profilemsg, setProfilemsg] = useState('');
     const [profileimg, setProfileimg] = useState('');
+    // const [accessToken, setAccessToken] = useState('')
+    // const [refreshToken, setRefreshToken] = useState('')
     const [oldImgsrc, setOldImgSrc] = useState('');
     const [imgSrc, setImgSrc] = useState('');
     const [imgStyle, setImgStyle] = useState({display:"none"});
     const lUser = useSelector( state=>state.user );
+    const { accessToken, refreshToken } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const cookies = new Cookies()
+    
 
     useEffect(
         ()=>{
@@ -48,7 +54,7 @@ const EditProfile = () => {
         const formData = new FormData();
         formData.append('image',  e.target.files[0]);
         try{
-            const result = await axios.post('/api/member/fileUpload', formData);
+            const result = await jaxios.post('/api/member/fileUpload', formData);
             console.log("result.data.filename"+result.data.filename)
             setImgSrc(result.data.filename);
             // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
@@ -66,39 +72,46 @@ const EditProfile = () => {
 
         try{
             if( email != lUser.email ){
-                let result = await axios.post('/api/member/emailCheck', null, {params:{email}} );
+                let result = await jaxios.post('/api/member/emailCheck', null, {params:{email}} );
                 if(result.data.msg == 'no' ){ return alert('이메일이 중복됩니다'); }
             }
             if( nickname != lUser.nickname ){
-                let result = await axios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
+                let result = await jaxios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
                 if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
-            alert("profileimg"+profileimg)
+            // alert("profileimg"+profileimg)
 
             let currentProfileImg = profileimg;
             if( !profileimg ) {
-                alert("!profileimg oldImgsrc : " + oldImgsrc);
+                // alert("!profileimg oldImgsrc : " + oldImgsrc);
                 currentProfileImg = oldImgsrc; // 상태가 비어 있으면 oldImgsrc를 사용
-            }            
+            }
 
-            alert("profileimg"+profileimg)
+            // alert("profileimg"+profileimg)
 
             //회원정보수정
-                let result = await axios.post('/api/member/updateProfile', { memberid, email, nickname, pwd, phone,  profileimg:currentProfileImg, profilemsg })
+                let result = await jaxios.post('/api/member/updateProfile', { memberid, email, nickname, pwd, phone,  profileimg:currentProfileImg, profilemsg })
                 if(result.data.msg=='ok'){
                     alert('회원 수정이 완료되었습니다.');
                     // 로그인유저 조회
-                    const res=await axios.get('/api/member/getLoginUser')
+                    const res = await jaxios.get('/api/member/getLoginUser',{params:{email}})
                     // 리덕스 수정
-                    // window.alert(JSON.stringify(res.data.loginUser))
 
-                    cookies.set('user', JSON.stringify( res.data.loginUser ) , {path:'/', })
-                    dispatch( loginAction( res.data.loginUser )  );
-                    // dispatch( setFollowers( {followers:res.data.followers} ) );
-                    // dispatch( setFollowings( {followings:res.data.followings} ) );
+                    // 병합 후 리덕스에 저장
+                    dispatch(loginAction({
+                        ...res.data.loginUser,
+                        accessToken,
+                        refreshToken,
+                    }));
+
+                    // 쿠키에도 동기화
+                    cookies.set('user', JSON.stringify({
+                        ...res.data.loginUser,
+                        accessToken,
+                        refreshToken,
+                    }), { path: '/' });
                 }
                 window.location.href=`${process.env.REACT_APP_ADDRESS}/myPage`;
-                // window.location.href='http://192.168.0.43:3000/myPage';
 
         }catch(err){console.error(err)}
     }

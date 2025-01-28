@@ -6,11 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
-import { VscFileMedia } from "react-icons/vsc";
-import { VscFeedback } from "react-icons/vsc";
+import { FcPicture } from "react-icons/fc";
+import { FcGallery } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
-
-import { format, parseISO } from 'date-fns'
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -18,6 +16,8 @@ import 'slick-carousel/slick/slick-theme.css';
 
 
 import '../../style/post.css';
+
+import jaxios from '../../util/jwtUtil';
 
 const settings = {
     dot:false,
@@ -60,30 +60,23 @@ function Post( props ) {
     
     useEffect(
         ()=>{
-            
-            axios.get(`/api/post/getImages/${props.post.postid}` )
-            .then((result)=>{ 
-                
+            jaxios.get(`/api/post/getImages/${props.post.postid}` )
+            .then((result)=>{
                 setImages( result.data.imgList ); })
-            .catch((err)=>{console.error(err)})            
+            .catch((err)=>{console.error(err)})
 
-            axios.get(`/api/post/getLikeList/${props.post.postid}`)
+            jaxios.get(`/api/post/getLikeList/${props.post.postid}`)
             .then((result)=>{
-                
-                 setLikeList( [...result.data.likeList ] );
+                setLikeList( [...result.data.likeList ] );
             }).catch((err)=>{console.error(err)})
 
-            axios.get(`/api/post/getReplyList/${props.post.postid}`)
+            jaxios.get(`/api/post/getReplyList/${props.post.postid}`)
             .then((result)=>{
-                
                 let temp = [...result.data.replyList];
-                
                 setReplyList([...temp]);
-
-                
             }).catch((err)=>{console.error(err)})
 
-        },[  ]
+        },[ ]
     )
 
     async function onLike(){
@@ -91,19 +84,15 @@ function Post( props ) {
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
             
-            await axios.post('/api/post/addLike', { postid:props.post.postid, memberid:lUser.memberid});
+            await jaxios.post('/api/post/addLike', { postid:props.post.postid, memberid:lUser.memberid});
 
             // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
-            const result = await axios.get(`/api/post/getLikeList/${props.post.postid}`)
+            const result = await jaxios.get(`/api/post/getLikeList/${props.post.postid}`)
             setLikeList( result.data.likeList );
         }catch(err){
             console.error(err);
         }
     }
-
-
-
-
 
     useEffect(
         ()=>{
@@ -119,50 +108,73 @@ function Post( props ) {
         setViewVal( !viewVal );
     }
 
-
     async function addReply(){
         try{
             // 댓글을 추가하고 댓글 리스트를 재조회 및 갱신하세요
-            await axios.post('/api/post/addReply', {memberid:lUser.memberid, content:replyContent, postid:props.post.postid})
-            const result = await axios.get(`/api/post/getReplyList/${props.post.postid}`)
+            await jaxios.post('/api/post/addReply', {memberid:lUser.memberid, content:replyContent, postid:props.post.postid})
+            const result = await jaxios.get(`/api/post/getReplyList/${props.post.postid}`)
             setReplyList( result.data.replyList );
         }catch(err){
             console.error(err);
         }
         setReplyContent('');
     }
+
     async function deleteReply(id){
         
         if(window.confirm("댓글을 삭제하시겠습니까?")){
         try{
             // 댓글을 삭제하고 댓글 리스트를 재조회 및 갱신하세요
-            await axios.delete(`/api/post/deleteReply/${id}`)
-            const result = await axios.get(`/api/post/getReplyList/${props.post.postid}`)
+            await jaxios.delete(`/api/post/deleteReply/${id}`)
+            const result = await jaxios.get(`/api/post/getReplyList/${props.post.postid}`)
             setReplyList( result.data.replyList );
         }catch(err){
             console.error(err);
         }
         }
-
     }
 
     return (
-        <div className='Post' style={{width:"600px"}}>
-            <div className='writer' >
-            {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
-                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.post.postid}&nbsp;{props.post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formatDate(props.post.post_write_date)}</span><span></span><span><VscFileMedia  />{images.length}</span></div>                
+        <div className='post' style={{width:"600px"}} key={props.idx}>
+            <div className='title'>
+                <div className='titleRow'>
+                    <span style={{
+                        display:'flex', justifyContent:'center', alignItems:'center',
+                        lineHeight:'0.5', 
+                        // border:'2px solid black', borderRadius:'10px',
+                    }}>#{props.post.postid}&nbsp;
+                    
+                    <span style={{
+                        display:'flex', justifyContent:'center', alignItems:'center',
+                        lineHeight:'0.7'}} onClick={()=>{
+                        props.getProfile(props.post.memberid);
+                        props.setModalOpen(true);
+                    }}>
+                        <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${props.post.profileimg}`}/>{props.post.nickname}</span> &nbsp;
+                    
+                        {formatDate(props.post.post_write_date)}
+                    </span>
+                    
+                    <span style={{
+                        display:'flex', justifyContent:'center', alignItems:'center',
+                        lineHeight:'0.5'}}>                    
+                    <FcPicture style={{width:'0.6em', lineHeight:'0.5'}} />
+                    {images.length}</span>
+
+                </div>
                 
                 {/* 객체.some( (변수)=>{} ) : 객체의 요소 하나하나를 한번씩  '변수'에 저장하고 익명함수를 반복실행합니다.
                 대개는 익명함수에서 비교연산의 결과를 리턴하는데, 그결과가 모두 false 라면 최종 결과 false 이며, 리턴값중 하나라도  true 가 있으면 최종 결과는  true 입니다.  위 명령은 내가 팔로잉 하는 사람들들 현재 post 의 작성자가 있다면 true , 없다면 false 가 결과가 됩니다. */}
                 {/* 글쓴이가 나이거나, 나의 팔로잉중에  글쓴이가 없다면..... */}
             </div>
+
             { <Slider {...settings} >
                 {
                     (images)?(
                         images.map((img, idx)=>{
                             return (
                                 <div className='mainimg'>
-                                <img key={idx}  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="750" height="900"/>
+                                    <img key={idx}  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="750" height="900"/>
                                 </div>
                             )
                         })
@@ -170,54 +182,53 @@ function Post( props ) {
                 }
             </Slider>  }
 
-            <div className='like' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                <span style={{width:"80px"}}>{
+            <div className='contents1' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                
+                <span style={{width:"100px"}}>
+                    {
                     (likeList)?(
                         likeList.some(
-                            (like)=>(lUser.memberid==like.memberid) 
+                            (like)=>(lUser.memberid==like.memberid)
                         )
                         ?
-                        ( 
+                        (
                             <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
-                        
                         )
                         :
                         (
-                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+                            <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
                         
                         )
                     ):(
                         <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
-                        
                     )
-                }{likeList.length}&nbsp;&nbsp;&nbsp;
+                    }
+                    {likeList.length}&nbsp;&nbsp;&nbsp;
                 
-                <FcComments style={{height:"20px",width:"20px"}} onClick={()=>{
-                    viewOrNot()}} />
+                    <FcComments style={{height:"20px",width:"20px"}} onClick={()=>{
+                        viewOrNot()}} />
+                    
+                    {replyList.length}
+                </span>
                 
-                {replyList.length}</span>
+                <span style={{width:"400px",fontSize:"80%"}}>
+                    {props.post.post_content}★{props.post.post_stars}&nbsp;
+                </span>
                 
-                <span>{props.post.post_content}★{props.post.post_stars}&nbsp;</span> 
-                
-            <span>
-                <div className='content' style={{display:"block"}}>{props.post.place_name}★{Math.floor(props.post.place_ave_stars * 10) / 10}</div>
-
-                <button style={{ flex: "1" }} onClick={() => { 
-                    if (props.viewMapOrNot === true) {
-                        props.onChangeMapView();}
-                    props.findRestorantLocation(props.post.placeid);
-                }}>
-                    위치
-                </button>
-            </span>
+                <span style={{width:"100px"}}>
+                    <div className='content' style={{fontSize:"70%"}}>
+                        {props.post.place_name}★{Math.floor(props.post.place_ave_stars * 10) / 10}
+                    </div>
+                    <button style={{ flex: "1" }} onClick={() => {
+                        if (props.viewMapOrNot === true) {
+                            props.onChangeMapView();}
+                        props.findRestorantLocation(props.post.placeid);
+                    }}>위치
+                    </button>
+                </span>
             </div>
-                        
-            <div className='content'></div>
-            
-            <div className='content'></div>
 
-            <div className='reply'> 
-
+            <div className='reply'>
                 {
                     (replyList && replyList.length>=1)?(
                         replyList.map((reply, idx)=>{
@@ -227,17 +238,18 @@ function Post( props ) {
                                     <div style={{flex:"3"}}>{reply.reply_content}</div>
                                     <div style={{flex:"1", fontWeight:"bold"}}>{formatDate(reply.writedate)}&nbsp;</div>
                                     <div style={{flex:"1", textAlign:"right"}}>
-                                        {
-                                             (reply.memberid==lUser.memberid)?(
-                                                 <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:"100%"}}>삭제</button>
-                                             ):(null)
-                                        }
+                                    {
+                                        (reply.memberid==lUser.memberid)?(
+                                            <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:"100%"}}>삭제</button>
+                                        ):(null)
+                                    }
                                     </div>
                                 </div>
                             )
                         })
                     ):(<div style={replyStyle}>아직 댓글이 없습니다</div>)
                 }
+
                 <div style={replyStyle}>
                     <input type="text" style={{flex:"5"}} value={replyContent} onChange={
                         (e)=>{ setReplyContent( e.currentTarget.value) }

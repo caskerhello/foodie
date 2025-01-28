@@ -10,6 +10,8 @@ import RatingStar from './RatingStars';
 import '../../style/mapcontainer.css'
 import '../../style/writepost.css'
 
+import jaxios from '../../util/jwtUtil';
+
 const { kakao } = window
 
 const WritePost = () => {
@@ -53,7 +55,7 @@ async function selectButton(place){
     
     // console.log("place.id"+place.id)
 
-    let placeresult = await axios.post('/api/place/checkPlaceCategory', null ,{params: {kakaoplaceid:place.id}  } )
+    let placeresult = await jaxios.post('/api/place/checkPlaceCategory', null ,{params: {kakaoplaceid:place.id}  } )
     setBeforeSetCategory(placeresult.data.category)
 
     setCategory(placeresult.data.category)
@@ -192,7 +194,7 @@ const fieldStyle={
 async function imgUpload(e, n){
     let formData = new FormData();
     formData.append('image', e.target.files[0] );
-    const result = await axios.post('/api/post/imgUp', formData);
+    const result = await jaxios.post('/api/post/imgUp', formData);
 
     if( n == 1){
         setDivStyle2( fieldStyle );
@@ -242,7 +244,7 @@ async function onSubmit(){
     if(!selectedPlace) {return alert('음식점을 선택하세요')}
 
     // 데이터베이스에 place정보 있는지 조회
-    let placeresult = await axios.post('/api/place/checkPlace', { place_name: selectedPlace.place_name, road_address_name:selectedPlace.road_address_name, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, place_url:selectedPlace.place_url, avestars:stars, category:category } )
+    let placeresult = await jaxios.post('/api/place/checkPlace', { placeName: selectedPlace.place_name, road_address_name:selectedPlace.road_address_name, phone:selectedPlace.phone, kakaoplaceid:selectedPlace.id, x:selectedPlace.x, y:selectedPlace.y, place_url:selectedPlace.place_url, avestars:stars, category:category } )
 
     let placeid = placeresult.data.place.placeid
 
@@ -250,14 +252,14 @@ async function onSubmit(){
 
     // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴         
 
-    let writepostresult = await axios.post('/api/post/writePost', { placeid, content, memberid, stars} )
+    let writepostresult = await jaxios.post('/api/post/writePost', { placeid, content, memberid, stars} )
     let postid = writepostresult.data.postid;
 
     
 
     // 리턴 아이디와  이미지 이름들로  images 테이블에 레코드들을 추가
     for( let i=0; i<imgList.length; i++){
-        await axios.post('/api/post/writeImages', { postid, savefilename:imgList[i] });
+        await jaxios.post('/api/post/writeImages', { postid, savefilename:imgList[i] });
     }
     //window.location.href='http://localhost:3000/main
     navigate('/main');

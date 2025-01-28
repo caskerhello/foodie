@@ -119,7 +119,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
       // 지도 중심좌표를 얻어옵니다 
       var latlng = map.getCenter(); 
 
-       
+      
 
       setMovedLocation2({lat:latlng.getLat(),lng:latlng.getLng()})
 

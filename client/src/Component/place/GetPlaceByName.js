@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 import '../../style/getplacebyname.css'
 
+import jaxios from '../../util/jwtUtil';
+
 const GetPlaceNyName = () => {
 const { searchPlace } = useParams();  // URL 파라미터에서 searchPlace 값 가져오기
 
@@ -38,7 +40,7 @@ const [modalOpen, setModalOpen] = useState(false);
 const modalBackground = useRef();
 
 useEffect(() => {
-    axios.get(`/api/place/getPlaceList`, {params:{searchPlace}})
+    jaxios.get(`/api/place/getPlaceList`, {params:{searchPlace}})
         .then((result)=>{
             setPlaceList( result.data.placeList );
             setPlaceListLength(result.data.placeList.length);
@@ -65,7 +67,7 @@ useEffect(() => {
 
 async function findPostList(placeid){
 
-    await axios.get(`/api/post/findPost`,{params:{placeid}})
+    await jaxios.get(`/api/post/findPost`,{params:{placeid}})
     .then((result)=>{
         
     setPostList( result.data.postList );
