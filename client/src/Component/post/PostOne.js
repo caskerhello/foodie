@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect , useRef} from 'react';
 import axios from "axios";
 import { useNavigate , useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ import jaxios from '../../util/jwtUtil';
 
 
 const settings = {
-    dot:false,
+    dot:true,
     arrows:false,
     infinite:false,
     speed:500,
@@ -45,12 +45,14 @@ function PostOne() {
     const loginUser = useSelector( state=>state.user );
     const lUser = useSelector( state=>state.user );
 
+    
+
     useEffect(
         ()=>{
             // 포스트
             jaxios.get(`/api/post/getPost/${postid}`)
             .then((result)=>{
-                console.log(result.data)
+                // console.log(result.data)
                 setPost( result.data )
             })
             .catch((err)=>{console.error(err)})
@@ -58,7 +60,7 @@ function PostOne() {
             // 이미지
             jaxios.get(`/api/post/getImages/${postid}` )
             .then((result)=>{ setImages( result.data.imgList );
-                console.log(result.data.imgList)
+                // console.log("result.data.imgList"+JSON.stringify(result.data.imgList))
             })
             .catch((err)=>{console.error(err)})
 
@@ -174,46 +176,24 @@ function PostOne() {
     
                     </div>
                 </div>
+                <div style={{width:'500px', height:'500px'}}>
 
-                {Array.isArray(images) && images.length > 0 ? (
-                <Slider {...settings}>
-                    {images.map((img, idx) => (
-                        <div key={idx}>
-                            <div className="imgs">
-                                <img
-                                    src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`}
-                                    alt={`Image ${idx}`}
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </Slider>
-                ) : (
-                <p>No images available</p>
-                )}
-
-
-                {/* {
-                <Slider {...settings} >
+                    { <Slider {...settings} >
                     {
-                        (Array.isArray(images) && images.length > 0 )?(
+                        (images)?(
                             images.map((img, idx)=>{
-
-                            return (
-                                <div key={idx}>
-                                    <div className='imgs' >
-                                        <img  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`}/>
+                                return (
+                                    <div>
+                                        <img key={idx} src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="500" height="500"/>
                                     </div>
-                                </div>
-                            )
-
+                                )
                             })
-                        )
-                        :("Loading...")
+                        ):("Loading...")
                     }
-                </Slider>
-                } */}
+                    </Slider>  }
+
                 
+                </div>
                 <div className='contents1'>
                     {post.post_content}
                 </div>

@@ -66,10 +66,12 @@ public class PlaceService {
     }
 
     public List<Place> getPlaceList(String searchPlace) {
-        return pr.findByPlaceNameContaining(searchPlace);
+//        return pr.findByPlaceNameContainingOrderByPlaceidDesc(searchPlace);
+        return pr.findByPlaceNameContainingRandom(searchPlace);
     }
 
     public List<Place> getPlaceListByCategory(int category) {
-        return pr.findByCategory(category);
+//        return pr.findByCategoryOrderByPlaceidDesc(category);
+        return pr.findByCategoryRandom(category);
     }
 }

@@ -70,9 +70,6 @@ public class PostController {
         return result;
     }
 
-    @Autowired
-    private PostService postService;
-
     @GetMapping("/getPostList")
     public HashMap<String, Object> getPostList(
             @RequestParam("page") int page,
