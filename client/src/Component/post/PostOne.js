@@ -5,17 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
-import { VscFileMedia } from "react-icons/vsc";
+import { FcPicture } from "react-icons/fc";
 import { VscFeedback } from "react-icons/vsc";
 
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-// import { format, parseISO } from 'date-fns'
-
 import MainMenu from '../MainMenu';
-import Post from './Post';
 
 import '../../style/postone.css';
 
@@ -35,7 +32,6 @@ function PostOne() {
     const [ likeList, setLikeList ] = useState([]);
     const [ replyList, setReplyList] = useState([]);
 
-    const [ followings, setFollowings ] = useState([]);   
     const [ word, setWord] = useState('');
 
     const [ viewVal, setViewVal ] = useState(false)
@@ -57,10 +53,11 @@ function PostOne() {
             })
             .catch((err)=>{console.error(err)})
 
-
             // 이미지
             axios.get(`/api/post/getImages/${postid}` )
-            .then((result)=>{ setImages( result.data.imgList ); })
+            .then((result)=>{ setImages( result.data.imgList );
+                console.log(result.data.imgList)
+            })
             .catch((err)=>{console.error(err)})
 
             // // 댓글
@@ -88,7 +85,6 @@ function PostOne() {
         return `${year}/${month}/${day} ${hours}:${minutes}`;
     }
 
-
     async function onLike(){
         try{
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
@@ -103,9 +99,6 @@ function PostOne() {
         }
     }
 
-    
-
-
     useEffect(
         ()=>{
             if( !viewVal ){
@@ -119,7 +112,6 @@ function PostOne() {
     function viewOrNot(){
         setViewVal( !viewVal );
     }
-
 
     async function addReply(){
         try{
@@ -143,58 +135,96 @@ function PostOne() {
         }catch(err){
             console.error(err);
         }
-
     }
 
     const handleGoBack = () => {
         navigate(-1); // -1은 이전 페이지로 돌아가는 의미
     };
     
-
     return (
         <div className='postOneContainer'>
             <MainMenu setWord={setWord}/>
 
             <div className='postOne'>
                 <div className='title'>
-                    
-                        <span>#{post.postid}&nbsp;{post.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {formatDate(post.post_write_date)}
-                        </span>
+                    <div className='titleRow'>
+                        <span style={{
+                            display:'flex', justifyContent:'center', alignItems:'center',
+                            lineHeight:'0.5',
+                            // border:'2px solid black', borderRadius:'10px',
+                        }}>#{post.postid}&nbsp;
+                        
+                        <span style={{
+                            display:'flex', justifyContent:'center', alignItems:'center',
+                            lineHeight:'0.7'}}>
 
-                        <span><VscFileMedia style={{width:'0.8em'}} />{images.length}</span>
+                            <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${post.profileimg}`}/>{post.nickname}</span> &nbsp;
+                        
+                            {formatDate(post.post_write_date)}
+                        </span>
+                        
+                        <span style={{
+                            display:'flex', justifyContent:'center', alignItems:'center',
+                            lineHeight:'0.5'}}>
+                        <FcPicture style={{width:'0.6em', lineHeight:'0.5'}} />
+                        {images.length}
+                        </span>
+    
+                    </div>
                 </div>
 
-                { <Slider {...settings} >
-                    {
-                        (images)?(
-                            images.map((img, idx)=>{
-                                return (
-                                    <div>
-                                        <div className='imgs' >
-                                            <img key={idx} src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`}/>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        ):(null)
-                    }
-                </Slider>  }
-                <div className='contents1'>
-                {post.post_content}
+                {Array.isArray(images) && images.length > 0 ? (
+                <Slider {...settings}>
+                    {images.map((img, idx) => (
+                        <div key={idx}>
+                            <div className="imgs">
+                                <img
+                                    src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`}
+                                    alt={`Image ${idx}`}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </Slider>
+                ) : (
+                <p>No images available</p>
+                )}
 
+
+                {/* {
+                <Slider {...settings} >
+                    {
+                        (Array.isArray(images) && images.length > 0 )?(
+                            images.map((img, idx)=>{
+
+                            return (
+                                <div key={idx}>
+                                    <div className='imgs' >
+                                        <img  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`}/>
+                                    </div>
+                                </div>
+                            )
+
+                            })
+                        )
+                        :("Loading...")
+                    }
+                </Slider>
+                } */}
+                
+                <div className='contents1'>
+                    {post.post_content}
                 </div>
                 
                 <div className='contents2'>
                     <span>{
-                        (likeList)?( 
+                        (likeList)?(
                             likeList.some(
-                                (like)=>(lUser.memberid==like.memberid) 
+                                (like)=>(lUser.memberid==like.memberid)
                             )
                             ?
                             (
                                 <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
-                            
                             )
                             :
                             (
@@ -206,7 +236,6 @@ function PostOne() {
                         }{likeList.length}&nbsp;&nbsp;&nbsp;
                         <VscFeedback style={{height:"20px",width:"20px"}} onClick={()=>{
                             viewOrNot()}}/>
-                        
                         {replyList.length}&nbsp;
                     </span>
                     
@@ -221,7 +250,6 @@ function PostOne() {
                 </div>
             
                 <div className='reply'>
-
                     {
                         (replyList && replyList.length>=1)?(
                             replyList.map((reply, idx)=>{
@@ -253,9 +281,7 @@ function PostOne() {
                 </div>
             </div>
             <div className='postOneBottom'>
-            <button onClick={handleGoBack}>
-            뒤로 가기
-            </button>
+                <button onClick={handleGoBack}> 뒤로가기 </button>
             </div>
         </div>
     )

@@ -165,4 +165,16 @@ public class MemberController {
 
 
 
+
+    @GetMapping("/getProfile")
+    public HashMap<String , Object> getProfile(@RequestParam("memberid") int memberid) {
+        HashMap<String, Object> result = new HashMap<>();
+        System.out.println("getProfile:" + memberid);
+
+        result.put("profile", ms.getMemberByMemberid(memberid));
+        return result;
+    }
+
+
+
 }

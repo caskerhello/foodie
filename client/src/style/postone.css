@@ -37,6 +37,20 @@
 
 }
 
+.postOne .title .titleRow{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.postOne .title .titleRow img{
+    width: 30px;
+    border-radius: 50%;
+    line-height: 1;
+    cursor: pointer;
+}
+
 .postOneContainer .postOne .imgs{
     display: flex;
     justify-content: center;
@@ -45,8 +59,8 @@
 
 
 .postOneContainer .postOne .imgs img{
-    width: 60%;
-    /* height: 500px; */
+    width: 100%;
+    height: auto;
     border-radius: 10px;
 
 }

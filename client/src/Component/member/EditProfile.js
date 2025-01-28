@@ -73,15 +73,15 @@ const EditProfile = () => {
                 let result = await axios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
                 if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
-            alert("profileimg"+profileimg)
+            // alert("profileimg"+profileimg)
 
             let currentProfileImg = profileimg;
             if( !profileimg ) {
-                alert("!profileimg oldImgsrc : " + oldImgsrc);
+                // alert("!profileimg oldImgsrc : " + oldImgsrc);
                 currentProfileImg = oldImgsrc; // 상태가 비어 있으면 oldImgsrc를 사용
             }            
 
-            alert("profileimg"+profileimg)
+            // alert("profileimg"+profileimg)
 
             //회원정보수정
                 let result = await axios.post('/api/member/updateProfile', { memberid, email, nickname, pwd, phone,  profileimg:currentProfileImg, profilemsg })
@@ -94,11 +94,8 @@ const EditProfile = () => {
 
                     cookies.set('user', JSON.stringify( res.data.loginUser ) , {path:'/', })
                     dispatch( loginAction( res.data.loginUser )  );
-                    // dispatch( setFollowers( {followers:res.data.followers} ) );
-                    // dispatch( setFollowings( {followings:res.data.followings} ) );
                 }
                 window.location.href=`${process.env.REACT_APP_ADDRESS}/myPage`;
-                // window.location.href='http://192.168.0.43:3000/myPage';
 
         }catch(err){console.error(err)}
     }
