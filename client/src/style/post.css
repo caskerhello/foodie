@@ -1,9 +1,13 @@
-.MainContainer{
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+.mainContainer{
     position: absolute;
     top:5%;
     left: 15%;
-    /* display:flex;
-    flex-direction:row; 
+    transition: left 0.3s ease; /* 애니메이션 효과 */
+    /*
+    display:flex;
+    flex-direction:row;
     align-items:center; */
     /* margin-top:50px; */
     /* border: 1px solid black; */
@@ -11,7 +15,11 @@
     width:800px */
 }
 
-.MainPosts{
+.mapViewActive {
+left:  unset ;
+}
+
+.mainPosts{
     position: relative;
     /* left: 0%; */
     width:95%;
@@ -25,12 +33,37 @@
     margin-bottom: 100px;
 }
 
-.Post{
+.post{
     margin-top: 30px;
     margin-bottom: 70px;
+
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+
+    line-height: 0.8;
 }
 
-.MainMapLoading{
+.post .title{
+
+}
+
+.post .title .titleRow{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.post .title .titleRow img{
+    width: 30px;
+    border-radius: 50%;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.mainMapLoading{
     height: 30px;
     width: 200px;
     border: 1px solid black;
@@ -50,6 +83,69 @@
     width:100% ;
     height:100%;  
     border-radius : 5%;
+}
 
+
+/* 모달 관련 css */
+.mainModalContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.mainModal {
+    background-color: #f9f9f9;
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: auto;
+    
+}
+
+.mainModalTitle{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mainModalContent{
+    margin: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+
+    text-align: left;
+
+    line-height: 0.9;
+
+}
+
+.mainModalContent .profileImg{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+
+}
+
+.mainModalContent .profileImg img{
+    width: 50%;
+    
+    border-radius: 20px;
+}
+
+.mainModalContent .profileMsg{
+    text-align: left;
 
 }
