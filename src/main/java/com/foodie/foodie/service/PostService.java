@@ -192,4 +192,8 @@ public class PostService {
 //        return pr.findAllByPlaceid(placeid);
         return pmpv.findAllByPlaceid(placeid);
     }
+
+    public List<PostMemberPlaceView> getPostListTop4(int memberid) {
+        return pmpv.findTop4ByMemberidOrderByPostidDesc(memberid);
+    }
 }

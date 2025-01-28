@@ -117,7 +117,7 @@ const Join = () => {
                 <label>이메일</label>
                 <div className='input-wrapper' style={{flexDirection: "row"}}>
                     <input type='text' style={{flex: "5", marginRight: "10px"}} value={email} placeholder='이메일 입력'
-                           onChange={handleEmailChange}/>
+                        onChange={handleEmailChange}/>
                     <button style={buttonStyle} onClick={() => { onEmailCheck() }}>중복확인</button>
                 </div>
                 <div className='message' style={{

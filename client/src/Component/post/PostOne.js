@@ -16,6 +16,8 @@ import MainMenu from '../MainMenu';
 
 import '../../style/postone.css';
 
+import jaxios from '../../util/jwtUtil';
+
 
 const settings = {
     dot:false,
@@ -46,7 +48,7 @@ function PostOne() {
     useEffect(
         ()=>{
             // 포스트
-            axios.get(`/api/post/getPost/${postid}`)
+            jaxios.get(`/api/post/getPost/${postid}`)
             .then((result)=>{
                 console.log(result.data)
                 setPost( result.data )
@@ -54,19 +56,19 @@ function PostOne() {
             .catch((err)=>{console.error(err)})
 
             // 이미지
-            axios.get(`/api/post/getImages/${postid}` )
+            jaxios.get(`/api/post/getImages/${postid}` )
             .then((result)=>{ setImages( result.data.imgList );
                 console.log(result.data.imgList)
             })
             .catch((err)=>{console.error(err)})
 
             // // 댓글
-            axios.get(`/api/post/getReplyList/${postid}`)
+            jaxios.get(`/api/post/getReplyList/${postid}`)
             .then((result)=>{ setReplyList( result.data.replyList ); })
             .catch((err)=>{console.error(err)})
 
             // // 좋아요
-            axios.get(`/api/post/getLikeList/${postid}` )
+            jaxios.get(`/api/post/getLikeList/${postid}` )
             .then((result)=>{ setLikeList( result.data.likeList ); })
             .catch((err)=>{console.error(err)})
         },[]
@@ -89,10 +91,10 @@ function PostOne() {
         try{
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
             // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
-            await axios.post('/api/post/addLike', {postid:postid, memberid:loginUser.memberid} );
+            await jaxios.post('/api/post/addLike', {postid:postid, memberid:loginUser.memberid} );
 
             // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
-            const result = await axios.get(`/api/post/getLikeList/${postid}` )
+            const result = await jaxios.get(`/api/post/getLikeList/${postid}` )
             setLikeList( result.data.likeList );
         }catch(err){
             console.error(err);
@@ -116,9 +118,9 @@ function PostOne() {
     async function addReply(){
         try{
             // 댓글을 추가하고 댓글 리스트를 재조회 및 갱신하세요
-            await axios.post('/api/post/addReply', {memberid:loginUser.memberid, content:replyContent, postid})
+            await jaxios.post('/api/post/addReply', {memberid:loginUser.memberid, content:replyContent, postid})
 
-            const result = await axios.get(`/api/post/getReplyList/${postid}`)
+            const result = await jaxios.get(`/api/post/getReplyList/${postid}`)
             setReplyList( result.data.replyList );
         }catch(err){
             console.error(err);
@@ -129,8 +131,8 @@ function PostOne() {
     async function deleteReply(id){
         try{
             // 댓글을 삭제하고 댓글 리스트를 재조회 및 갱신하세요
-            await axios.delete(`/api/post/deleteReply/${id}`)
-            const result = await axios.get(`/api/post/getReplyList/${postid}`)
+            await jaxios.delete(`/api/post/deleteReply/${id}`)
+            const result = await jaxios.get(`/api/post/getReplyList/${postid}`)
             setReplyList( result.data.replyList );
         }catch(err){
             console.error(err);

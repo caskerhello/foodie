@@ -8,6 +8,8 @@ import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
 import { Map, MapMarker ,ZoomControl, CustomOverlayMap  } from "react-kakao-maps-sdk";
 
+import jaxios from '../util/jwtUtil';
+
 const { kakao } = window;
 
 
@@ -35,13 +37,14 @@ const lUser = useSelector( state=>state.user );
 const [modalOpen, setModalOpen] = useState(false);
 const modalBackground = useRef();
 const [profile, setProfile] = useState();
+const [postTop4, setPostTop4] = useState();
 
 const [viewMapOrNot, setViewMapOrNot] = useState(false);
 
 const navigate = useNavigate();
     
 useEffect(() => {
-  axios.get(`/api/post/getPostList`, {params:{page:1,word}})
+  jaxios.get(`/api/post/getPostList`, {params:{page:1,word}})
         .then((result)=>{
           console.log("result.data.postList:",result.data.postList)
             setPostList( result.data.postList.content );
@@ -71,7 +74,7 @@ const handleScroll=()=>{
 
 async function onPageMove( page ){
 
-  const result = await axios.get(`/api/post/getPostList`, {params:{page:page,word}})
+  const result = await jaxios.get(`/api/post/getPostList`, {params:{page:page,word}})
   .then((result)=>{
     console.log("result.data.postList.content"+result.data.postList.content)
 
@@ -87,7 +90,7 @@ async function onPageMove( page ){
 
 function findRestorantLocation(placeid) {
 
-axios.get(`/api/place/getPlaceInfo`, {params:{placeid}})
+  jaxios.get(`/api/place/getPlaceInfo`, {params:{placeid}})
       .then((result)=>{
         
         setLocation({lat:result.data.place.y, lng:result.data.place.x});
@@ -197,13 +200,35 @@ function handleMouseOver(){
 
 function getProfile(memberid){
 
-  axios.get(`/api/member/getProfile`, {params:{memberid}})
+  jaxios.get(`/api/member/getProfile`, {params:{memberid}})
       .then((result)=>{
         // console.log(result.data)
         console.log(result.data.profile)
         setProfile(result.data.profile);
         
       }).catch((err)=>{console.error(err)})
+
+  jaxios.get(`/api/post/getPostListTop4`, {params:{memberid}})
+      .then((result)=>{
+        // console.log(result.data)
+        console.log(result.data.postTop4)
+        setPostTop4(result.data.postTop4)
+        
+        
+      }).catch((err)=>{console.error(err)})
+}
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString); // ISO 8601 형식의 문자열을 Date 객체로 변환
+
+  const day = String(date.getDate()).padStart(2, '0'); // 일 (2자리로 맞추기)
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월 (0부터 시작하므로 +1)
+  const year = String(date.getFullYear()).slice(-2); // 년 (끝 두 자리만 사용)
+  
+  const hours = String(date.getHours()).padStart(2, '0'); // 시간
+  const minutes = String(date.getMinutes()).padStart(2, '0'); // 분
+  
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
       
 return (
@@ -301,13 +326,43 @@ className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
             <div className='mainModalContent'>
               { profile?
               (<>
-              <div className='profileImg'>
-                <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${profile.profileimg}`} />
-              </div>
-              <br/>
-              <div className='profileMsg'>
-                {profile.profilemsg}
-              </div>
+                <div className='profileImg'>
+                  <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${profile.profileimg}`} />
+                </div>
+                <br/>
+                <div className='profileMsg'>
+                  {profile.profilemsg}
+                </div>
+                <br/>
+
+                <div className='postListTop4Container'>
+                  <div>게시글이 최대 4개만 조회됩니다.</div>
+                  <br/>
+                  {(postTop4)?(
+                        postTop4.map((post, idx)=>{
+                            return (
+                              <div key={idx} className='postListTop4Post' >
+                                <div><span>{post.place_name}</span>&nbsp; <span>★{post.post_stars}</span>&nbsp;<span>{formatDate(post.post_write_date)}</span>&nbsp;
+                                <span>
+                                  <button
+                                    onClick={
+                                        ()=>{ navigate(`/postOne/${post.postid}`) }
+                                    }
+                                    >리뷰상세보기</button>
+                                </span>
+                                </div>
+                                <div><span>{post.post_content}</span></div>
+                                <div>
+                                
+                                </div>
+                                <br/>
+                              </div>
+                                
+                            )
+                        })
+                    ):("게시물이 없습니다.")}
+
+                </div>
               </>
               )
               :(<div className='profile'>"Loading..."</div>)

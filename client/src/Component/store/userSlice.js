@@ -4,24 +4,27 @@ import {Cookies} from 'react-cookie'
 const cookies = new Cookies()
 
 const initialState={
-    id:'',
+    memberid:'',
     nickname:'',
     email:'',
     
     phone:'',
+    provider:'',
+
     profileimg:'',
     profilemsg:'',    
     snsid:'',
-    provider:'',
-    followers:[],
-    followings:[], 
+    
+    accessToken:'',
+    refreshToken:'',
+
 }
 
 
 const getLoginUser=()=>{
     const memberinfo = cookies.get('user')
     if( memberinfo && memberinfo.email ){
-        memberinfo.id = decodeURIComponent( memberinfo.id )
+        memberinfo.memberid = decodeURIComponent( memberinfo.memberid )
         memberinfo.nickname = decodeURIComponent( memberinfo.nickname )
         memberinfo.email = decodeURIComponent( memberinfo.email )
 
@@ -32,6 +35,10 @@ const getLoginUser=()=>{
         memberinfo.profilemsg = decodeURIComponent( memberinfo.profilemsg )
         
         memberinfo.snsid = decodeURIComponent( memberinfo.snsid )
+
+        memberinfo.accessToken = decodeURIComponent( memberinfo.accessToken )
+        memberinfo.refreshToken = decodeURIComponent( memberinfo.refreshToken )
+
     }
     return memberinfo
 }
@@ -50,6 +57,8 @@ export const userSlice=createSlice(
                 state.profileimg = action.payload.profileimg;
                 state.provider = action.payload.provider;
                 state.snsid = action.payload.snsid;
+                state.accessToken = action.payload.accessToken;
+                state.refreshToken = action.payload.refreshToken;
             },
             logoutAction:(state)=>{
                 state.memberid = '';
@@ -60,17 +69,15 @@ export const userSlice=createSlice(
                 state.profileimg = '';
                 state.provider = '';
                 state.snsid = '';
-                state.followers = [];
-                state.followings = [];
+                state.accessToken = '';
+                state.refreshToken = '';
+
+
+            
             },
-            // setFollowings : (state, action)=>{
-            //     state.followings = action.payload;
-            // },
-            // setFollowers : (state, action)=>{
-            //     state.followers = action.payload;
-            // },
+            
         }
     }
 )
-export const { loginAction, logoutAction, setFollowings, setFollowers } = userSlice.actions
+export const { loginAction, logoutAction} = userSlice.actions
 export default userSlice.reducer
