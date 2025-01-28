@@ -157,15 +157,12 @@ function Post( props ) {
                     
                     <span style={{
                         display:'flex', justifyContent:'center', alignItems:'center',
-                        lineHeight:'0.5'}}>                    
+                        lineHeight:'0.5'}}>
                     <FcPicture style={{width:'0.6em', lineHeight:'0.5'}} />
                     {images.length}</span>
 
                 </div>
                 
-                {/* 객체.some( (변수)=>{} ) : 객체의 요소 하나하나를 한번씩  '변수'에 저장하고 익명함수를 반복실행합니다.
-                대개는 익명함수에서 비교연산의 결과를 리턴하는데, 그결과가 모두 false 라면 최종 결과 false 이며, 리턴값중 하나라도  true 가 있으면 최종 결과는  true 입니다.  위 명령은 내가 팔로잉 하는 사람들들 현재 post 의 작성자가 있다면 true , 없다면 false 가 결과가 됩니다. */}
-                {/* 글쓴이가 나이거나, 나의 팔로잉중에  글쓴이가 없다면..... */}
             </div>
 
             { <Slider {...settings} >
@@ -174,7 +171,7 @@ function Post( props ) {
                         images.map((img, idx)=>{
                             return (
                                 <div className='mainimg'>
-                                    <img key={idx}  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="750" height="900"/>
+                                    <img key={idx}  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="500" height="500"/>
                                 </div>
                             )
                         })
