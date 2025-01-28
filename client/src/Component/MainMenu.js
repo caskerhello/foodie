@@ -127,12 +127,17 @@ const MainMenu = (props) => {
             }
         );
         setTimeout(() => {
-        axios.get('/api/member/logout')
-        .then((result)=>{
-            dispatch( logoutAction() );
-            cookies.remove('user', {path:'/',} )
-            navigate('/')
-        }).catch((err)=>{console.error(err)})
+        // axios.get('/api/member/logout')
+        // .then((result)=>{
+        //     dispatch( logoutAction() );
+        //     cookies.remove('user', {path:'/',} )
+        //     navigate('/')
+        // }).catch((err)=>{console.error(err)})
+
+        dispatch( logoutAction() );
+        cookies.remove('user', {path:'/',} )
+        navigate('/')
+
         
             }, 1200);
     }

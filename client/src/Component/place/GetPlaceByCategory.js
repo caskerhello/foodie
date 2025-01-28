@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 import '../../style/getplacebycategory.css'
 
+import jaxios from '../../util/jwtUtil';
+
 const GetPlaceByCategory = () => {
 const { category } = useParams();
 const categories = ["", "한식", "양식", "중식", "일식", "후식"];
@@ -28,7 +30,7 @@ const modalBackground = useRef();
 
 
 useEffect(() => {
-    axios.get(`/api/place/getPlaceListByCategory`, {params:{category}})
+    jaxios.get(`/api/place/getPlaceListByCategory`, {params:{category}})
     .then((result)=>{
         
     setPlaceList( result.data.placeList );
@@ -62,7 +64,7 @@ useEffect(() => {
 async function findPostList(placeid){
 
 
-    await axios.get(`/api/post/findPost`,{params:{placeid}})
+    await jaxios.get(`/api/post/findPost`,{params:{placeid}})
     .then((result)=>{
         console.log("result.data.postList : ", result.data.postList)
         // console.log("result.data.postList.length : ", result.data.postList.length)

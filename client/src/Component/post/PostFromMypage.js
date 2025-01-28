@@ -19,6 +19,8 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import '../../style/post.css';
 
+import jaxios from '../../util/jwtUtil';
+
 const settings = {
     dot:false,
     arrows:false,
@@ -61,19 +63,19 @@ const formatDate = (dateString) => {
 useEffect(
     ()=>{
         
-        axios.get(`/api/post/getImages/${props.modalPost.postid}` )
-        .then((result)=>{ 
+        jaxios.get(`/api/post/getImages/${props.modalPost.postid}` )
+        .then((result)=>{
             
             setImages( result.data.imgList ); })
-        .catch((err)=>{console.error(err)})            
+        .catch((err)=>{console.error(err)})
 
-        axios.get(`/api/post/getLikeList/${props.modalPost.postid}`)
+        jaxios.get(`/api/post/getLikeList/${props.modalPost.postid}`)
         .then((result)=>{
             
                 setLikeList( [...result.data.likeList ] );
         }).catch((err)=>{console.error(err)})
 
-        axios.get(`/api/post/getReplyList/${props.modalPost.postid}`)
+        jaxios.get(`/api/post/getReplyList/${props.modalPost.postid}`)
         .then((result)=>{
             
             let temp = [...result.data.replyList];
@@ -91,10 +93,10 @@ async function onLike(){
         // 현재 로그인 유저의 닉네임과 현재 포스트의 id 로  like 작업
         // 현재 로그인 유저의 닉네임과 현재 포스트의 id 를 서버에 보내서 내역이 있으면 삭제 , 없으면 추가
         
-        await axios.post('/api/post/addLike', { postid:props.modalPost.postid, memberid:lUser.memberid});
+        await jaxios.post('/api/post/addLike', { postid:props.modalPost.postid, memberid:lUser.memberid});
 
         // 현재 포스트의 라이크를 재조회하고 likeList 를 갱신 합니다
-        const result = await axios.get(`/api/post/getLikeList/${props.modalPost.postid}`)
+        const result = await jaxios.get(`/api/post/getLikeList/${props.modalPost.postid}`)
         setLikeList( result.data.likeList );
     }catch(err){
         console.error(err);
@@ -123,8 +125,8 @@ function viewOrNot(){
 async function addReply(){
     try{
         // 댓글을 추가하고 댓글 리스트를 재조회 및 갱신하세요
-        await axios.post('/api/post/addReply', {memberid:lUser.memberid, content:replyContent, postid:props.modalPost.postid})
-        const result = await axios.get(`/api/post/getReplyList/${props.modalPost.postid}`)
+        await jaxios.post('/api/post/addReply', {memberid:lUser.memberid, content:replyContent, postid:props.modalPost.postid})
+        const result = await jaxios.get(`/api/post/getReplyList/${props.modalPost.postid}`)
         setReplyList( result.data.replyList );
     }catch(err){
         console.error(err);
@@ -136,8 +138,8 @@ async function deleteReply(id){
     if(window.confirm("댓글을 삭제하시겠습니까?")){
     try{
         // 댓글을 삭제하고 댓글 리스트를 재조회 및 갱신하세요
-        await axios.delete(`/api/post/deleteReply/${id}`)
-        const result = await axios.get(`/api/post/getReplyList/${props.modalPost.postid}`)
+        await jaxios.delete(`/api/post/deleteReply/${id}`)
+        const result = await jaxios.get(`/api/post/getReplyList/${props.modalPost.postid}`)
         setReplyList( result.data.replyList );
     }catch(err){
         console.error(err);

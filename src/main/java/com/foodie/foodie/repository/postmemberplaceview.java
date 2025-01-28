@@ -16,4 +16,6 @@ public interface postmemberplaceview extends JpaRepository<PostMemberPlaceView,L
     List<PostMemberPlaceView> findAllByPlaceid(int placeid);
 
     Optional<PostMemberPlaceView> findByPostid(int id);
+
+    List<PostMemberPlaceView> findTop4ByMemberidOrderByPostidDesc(int memberid);
 }

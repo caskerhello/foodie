@@ -16,6 +16,8 @@ import 'slick-carousel/slick/slick-theme.css'
 
 import '../../style/mypage.css'
 
+import jaxios from '../../util/jwtUtil';
+
 const MyPage = () => {
 const [ imgSrc, setImgSrc ]=useState();
 const [ followers, setFollowers] = useState([]);  // 나를 follow 하는 사람들
@@ -43,7 +45,7 @@ useEffect(
             setImgSrc(lUser.profileimg)
         }
         
-        axios.get('/api/member/getMyPost', {params:{memberid:lUser.memberid}})
+        jaxios.get('/api/member/getMyPost', {params:{memberid:lUser.memberid}})
         .then((result)=>{
         setPostList([...result.data.postList])
         setImgList( [...result.data.imgList] );
@@ -53,7 +55,7 @@ useEffect(
 
 async function myPageModalOpen(postid) {
     try {
-        const result = await axios.get(`/api/post/getPost/${postid}`);
+        const result = await jaxios.get(`/api/post/getPost/${postid}`);
         console.log(result.data);
         setModalPost(result.data);
     } catch (err) {

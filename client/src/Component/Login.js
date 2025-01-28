@@ -10,6 +10,7 @@ import {Cookies} from 'react-cookie'
 
 import '../style/login.css'
 
+
 function Login() {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
@@ -21,22 +22,17 @@ function Login() {
         if(!email){return alert("이메일을 입력하세요");}
         if(!pwd){return alert("패스워드를 입력하세요");}
         
-        try{            
-
-            const result = await axios.post('/api/member/loginLocal', {email, pwd} )
-            if( result.data.msg== 'ok'){
-               
-                const res=await axios.get('/api/member/getLoginUser')
-                const lUser = res.data.loginUser;
-
-                cookies.set('user', JSON.stringify( lUser ) , {path:'/', })                
-
-                dispatch( loginAction( res.data.loginUser )  );                     
-                
-                navigate('/main'); 
-            }else{
+        try{
+            const result = await axios.post('/api/member/loginLocal', null, {params:{username:email, password:pwd}} )
+            if( result.data.error === 'ERROR_LOGIN'){
                 setPwd("");
-                return alert(result.data.msg);
+                return alert('이메일과 패스워드를 확인하세요')
+            }else{
+                // alert('result.data',result.data)
+                // alert('result.data', JSON.stringify( result.data ) );
+                cookies.set('user', JSON.stringify( result.data ) , {path:'/', })
+                dispatch( loginAction( result.data ) )
+                navigate('/main');
             }
         }catch(err){ console.error(err)}
     }
@@ -45,9 +41,9 @@ function Login() {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-          console.log('enter 입력');
-          onLoginLocal()
-        }    
+        console.log('enter 입력');
+        onLoginLocal()
+        }
     }
 
     return (

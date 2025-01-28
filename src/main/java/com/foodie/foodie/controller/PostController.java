@@ -153,6 +153,15 @@ public class PostController {
         return result;
     }
 
+    @GetMapping("/getPostListTop4")
+    public HashMap<String, Object> getPostListTop4(@RequestParam("memberid") int memberid) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        List<PostMemberPlaceView> postTop4 = ps.getPostListTop4(memberid);
+        result.put("postTop4",postTop4);
+        return result;
+    }
+
 
 
 
