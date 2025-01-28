@@ -15,6 +15,7 @@ import jaxios from '../../util/jwtUtil';
 const { kakao } = window
 
 const WritePost = () => {
+
 const navigate=useNavigate();
 const [content, setContent] = useState('');
 const [word, setWord] = useState('')
@@ -73,7 +74,8 @@ const onChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault()
-
+    
+    if(movedLocation2.lat){
     setOptions1({
     location: new kakao.maps.LatLng(
         movedLocation2.lat,
@@ -82,30 +84,46 @@ const handleSubmit = (e) => {
     radius: 1000,
     sort: kakao.maps.services.SortBy.DISTANCE,
     })
-
-
-    if(!movedLocation2.lat){
-
-        if(currentLocation){
-            setOptions1(
-                currentLocation
-            )
-
-        }
-
-
-        else{
-        setOptions1({
-            location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
-            radius: 1000,
-            sort: kakao.maps.services.SortBy.DISTANCE,
-            })
-        }
+    }else if(
+        currentLocation.latitude&&currentLocation.longitude
+    ) {
+    setOptions1({
+        location: new kakao.maps.LatLng(currentLocation.latitude,currentLocation.longitude),
+        radius: 1000,
+        sort: kakao.maps.services.SortBy.DISTANCE,
+    })
+    }else{
+    setOptions1({
+        location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
+        radius: 1000,
+        sort: kakao.maps.services.SortBy.DISTANCE,
+    })
     }
 
     setPlace(InputText)
     setInputText('')
 }
+
+// useEffect(
+//     ()=>{
+//         navigator.geolocation.getCurrentPosition(
+//             (position) => {
+//                 setCurrentLocation({
+//                     location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
+//                     radius: 1000,
+//                     sort: kakao.maps.services.SortBy.DISTANCE,
+//                 })
+
+//             },
+//             (err) => {
+
+
+//             }
+//         );
+//     },[]
+// )
+
+
 
 // const onSubmitEnter = (e) => {
 //     // if(e.key === 'Enter' || e.keyCode === 13) {
@@ -250,7 +268,7 @@ async function onSubmit(){
 
     let memberid = lUser.memberid
 
-    // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴         
+    // content 와 작성자로  post 테이블에 레코드를 추가. 이때 insert 된 레코드의 id 를 리턴
 
     let writepostresult = await jaxios.post('/api/post/writePost', { placeid, content, memberid, stars} )
     let postid = writepostresult.data.postid;
@@ -286,11 +304,11 @@ return (
             </div>
 
             <div className='field' id='img1'style={divStyle1}>
-                <input type="file" onChange={(e)=>{ imgUpload(e, 1) }} />                
+                <input type="file" onChange={(e)=>{ imgUpload(e, 1) }} />
             </div>
             <img src={imgsrc1} />
             <div className='field' id='img2' style={divStyle2}>
-                <input type="file" onChange={(e)=>{ imgUpload(e, 2) }} />                
+                <input type="file" onChange={(e)=>{ imgUpload(e, 2) }} />
             </div>
             <img src={imgsrc2} />
             <div className='field' id='img3' style={divStyle3}>

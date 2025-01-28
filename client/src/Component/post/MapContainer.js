@@ -27,7 +27,7 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         
         
         setOptions({
-          center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),          
+          center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
           level: 3,
         });
 
@@ -35,9 +35,8 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
         setLonw(position.coords.longitude)
 
         setCurrentLocation({
-          location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          radius: 1000,
-          sort: kakao.maps.services.SortBy.DISTANCE,
+          latitude:position.coords.latitude,
+          longitude:position.coords.longitude
         })
 
         setOptions1({
@@ -54,6 +53,11 @@ const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_na
           center: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
           level: 3,
         });
+        setOptions1({
+          location: new kakao.maps.LatLng(37.57261013516411, 126.99042333710086),
+          radius: 1000,
+          sort: kakao.maps.services.SortBy.DISTANCE,
+        })
         setLanw(37.57261013516411)
         setLonw(126.99042333710086)
 
