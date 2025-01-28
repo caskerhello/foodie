@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 .joinformContainer{
-    width: 100vh;
-    /* height: 100vh; */
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,7 +62,7 @@
 }
 
 .joinform .message,
-.joinform .input-wrapper .message{
+.joinform .input-wrapper .message {
     margin-top: 3px; /* 입력 필드 아래 간격 */
     margin-bottom: 10px;
     text-align: left;
@@ -72,7 +72,8 @@
 
 /* 버튼 스타일 */
 .joinform .btns button,
-.joinform .input-wrapper button {
+.joinform .input-wrapper button,
+.joinform .cropper-buttons button {
     flex: 2;
     padding: 10px;
     font-size: 16px;
@@ -96,7 +97,8 @@
     cursor: pointer;
 }
 
-.joinform .btns button.enabled:hover {
+.joinform .btns button.enabled:hover,
+.joinform .cropper-buttons button:hover {
     background-color: rgb(200, 30, 30);
 }
 
@@ -117,6 +119,57 @@
     width: 150px;
     max-width: 100%;
     border-radius: 5px;
+}
+
+/* 크롭 컨테이너 및 모달 스타일 */
+.joinform .container-cropper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.joinform .cropper-modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 크롭 화면 */
+.joinform .cropper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-color: #f3f3f3;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* 크롭 버튼 그룹 */
+.joinform .cropper-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.joinform .cropper-buttons .btn-cancel {
+    background-color: rgb(128, 128, 128); /* 취소 버튼 색상 */
+}
+
+.joinform .cropper-buttons .btn-cancel:hover {
+    background-color: rgb(100, 100, 100);
 }
 
 @media (max-width:700px) {

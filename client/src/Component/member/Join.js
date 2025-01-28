@@ -2,21 +2,23 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import Cropper from 'react-easy-crop'; // 사진 크롭 기능
+import ImageCropper from '../util/ImageCropper'; // 이미지 크롭
+import getCroppedImg from '../util/GetCrop'; // 크롭 이미지 저장
 
 import '../../style/join.css'
 
 const Join = () => {
-    const inputRef = useRef(); // 버튼 입력과 동시에 input 작동을 위함
-
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [pwdCheck, setPwdCheck] = useState('');
     const [nickname, setNickname] = useState('');
     const [phone, setPhone] = useState('');
     const [intro, setIntro] = useState('');
-    const [imgSrc, setImgSrc] = useState('');
-
+    const [imgSrc, setImgSrc] = useState(''); // 프로필 이미지
+    const [previewImg, setPreviewImg] = useState(''); // 이미지 미리보기
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null); // 잘린 이미지 값
+    const inputRef = useRef(); // 버튼 입력과 동시에 input 작동을 위함
+    
     const [buttonStyle, setButtonStyle] = useState({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
 
     const [emailMessage, setEmailMessage] = useState('');
@@ -25,6 +27,7 @@ const Join = () => {
 
     const [isEmailValid, setIsEmailValid] = useState(false); // 이메일 유효성 상태
     const [isPwdValid, setIsPwdValid] = useState(false); // 비밀번호 유효성 상태
+    const [cropperModal, setCropperModal] = useState(false); // 자르기 모달 상태
 
     const navigate = useNavigate();
 
@@ -73,7 +76,7 @@ const Join = () => {
     /* 이메일 중복 체크 */
     async function onEmailCheck(){
         try{
-            let result = await axios.post('/api/member/emailCheck', null, {params: {email}} );
+            let result = await axios.post('/api/member/emailCheck', null, {params: {email}});
             if(result.data.msg === 'yes'){
                 setButtonStyle({backgroundColor: "rgb(238, 238, 238)", color: "rgb(191, 191, 191)"});
                 setEmailMessage('사용 가능한 이메일입니다');
@@ -88,6 +91,65 @@ const Join = () => {
 
     /* 버튼 클릭 시 input 태그 작동을 위한 트리거 */
     const triggerFileSelectPopup = () => inputRef.current.click();
+
+    /* 사진 업로드 시 작동되는 이벤트 함수 */
+    const onSelectFile = (event) => {
+        if(event.target.files && event.target.files.length > 0){
+            setCropperModal(true);
+            const reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]);
+            reader.addEventListener('load', () => {
+                setImgSrc(reader.result); // 이미지 URL 설정
+                setCropperModal(true); // 크롭 모댤 표시
+            }); // 이미지 업로드 후 작동될 콜백함수
+        }
+    }
+
+    /* 크롭된 이미지 저장 핸들러 */
+    const handleCropImage = async () => {
+        try {
+            // 크롭된 이미지 생성 (Base64 형식으로 반환됨)
+            const croppedImageBase64 = await getCroppedImg(imgSrc, croppedAreaPixels);
+
+            // Base64 데이터를 Blob으로 변환
+            const base64ToBlob = (base64Data) => {
+                const byteCharacters = atob(base64Data.split(',')[1]);
+                const byteArrays = [];
+                for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+                    const slice = byteCharacters.slice(offset, offset + 1024);
+                    const byteNumbers = new Array(slice.length);
+                    for (let i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+                    byteArrays.push(new Uint8Array(byteNumbers));
+                }
+                return new Blob(byteArrays, { type: 'image/png' });
+            };
+
+            // Base64 데이터를 Blob 객체로 변환
+            const croppedImageBlob = base64ToBlob(croppedImageBase64);
+
+            // FormData에 Blob 객체 추가
+            const data = new FormData();
+            data.append('image', croppedImageBlob, 'cropped_image.png'); // 서버로 보낼 이미지 추가
+
+            // 업로드 요청
+            await axios.post('/api/member/fileUpload', data);
+
+            setCropperModal(false); // 크롭 모달 닫기
+            setPreviewImg(croppedImageBase64); // 이미지 미리보기 설정
+            setImgSrc(null); // 이미지 상태 초기화
+        } catch (e) {
+            console.error('이미지 업로드 중 오류:', e);
+        }
+    };
+
+    // async function fileUpload(e){
+    //     const formData = new FormData();
+    //     formData.append('image', e.target.files[0]);
+    //     const result = await axios.post('/api/member/fileUpload', formData);
+    //     setImgSrc(result.data.filename);
+    // }
 
     /* 회원가입 진행 */
     async function onSubmit(){
@@ -107,14 +169,6 @@ const Join = () => {
         }catch(err){
             console.error(err);
         }
-    }
-
-    /* 프로필 사진 업로드 */
-    async function fileUpload(e){
-        const formData = new FormData();
-        formData.append('image', e.target.files[0]);
-        const result = await axios.post('/api/member/fileUpload', formData);
-        setImgSrc(result.data.filename);
     }
 
     return (
@@ -174,24 +228,52 @@ const Join = () => {
                 <div className='field'>
                     <label>사진</label>
                     <div className='input-wrapper'>
-                        <input type='file' accept='image/*' ref={inputRef} style={{display: 'none'}}/>
+                        <input
+                            type='file'
+                            accept='image/*'
+                            ref={inputRef}
+                            style={{display: 'none'}}
+                            onChange={onSelectFile}
+                        />
                         <button onClick={triggerFileSelectPopup}>사진선택</button>
                     </div>
                 </div>
+                {/* 크롭 모달 */}
+                {cropperModal && (
+                    <div className="container-cropper">
+                        <div className="cropper-modal">
+                            <ImageCropper
+                                croppedImage={imgSrc} // 업로드된 이미지 URL
+                                setCroppedAreaPixels={setCroppedAreaPixels} // 크롭 영역 상태 업데이트
+                                width={1} // 가로 비율
+                                height={1} // 세로 비율
+                                cropShape="round" // 원형 크롭
+                            />
+                            <div className="cropper-buttons">
+                                <button className="btn-cancel" onClick={() => setCropperModal(false)}>
+                                    취소
+                                </button>
+                                <button className="btn-save" onClick={handleCropImage}>
+                                    저장
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <div className='field'>
                     <label>사진미리보기</label>
                     <div><img src={
-                        (imgSrc)?
-                            (`${process.env.REACT_APP_ADDRESS2}/uploads/${imgSrc}`)
+                        (previewImg)?
+                            (`${previewImg}`)
                             :(`${process.env.REACT_APP_ADDRESS2}/images/user.png`)
                     } alt='프로필사진'/></div>
                 </div>
                 <div className='btns'>
-                    <button onClick={() => { onSubmit() }}
+                    <button onClick={() => {onSubmit()}}
                             disabled={!isEmailValid || !isPwdValid}
                             className={(!isEmailValid || !isPwdValid) ? "disabled" : "enabled"}
                     >가입</button>
-                    <button onClick={() => { navigate('/') }}>뒤로</button>
+                    <button onClick={() => {navigate('/')}}>뒤로</button>
                 </div>
             </div>
         </div>
