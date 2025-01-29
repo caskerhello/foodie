@@ -62,7 +62,7 @@ public class MemberService {
     public Member getMemberByEmail(String email) {
         Optional<Member> member = mr.findByEmail(email);
         if ( member.isEmpty() ) {
-            throw new UsernameNotFoundException(email + " - User Not found");
+            return null;
         } else {
             return member.get();
         }
