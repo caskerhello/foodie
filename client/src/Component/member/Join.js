@@ -65,9 +65,11 @@ const Join = () => {
 
         // 이메일 형식 검사
         if (!emailRegex.test(value)) {
+            setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
             setEmailMessage("이메일 형식이 올바르지 않습니다");
             setIsEmailValid(false);
         } else {
+            setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
             setEmailMessage(''); // 에러 메시지 제거
             setIsEmailValid(false);
         }
@@ -75,6 +77,12 @@ const Join = () => {
 
     /* 이메일 중복 체크 */
     async function onEmailCheck(){
+        if(!email){
+            setIsEmailValid(false);
+            setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
+            return alert('이메일을 입력하세요');
+        }
+
         try{
             let result = await axios.post('/api/member/emailCheck', null, {params: {email}});
             if(result.data.msg === 'yes'){
@@ -134,11 +142,11 @@ const Join = () => {
             data.append('image', croppedImageBlob, 'cropped_image.png'); // 서버로 보낼 이미지 추가
 
             // 업로드 요청
-            await axios.post('/api/member/fileUpload', data);
+            const result = await axios.post('/api/member/fileUpload', data);
 
             setCropperModal(false); // 크롭 모달 닫기
             setPreviewImg(croppedImageBase64); // 이미지 미리보기 설정
-            setImgSrc(null); // 이미지 상태 초기화
+            setImgSrc(result.data.filename); // 이미지 저장
         } catch (e) {
             console.error('이미지 업로드 중 오류:', e);
         }
@@ -269,11 +277,11 @@ const Join = () => {
                     } alt='프로필사진'/></div>
                 </div>
                 <div className='btns'>
-                    <button onClick={() => {onSubmit()}}
+                    <button onClick={() => { onSubmit() }}
                             disabled={!isEmailValid || !isPwdValid}
                             className={(!isEmailValid || !isPwdValid) ? "disabled" : "enabled"}
                     >가입</button>
-                    <button onClick={() => {navigate('/')}}>뒤로</button>
+                    <button onClick={() => { navigate('/') }}>뒤로</button>
                 </div>
             </div>
         </div>
