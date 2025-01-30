@@ -123,28 +123,37 @@ const getLocation = () => {
 
 
 
-useEffect(()=>{
-      if(!viewMapOrNot){
-          setInputMapStyle({
-            position: 'fixed',
-            top:'15%',right:'1%',
-            width: '600px',
-            height: '500px',
-            borderRadius: '20px',
-            boxShadow: '0 0 10px',
-            transition: 'right 1s ease-out', });
-      }else{
-          setInputMapStyle({position: 'fixed',
-            top: '15%',
-            right: '-610px',  // 오른쪽으로 완전히 이동
-            width: '600px',
-            height: '500px',
-            borderRadius: '20px',
-            boxShadow: '0 0 10px',
-            transition: 'right 1s ease-out',})
-          
-      }
-},[viewMapOrNot])
+useEffect(() => {
+  if (!viewMapOrNot) {
+      setInputMapStyle({
+          position: 'fixed',
+          top: '15%',
+          right: '-5%',
+          width: '600px',
+          height: '500px',
+          borderRadius: '20px',
+          transition: 'right 1s ease-out, transform 0.2s ease-out',
+          outline: "2px solid white",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      });
+      
+      setTimeout(() => {
+          setInputMapStyle(prev => ({ ...prev, right: '1%' }));
+      }, 200);
+  } else {
+      setInputMapStyle({
+          position: 'fixed',
+          top: '15%',
+          right: '-610px', // 오른쪽으로 완전히 이동
+          width: '600px',
+          height: '500px',
+          borderRadius: '20px',
+          transition: 'right 1s ease-out',
+          outline: "2px solid white",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      });
+  }
+}, [viewMapOrNot]);
 
 // useEffect(()=>{
 //   if(!viewMapOrNot){
@@ -266,7 +275,7 @@ className='mainContainer'
     <div>
       {location ? (
         <div>
-          <Map
+          <Map id="mainMap"
             center={location}   // 지도의 중심 좌표
             style={inputMapStyle} // 지도 크기
             level={4} // 지도 확대 레벨s
@@ -311,9 +320,13 @@ className='mainContainer'
       <div className='mainMapLoading'>위치 정보를 가져오는 중...</div>
       )}
 
-      <CiGps style={{ position: 'fixed', top:'2%',right:'4.5%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocation()}}/>
+      
+      <CiGps id='CiGps' onClick={()=>{getLocation()}}/>
+      
 
-      <VscMap style={{ position: 'fixed', top:'2%',right:'1%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{onChangeMapView()}}/>
+      
+      <VscMap id='VscMap' onClick={()=>{onChangeMapView()}}/>
+      
 
       {
       modalOpen &&
