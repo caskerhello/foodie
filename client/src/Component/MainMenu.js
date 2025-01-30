@@ -20,37 +20,50 @@ import '../style/mainmenu.css'
 
 const MainMenu = (props) => {
     const topMenuOn = {
-        position: "fixed", 
+        position: "fixed",
+        left: '27%',
+        // transform: 'translateX(-50%)',
         bottom:"0%",
-        right:"34%",
+        
         width:"700px",
         border:"1px solid silver",
         borderRadius: "15px",
+        
         display: "flex",
         justifyContent: "space-around",
         padding:"10px 0",
+        
         marginBottom:"10px",
         boxSizing:"border-box",
         zIndex: "1",
+        
         backdropFilter: "blur(5px)",
         borderRadius:"10px",
-        boxShadow: "0px 0px 5px",
-        
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        transition: "left 1s ease-out",
     }
 
     const topMenuOff = {
-        position: "fixed", 
+        position: "fixed",
         bottom:"0%",
-        left:"10%",
+        left:"5%",
+        
         width:"50px",
         border:"1px solid silver",
         borderRadius: "15px",
+        
         display: "flex",
         justifyContent: "space-around",
         padding:"10px 0",
+        
         marginBottom:"10px",
         boxSizing:"border-box",
-
+        zIndex: "1",
+        
+        backdropFilter: "blur(5px)",
+        borderRadius:"10px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        transition: "left 1s ease-out",
     }
 
     const cookies = new Cookies()
@@ -88,17 +101,42 @@ const MainMenu = (props) => {
 
 
 
-    useEffect(()=>{
-        if(viewOrNot){
-            setInputStyle({position:'fixed' , bottom:'8%',right:'35%' ,display:"flex",justifyContents:'center',alignItems:'center',
-                // border:'1px dotted black' ,
-                marginBottom:"10px",width:"700px",zIndex: "1"});
-        }else{
-            setInputStyle({display:"none"})
+    useEffect(() => {
+        if (viewOrNot) {
+            setInputStyle({
+                position: 'fixed',
+                bottom: '8%',
+                right: '23%',
+                display: "flex",
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: "10px",
+                width: "700px",
+                zIndex: "1",
+                opacity: 1, // 나타날 때 완전 불투명
+                transition: "opacity 1s ease-in-out",
+                 // 부드러운 전환 효과
+                pointerEvents: 'auto'
+            });
+        } else {
+            setInputStyle({
+                position: 'fixed',
+                bottom: '8%',
+                right: '23%',
+                display: "flex",
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: "10px",
+                width: "700px",
+                zIndex: "1",
+                opacity: 0, // 나타날 때 완전 불투명
+                transition: "opacity 1s ease-in-out", // 부드러운 전환 효과
+                pointerEvents: 'none'
+            });
             props.setWord('');
             setSearchPlace('');
         }
-    },[viewOrNot])
+    }, [viewOrNot]);
 
     useEffect(()=>{
         if(menuViewOrNot){
@@ -178,24 +216,24 @@ const MainMenu = (props) => {
     
     return (
         <div >
-            <div className='topmenu'style={topMenuCss}>
-                <VscMenu style={{height:"30px",width:"30px"}} onClick={()=>{ onChangeMenuView() }} />
+            <div className='mainMenu'style={topMenuCss}>
+                <VscMenu className='mainMenuBtns' style={{height:"30px",width:"30px"}} onClick={()=>{ onChangeMenuView() }} />
                 
-                <VscHome style={iconstyle}onClick={ 
+                <VscHome className='mainMenuBtns' style={iconstyle}onClick={ 
                     ()=>{   navigate('/main') }
                 }/>
 
-                <VscEdit style={iconstyle} onClick={
+                <VscEdit className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/writePost')}} />
 
-                <VscSearch style={iconstyle} onClick={
+                <VscSearch className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ onChangeView()  }} />
 
-                <VscAccount style={iconstyle} onClick={
+                <VscAccount className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
                 } />
 
-                <VscExport style={iconstyle} onClick={
+                <VscExport className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
                 />
                 

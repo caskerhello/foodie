@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
 
 .mainContainer{
-    position: absolute;
-    top:5%;
-    left: 15%;
-    transition: left 0.3s ease; /* 애니메이션 효과 */
+    position: relative;
+    width: 100vw;
+
     /*
     display:flex;
     flex-direction:row;
@@ -13,39 +12,78 @@
     /* border: 1px solid black; */
     /* height:600px;
     width:800px */
+    
 }
 
-.mapViewActive {
-left:  unset ;
-}
 
-.mainPosts{
-    position: relative;
-    /* left: 0%; */
-    width:95%;
-    /* border:1px solid blue; */
-    padding:5px;
-    margin:5px;
+
+.mainPosts {
+    position: absolute; /* relative로 변경 */
+    left: 10%;
+    /* transform: translateX(-50%); */
+    transition: left 1s ease; /* 애니메이션 효과 */
+    /* width: 95%; */
+    padding: 5px;
+    margin: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
     margin-bottom: 100px;
+
+    /* overflow: auto;  */
+    /* 부모 영역에 스크롤을 추가 */
+    max-height: 80vh; /* 부모 영역의 높이를 제한하여 스크롤이 생기게 */
 }
 
-.post{
-    margin-top: 30px;
-    margin-bottom: 70px;
+.mapViewActive {
+    position: absolute; /* mapViewActive에서도 relative로 설정 */
+    left: 30%;
+    /* transform: translateX(-50%); */
+    transition: left 1s ease; /* 애니메이션 효과 */
+}
+
+/* .post{
+    margin-top: 20px;
+    margin-bottom: 20px;
 
     font-family: "Dongle", serif;
     font-weight: 400;
     font-style: normal;
     font-size: 200%;
 
-    line-height: 0.8;
+    line-height: 1;
+} */
+
+.post {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.post:hover {
+    transform: translateY(-5px);
 }
 
 .post .title{
+    /* border: 5px solid rgba( 242, 38, 38 ); */
+    /* border: 1px solid black; */
+    border-radius: 20px;
+    padding: 5px;
+    /* background-color: rgba( 242, 38, 38 ); */
+    /* color: #f9f9f9; */
+    margin-bottom: 5px;
+    /* box-shadow: 0px 0px 5px; */
 
 }
 
@@ -61,6 +99,63 @@ left:  unset ;
     border-radius: 50%;
     line-height: 1;
     cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.post .title .titleRow img:hover{
+    transform: translateY(-5px);
+}
+
+.post .contents1{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.post .contents1 button{
+    width: 50px;
+    height: 30px;
+    background-color: rgba(242, 38, 38);
+    border: #f9f9f9;
+    border-radius: 10px;
+    color: white;
+
+    font-family: "Dongle", serif;
+    font-size: 110%;
+    line-height: 0.8;
+
+    transition: background-color 0.3s;
+    box-shadow: 0px 0px 10px;
+
+    cursor: pointer;
+}
+
+.post .contents1 button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+.reply button{
+    width: 50px;
+    height: 30px;
+    background-color: rgba(242, 38, 38);
+    border: #f9f9f9;
+    border-radius: 10px;
+    color: white;
+
+    font-family: "Dongle", serif;
+    font-size: 80%;
+    line-height: 0.8;
+
+    transition: background-color 0.3s;
+    box-shadow: 0px 0px 10px;
+
+    cursor: pointer;
+}
+
+.reply button:hover {
+    background-color: rgb(200, 30, 30);
 }
 
 .mainMapLoading{
@@ -148,4 +243,50 @@ left:  unset ;
 .mainModalContent .profileMsg{
     text-align: left;
 
+}
+
+/* 모달 끝 */
+
+/* 우상단 버튼 css */
+
+#CiGps{
+    position: fixed;
+    top: 2%;
+    right: 4.5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#CiGps:hover {
+    transform: scale(1.1);
+}
+
+#VscMap{
+    position: fixed;
+    top: 2%;
+    right: 1%;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#VscMap:hover {
+    transform: scale(1.1);
+}
+
+#mainMap{
+    transition: transform 5s ease-out; 
+    
+}
+
+#mainMap:hover{
+    transform: translateY(-5px);
+    /* transition: transform 5s ease-out; */
 }

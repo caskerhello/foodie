@@ -41,6 +41,7 @@ const [postTop4, setPostTop4] = useState();
 
 const [viewMapOrNot, setViewMapOrNot] = useState(false);
 
+
 const navigate = useNavigate();
     
 useEffect(() => {
@@ -122,23 +123,46 @@ const getLocation = () => {
 
 
 
-useEffect(()=>{
-      if(!viewMapOrNot){
-          setInputMapStyle({ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
-      }else{
-          setInputMapStyle({display:'none'})
-          
-      }
-},[viewMapOrNot])
-
-useEffect(()=>{
-  if(!viewMapOrNot){
-      setInputMapStyle({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
-  }else{
-      setInputMapStyle({display:'none'})
+useEffect(() => {
+  if (!viewMapOrNot) {
+      setInputMapStyle({
+          position: 'fixed',
+          top: '15%',
+          right: '-5%',
+          width: '600px',
+          height: '500px',
+          borderRadius: '20px',
+          transition: 'right 1s ease-out, transform 0.2s ease-out',
+          outline: "2px solid white",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      });
       
+      setTimeout(() => {
+          setInputMapStyle(prev => ({ ...prev, right: '1%' }));
+      }, 200);
+  } else {
+      setInputMapStyle({
+          position: 'fixed',
+          top: '15%',
+          right: '-610px', // 오른쪽으로 완전히 이동
+          width: '600px',
+          height: '500px',
+          borderRadius: '20px',
+          transition: 'right 1s ease-out',
+          outline: "2px solid white",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      });
   }
-},[viewMapOrNot])
+}, [viewMapOrNot]);
+
+// useEffect(()=>{
+//   if(!viewMapOrNot){
+//       setInputMapStyle({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
+//   }else{
+//       setInputMapStyle({display:'none'})
+      
+//   }
+// },[viewMapOrNot])
 
 const [inputMapStyle, setInputMapStyle ] = useState({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' })
 
@@ -224,10 +248,10 @@ const formatDate = (dateString) => {
       
 return (
 <div
-className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
+className='mainContainer'
 >
   <MainMenu setWord={setWord} />
-    <div className='mainPosts'>
+    <div className={`mainPosts ${viewMapOrNot ? 'mapViewActive' : ''}`}>
       {
         (postList)?(
             postList.map((post, idx)=>{
@@ -251,7 +275,7 @@ className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
     <div>
       {location ? (
         <div>
-          <Map
+          <Map id="mainMap"
             center={location}   // 지도의 중심 좌표
             style={inputMapStyle} // 지도 크기
             level={4} // 지도 확대 레벨s
@@ -296,9 +320,13 @@ className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
       <div className='mainMapLoading'>위치 정보를 가져오는 중...</div>
       )}
 
-      <CiGps style={{ position: 'fixed', top:'2%',right:'4%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{getLocation()}}/>
+      
+      <CiGps id='CiGps' onClick={()=>{getLocation()}}/>
+      
 
-      <VscMap style={{ position: 'fixed', top:'2%',right:'1%',width: '50px', height: '50px',borderRadius: '5px',boxShadow: '0 0 10px' }} onClick={()=>{onChangeMapView()}}/>
+      
+      <VscMap id='VscMap' onClick={()=>{onChangeMapView()}}/>
+      
 
       {
       modalOpen &&

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
 
-.topmenu{
+.mainMenu{
     /* position: fixed; 
     bottom:0%;
     right:34%;
@@ -31,12 +31,14 @@
     color: white;
     background-color: rgb(242, 38, 38);
     margin: 5px;
-    transition: background-color 0.3s;
-    box-shadow: 0px 0px 10px;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .search button:hover {
     background-color: rgb(200, 30, 30);
+    transform: scale(1.1);
 }
 
 .search button:first-of-type{
@@ -48,5 +50,16 @@
     margin: 5px;
     width: 60px;
     /* flex: 2; */
-    box-shadow: 0px 0px 5px;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.mainMenu .mainMenuBtns{
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.mainMenu .mainMenuBtns:hover {
+    transform: scale(1.1);
 }
