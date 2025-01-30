@@ -28,7 +28,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         Map<String, Object> claims = memberDTO.getClaims();
 
         // 사용장정보가 들어있는 Map 자료(claims)를 이용하여 토큰을 생성
-        String accessToken = JWTUtil.generateToken(claims, 10);
+        String accessToken = JWTUtil.generateToken(claims, 1);
         String refreshToken = JWTUtil.generateToken(claims, 60*24);
 
         claims.put("accessToken", accessToken);

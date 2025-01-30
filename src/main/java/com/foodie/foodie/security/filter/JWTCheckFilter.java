@@ -63,6 +63,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         if(path.startsWith("/member/loginLocal"))
             return true;
 
+        //토큰 갱신
+        if(path.startsWith("/member/refresh"))
+            return true;
         
         //이미지들
         if(path.startsWith("/uploads/"))

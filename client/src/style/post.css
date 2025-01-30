@@ -73,13 +73,13 @@ left:  unset ;
     top: 1%;
 }
 
-.mainimg{
+.mainImg{
     width:50vw ;
     height:50vh  
 
 }
 
-.mainimg img{
+.mainImg img{
     width:100% ;
     height:100%;  
     border-radius : 5%;
