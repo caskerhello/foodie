@@ -39,7 +39,7 @@ const MainMenu = (props) => {
         
         backdropFilter: "blur(5px)",
         borderRadius:"10px",
-        boxShadow: "0px 0px 5px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         transition: "left 1s ease-out",
     }
 
@@ -62,7 +62,7 @@ const MainMenu = (props) => {
         
         backdropFilter: "blur(5px)",
         borderRadius:"10px",
-        boxShadow: "0px 0px 5px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         transition: "left 1s ease-out",
     }
 
@@ -216,24 +216,24 @@ const MainMenu = (props) => {
     
     return (
         <div >
-            <div className='topmenu'style={topMenuCss}>
-                <VscMenu style={{height:"30px",width:"30px"}} onClick={()=>{ onChangeMenuView() }} />
+            <div className='mainMenu'style={topMenuCss}>
+                <VscMenu className='mainMenuBtns' style={{height:"30px",width:"30px"}} onClick={()=>{ onChangeMenuView() }} />
                 
-                <VscHome style={iconstyle}onClick={ 
+                <VscHome className='mainMenuBtns' style={iconstyle}onClick={ 
                     ()=>{   navigate('/main') }
                 }/>
 
-                <VscEdit style={iconstyle} onClick={
+                <VscEdit className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/writePost')}} />
 
-                <VscSearch style={iconstyle} onClick={
+                <VscSearch className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ onChangeView()  }} />
 
-                <VscAccount style={iconstyle} onClick={
+                <VscAccount className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
                 } />
 
-                <VscExport style={iconstyle} onClick={
+                <VscExport className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
                 />
                 
