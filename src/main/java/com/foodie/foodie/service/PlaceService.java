@@ -70,8 +70,26 @@ public class PlaceService {
         return pr.findByPlaceNameContainingRandom(searchPlace);
     }
 
+    public List<Place> getPlaceListByStars(String searchPlace) {
+        return pr.findByPlaceNameContainingOrderByAvestarsDesc(searchPlace);
+    }
+
+    public List<Place> getPlaceListByReviews(String searchPlace) {
+        return pr.findByPlaceNameContainingOrderByReviewamountDesc(searchPlace);
+    }
+
     public List<Place> getPlaceListByCategory(int category) {
 //        return pr.findByCategoryOrderByPlaceidDesc(category);
         return pr.findByCategoryRandom(category);
     }
+
+    public List<Place> getPlaceListByCategoryByStars(int category) {
+        return pr.findByCategoryOrderByAvestarsDesc(category);
+    }
+
+    public List<Place> getPlaceListByCategoryByReviews(int category) {
+        return pr.findByCategoryOrderByReviewamountDesc(category);
+    }
+
+
 }

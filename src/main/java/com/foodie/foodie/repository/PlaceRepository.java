@@ -24,6 +24,16 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     @Query("SELECT p FROM Place p WHERE p.placeName LIKE %:searchPlace% ORDER BY RAND()")
     List<Place> findByPlaceNameContainingRandom(@Param("searchPlace") String searchPlace);
 
+    List<Place> findByPlaceNameContainingOrderByAvestarsDesc(String searchPlace);
+
+    List<Place> findByPlaceNameContainingOrderByReviewamountDesc(String searchPlace);
+
     @Query("SELECT p FROM Place p WHERE p.category = :category ORDER BY RAND()")
     List<Place> findByCategoryRandom(@Param("category") int category);
+
+    List<Place> findByCategoryOrderByAvestarsDesc(int category);
+
+    List<Place> findByCategoryOrderByReviewamountDesc(int category);
+
+
 }
