@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
 import { FcPicture } from "react-icons/fc";
-import { FcGallery } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
 
 import Slider from 'react-slick';
@@ -97,9 +96,9 @@ function Post( props ) {
     useEffect(
         ()=>{
             if( !viewVal ){
-                setReplyStyle({display:"none"})
+                setReplyStyle({display:'none'})
             }else{
-                setReplyStyle({display:"flex", margin:"5px 5px"})
+                setReplyStyle({display:'flex', margin:'5px 5px'})
             }
         },[viewVal]
     );
@@ -135,12 +134,12 @@ function Post( props ) {
     }
 
     return (
-        <div className='post' style={{width:"600px"}} key={props.idx}>
+        <div className='post' style={{width:'600px'}} key={props.idx}>
             <div className='title'>
                 <div className='titleRow'>
                     <span style={{
                         display:'flex', justifyContent:'center', alignItems:'center',
-                        lineHeight:'0.5', 
+                        lineHeight:'0.5',
                         // border:'2px solid black', borderRadius:'10px',
                     }}>#{props.post.postid}&nbsp;
                     
@@ -158,8 +157,10 @@ function Post( props ) {
                     <span style={{
                         display:'flex', justifyContent:'center', alignItems:'center',
                         lineHeight:'0.5'}}>
+
                     <FcPicture style={{width:'0.6em', lineHeight:'0.5'}} />
-                    {images.length}</span>
+                    {images.length}
+                    </span>
 
                 </div>
                 
@@ -170,8 +171,8 @@ function Post( props ) {
                     (images)?(
                         images.map((img, idx)=>{
                             return (
-                                <div className='mainimg'>
-                                    <img key={idx}  src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width="500" height="500"/>
+                                <div className='mainImg' key={idx}>
+                                    <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${img.savefilename}`} width='500' height='500'/>
                                 </div>
                             )
                         })
@@ -179,9 +180,9 @@ function Post( props ) {
                 }
             </Slider>  }
 
-            <div className='contents1' style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+            <div className='contents1' style={{width:'100%',display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'20px'}}>
                 
-                <span style={{width:"100px"}}>
+                <span style={{width:'200px',}}>
                     {
                     (likeList)?(
                         likeList.some(
@@ -189,34 +190,32 @@ function Post( props ) {
                         )
                         ?
                         (
-                            <VscHeartFilled style={{height:"20px",width:"20px",color:"red"}} onClick={ ()=>{ onLike() } }/>
+                            <VscHeartFilled style={{height:'20px',width:'20px',color:'red'}} onClick={ ()=>{ onLike() } }/>
                         )
                         :
                         (
-                            <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+                            <VscHeart style={{height:'20px',width:'20px'}} onClick={ ()=>{ onLike() } }/>
                         
                         )
                     ):(
-                        <VscHeart style={{height:"20px",width:"20px"}} onClick={ ()=>{ onLike() } }/>
+                        <VscHeart style={{height:'20px',width:'20px'}} onClick={ ()=>{ onLike() } }/>
                     )
                     }
                     {likeList.length}&nbsp;&nbsp;&nbsp;
                 
-                    <FcComments style={{height:"20px",width:"20px"}} onClick={()=>{
+                    <FcComments style={{height:'20px',width:'20px'}} onClick={()=>{
                         viewOrNot()}} />
                     
                     {replyList.length}
                 </span>
                 
-                <span style={{width:"400px",fontSize:"80%"}}>
-                    {props.post.post_content}★{props.post.post_stars}&nbsp;
-                </span>
                 
-                <span style={{width:"100px"}}>
-                    <div className='content' style={{fontSize:"70%"}}>
-                        {props.post.place_name}★{Math.floor(props.post.place_ave_stars * 10) / 10}
-                    </div>
-                    <button style={{ flex: "1" }} onClick={() => {
+                
+                <span style={{width:'400px', fontSize:'70%'}}>
+                    
+                    {props.post.place_name}★{Math.floor(props.post.place_ave_stars * 10) / 10}
+                    &nbsp;
+                    <button style={{ flex: '1' }} onClick={() => {
                         if (props.viewMapOrNot === true) {
                             props.onChangeMapView();}
                         props.findRestorantLocation(props.post.placeid);
@@ -225,19 +224,31 @@ function Post( props ) {
                 </span>
             </div>
 
-            <div className='reply'>
+            <div className='contents2' style={{width:'600px',fontSize:'80%', borderRadius:'10px',padding:'10px', boxShadow:'0px 0px 5px'}}> 
+                <span >
+                    {props.post.post_content}★{props.post.post_stars}&nbsp;
+                </span>
+            </div>
+
+            <div className='reply' style={{marginTop:'20px'}}>
                 {
                     (replyList && replyList.length>=1)?(
                         replyList.map((reply, idx)=>{
                             return (
                                 <div key={idx} style={replyStyle}>
-                                    <div style={{flex:"1", fontWeight:"bold"}}>{reply.nickname}&nbsp;</div>
-                                    <div style={{flex:"3"}}>{reply.reply_content}</div>
-                                    <div style={{flex:"1", fontWeight:"bold"}}>{formatDate(reply.writedate)}&nbsp;</div>
-                                    <div style={{flex:"1", textAlign:"right"}}>
+                                    <div style={{flex:'1', fontWeight:'bold'}}>
+                                        {reply.nickname}&nbsp;
+                                    </div>
+                                    <div style={{flex:'3'}}>
+                                        {reply.reply_content}
+                                    </div>
+                                    <div style={{flex:'1', fontSize:'70%'}}>
+                                        {formatDate(reply.writedate)}&nbsp;
+                                    </div>
+                                    <div style={{flex:'1', textAlign:'right'}}>
                                     {
                                         (reply.memberid==lUser.memberid)?(
-                                            <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:"100%"}}>삭제</button>
+                                            <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:'100%'}}>삭제</button>
                                         ):(null)
                                     }
                                     </div>
@@ -248,10 +259,10 @@ function Post( props ) {
                 }
 
                 <div style={replyStyle}>
-                    <input type="text" style={{flex:"5"}} value={replyContent} onChange={
+                    <input type="text" style={{flex:'5'}} value={replyContent} onChange={
                         (e)=>{ setReplyContent( e.currentTarget.value) }
                     }/>
-                    <button style={{flex:"1"}} onClick={
+                    <button style={{flex:'1'}} onClick={
                         ()=>{  addReply() }
                     }>댓글입력</button>
                 </div>

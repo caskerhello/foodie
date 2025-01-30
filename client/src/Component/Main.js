@@ -46,7 +46,7 @@ const navigate = useNavigate();
 useEffect(() => {
   jaxios.get(`/api/post/getPostList`, {params:{page:1,word}})
         .then((result)=>{
-          console.log("result.data.postList:",result.data.postList)
+        
             setPostList( result.data.postList.content );
             setPaging( result.data.postList.pageable.pageNumber+1 );
         }).catch((err)=>{console.error(err)})
@@ -76,13 +76,11 @@ async function onPageMove( page ){
 
   const result = await jaxios.get(`/api/post/getPostList`, {params:{page:page,word}})
   .then((result)=>{
-    console.log("result.data.postList.content"+result.data.postList.content)
 
   setPaging( result.data.postList.pageable.pageNumber+1 );
   let posts = [];
   posts = [...postList];
   posts = [...posts, ...result.data.postList.content ];
-
 
   setPostList([...posts]);
   }).catch((err)=>{console.error(err)})
@@ -91,16 +89,12 @@ async function onPageMove( page ){
 function findRestorantLocation(placeid) {
 
   jaxios.get(`/api/place/getPlaceInfo`, {params:{placeid}})
-      .then((result)=>{
-        
-        setLocation({lat:result.data.place.y, lng:result.data.place.x});
-        
-        setPlaceInfo(result.data.place.place_url)
-        console.log(result.data.place.place_url)
+    .then((result)=>{
+    
+    setLocation({lat:result.data.place.y, lng:result.data.place.x});
+    setPlaceInfo(result.data.place.place_url)
 
-      }).catch((err)=>{console.error(err)})
-
-// setLocation(placeInfo);
+  }).catch((err)=>{console.error(err)})
 
 }
 
@@ -109,7 +103,7 @@ function onChangeMapView(){
   setViewMapOrNot( !viewMapOrNot );
 }
 
-  // 위치 정보를 가져오는 함수
+// 위치 정보를 가져오는 함수
 const getLocation = () => {
   setLocation(movedLocation);
 
@@ -120,7 +114,7 @@ const getLocation = () => {
       setLocation({lat:position.coords.latitude, lng:position.coords.longitude});
   },
   (err) => {
-      window.alert("위치 정보 접근을 허용해주세요");
+      window.alert('위치 정보 접근을 허용해주세요');
       setLocation({lat:37.57261013516411,lng:126.99042333710086});
   }
   );
@@ -132,7 +126,7 @@ useEffect(()=>{
       if(!viewMapOrNot){
           setInputMapStyle({ position: 'fixed', top:'7%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
       }else{
-          setInputMapStyle({display:"none"})
+          setInputMapStyle({display:'none'})
           
       }
 },[viewMapOrNot])
@@ -141,7 +135,7 @@ useEffect(()=>{
   if(!viewMapOrNot){
       setInputMapStyle({ position: 'fixed', top:'15%',right:'1%',width: '600px', height: '500px',borderRadius: '20px',boxShadow: '0 0 10px' });
   }else{
-      setInputMapStyle({display:"none"})
+      setInputMapStyle({display:'none'})
       
   }
 },[viewMapOrNot])
@@ -202,18 +196,15 @@ function getProfile(memberid){
 
   jaxios.get(`/api/member/getProfile`, {params:{memberid}})
       .then((result)=>{
-        // console.log(result.data)
-        console.log(result.data.profile)
+        
         setProfile(result.data.profile);
         
       }).catch((err)=>{console.error(err)})
 
   jaxios.get(`/api/post/getPostListTop4`, {params:{memberid}})
       .then((result)=>{
-        // console.log(result.data)
-        console.log(result.data.postTop4)
-        setPostTop4(result.data.postTop4)
         
+        setPostTop4(result.data.postTop4)
         
       }).catch((err)=>{console.error(err)})
 }
@@ -270,7 +261,7 @@ className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
           }}>
 
             <MapMarker image={{
-              src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
+              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다
               size: {
               width: 24,
               height: 35
@@ -298,7 +289,7 @@ className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
                     
                   </div>
                 </CustomOverlayMap> */}
-              <ZoomControl position={"RIGHT"} />
+              <ZoomControl position={'RIGHT'} />
           </Map>
         </div>
       ) : (
@@ -360,7 +351,7 @@ className={`mainContainer ${viewMapOrNot ? 'mapViewActive' : ''}`}
                                 
                             )
                         })
-                    ):("게시물이 없습니다.")}
+                    ):('게시물이 없습니다.')}
 
                 </div>
               </>

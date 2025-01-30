@@ -192,7 +192,7 @@ public class MemberController {
             result.put("accessToken", accessToken);
             result.put("refreshToken", refreshToken);
         }else{
-            System.out.println("토큰이 갱신되었습니다");
+            System.out.println("유효기간 만료로 토큰이 갱신되었습니다");
             // accessToken 기간 만료시  refresh 토큰으로 재 검증하여 사용자 정보 추출
             Map<String, Object> claims = JWTUtil.validateToken(refreshToken);
 
