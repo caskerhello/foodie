@@ -55,6 +55,27 @@ public class MemberController {
         return result;
     }
 
+    /* 입력한 이메일로 인증코드 전송 */
+    @PostMapping("/sendCode")
+    public HashMap<String, Object> sendCode(@RequestParam("email") String email){
+        HashMap<String, Object> result = new HashMap<>();
+
+        return result;
+    }
+
+
+    /* 비밀번호 찾기 (이메일 조회) */
+    @PostMapping("/findPassword")
+    public HashMap<String, Object> findPassword(
+            @RequestParam("code") String code,
+            @RequestParam("email") String email){
+        HashMap<String, Object> result = new HashMap<>();
+        Member member = ms.getMemberByEmail(email);
+        if(member == null) result.put("msg", "no");
+        else result.put("msg", "yes");
+        return result;
+    }
+
     @PostMapping("/emailCheck")
     public HashMap<String, Object> emailCheck(@RequestParam("email") String email){
         HashMap<String, Object> result = new HashMap<String, Object>();
@@ -151,9 +172,6 @@ public class MemberController {
         return result;
     }
 
-
-
-
     @GetMapping("/getProfile")
     public HashMap<String , Object> getProfile(@RequestParam("memberid") int memberid) {
         HashMap<String, Object> result = new HashMap<>();
@@ -162,10 +180,6 @@ public class MemberController {
         result.put("profile", ms.getMemberByMemberid(memberid));
         return result;
     }
-
-
-
-
 
     @GetMapping("/refresh/{refreshToken}")
     public HashMap<String, Object> refresh(

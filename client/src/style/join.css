@@ -85,13 +85,15 @@
     transition: background-color 0.3s;
 }
 
-.joinform .btns button.enabled {
+.joinform .btns button.enabled,
+.joinform .input-wrapper button.enabled {
     background-color: rgb(242, 38, 38);
     color: #fff;
     cursor: not-allowed;
 }
 
-.joinform .btns button.disabled {
+.joinform .btns button.disabled,
+.joinform .input-wrapper button.disabled {
     background-color: rgb(238, 238, 238);
     color: rgb(191, 191, 191);
     cursor: pointer;
