@@ -6,9 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
-import { VscFileMedia } from "react-icons/vsc";
-import { VscFeedback } from "react-icons/vsc";
 import { FcComments } from "react-icons/fc";
+import { IoMdPhotos } from "react-icons/io";
 
 import { format, parseISO } from 'date-fns'
 
@@ -152,8 +151,16 @@ async function deleteReply(id){
         <div className='postFromMypage' style={{width:"600px"}}>
             <div className='postProfile' >
             {/* style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} */}
-                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} ><span>#{props.modalPost.postid}&nbsp;{props.modalPost.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formatDate(props.modalPost.post_write_date)}</span><span><VscFileMedia style={{width:"0.5em"}} />{images.length}</span><span><button className={'modalCloseBtn'} onClick={() => props.setModalOpen(false)}>
-                창닫기</button></span></div>
+                <div style={{width:"100%",display:"flex", alignItems:"center", justifyContent:"space-between"}} >
+                    <span>#{props.modalPost.postid}&nbsp;{props.modalPost.nickname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{formatDate(props.modalPost.post_write_date)}</span>
+                    <span style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                    <IoMdPhotos style={{width:"0.5em"}} />{images.length}
+                    </span>
+                    <span>
+                        <button className={'modalCloseBtn'} onClick={() => props.setModalOpen(false)}>
+                        창닫기</button>
+                    </span>
+                </div>
                 
                 {/* 객체.some( (변수)=>{} ) : 객체의 요소 하나하나를 한번씩  '변수'에 저장하고 익명함수를 반복실행합니다.
                 대개는 익명함수에서 비교연산의 결과를 리턴하는데, 그결과가 모두 false 라면 최종 결과 false 이며, 리턴값중 하나라도  true 가 있으면 최종 결과는  true 입니다.  위 명령은 내가 팔로잉 하는 사람들들 현재 post 의 작성자가 있다면 true , 없다면 false 가 결과가 됩니다. */}
