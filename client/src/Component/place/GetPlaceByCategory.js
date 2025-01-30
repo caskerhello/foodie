@@ -16,6 +16,9 @@ const [categoryName1, setCategoryName1] = useState(categories[categoryIndex]);
 
 const [isVisible, setIsVisible] = useState(true);
 
+const [isVisible2, setIsVisible2] = useState(true);
+const [placeListByCategoryOrderBy, setPlaceListByCategoryOrderBy] = useState("임의");
+
 const [placeList, setPlaceList] = useState();
 const [placeListLength, setPlaceListLength] = useState();
 
@@ -28,6 +31,10 @@ const navigate=useNavigate();
 const [modalOpen, setModalOpen] = useState(false);
 const modalBackground = useRef();
 
+useEffect(()=>{
+    setPlaceListByCategoryOrderBy("임의")
+},[categoryName1])
+
 
 useEffect(() => {
     jaxios.get(`/api/place/getPlaceListByCategory`, {params:{category}})
@@ -37,6 +44,7 @@ useEffect(() => {
     setPlaceListLength(result.data.placeList.length);
     setPostList("")
     setPostListLength("")
+    setPlaceListByCategoryOrderBy("임의")
 
     }).catch((err)=>{console.error(err)})
 }, [category]);
@@ -59,7 +67,26 @@ useEffect(() => {
 
     // Clean up the timer on component unmount or category change
     return () => clearTimeout(timer);
-  }, [category]); // category가 바뀔 때마다 실행
+}, [category]); // category가 바뀔 때마다 실행
+
+
+useEffect(() => {
+    // setCategoryName1(categories[categoryIndex]);
+
+    // Show the message for 5 seconds after category change
+    setIsVisible2(true);
+    const timer = setTimeout(() => {
+    setIsVisible2(false);
+    }, 2000);
+
+    // Clean up the timer on component unmount or category change
+    return () => clearTimeout(timer);
+}, [category]);
+
+
+
+
+
 
 async function findPostList(placeid){
 
@@ -88,6 +115,70 @@ const formatDate = (dateString) => {
     return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
 
+function getPlaceByCategoryByStars(){
+    jaxios.get(`/api/place/getPlaceListByCategoryByStars`, {params:{category}})
+    .then((result)=>{
+        
+    setPlaceList( result.data.placeList );
+    setPlaceListLength(result.data.placeList.length);
+    setPostList("")
+    setPostListLength("")
+
+    }).catch((err)=>{console.error(err)})
+    setPlaceListByCategoryOrderBy("별점");
+    
+    setIsVisible2(true);  // 팝업 보이기
+    const timer = setTimeout(() => {
+        setIsVisible2(false);  // 2초 후 팝업 숨기기
+    }, 2000);
+
+    // 클린업
+    return () => clearTimeout(timer);
+}
+
+function getPlaceByCategoryByReviews(){
+    jaxios.get(`/api/place/getPlaceListByCategoryByReviews`, {params:{category}})
+    .then((result)=>{
+        
+    setPlaceList( result.data.placeList );
+    setPlaceListLength(result.data.placeList.length);
+    setPostList("")
+    setPostListLength("")
+
+    }).catch((err)=>{console.error(err)})
+    setPlaceListByCategoryOrderBy("리뷰")
+
+    setIsVisible2(true);  // 팝업 보이기
+    const timer = setTimeout(() => {
+        setIsVisible2(false);  // 2초 후 팝업 숨기기
+    }, 2000);
+
+    // 클린업
+    return () => clearTimeout(timer);
+}
+
+function getPlaceByCategoryByRandom(){
+    jaxios.get(`/api/place/getPlaceListByCategory`, {params:{category}})
+    .then((result)=>{
+        
+    setPlaceList( result.data.placeList );
+    setPlaceListLength(result.data.placeList.length);
+    setPostList("")
+    setPostListLength("")
+
+    }).catch((err)=>{console.error(err)})
+    setPlaceListByCategoryOrderBy("임의")
+
+    setIsVisible2(true);  // 팝업 보이기
+    const timer = setTimeout(() => {
+        setIsVisible2(false);  // 2초 후 팝업 숨기기
+    }, 2000);
+
+    // 클린업
+    return () => clearTimeout(timer);
+}
+
+
 return (
     <div className='getPlaceByCategoryContainer'>
         <MainMenu setWord={setWord} />
@@ -97,7 +188,18 @@ return (
                     조회된 자료 갯수는 "{placeListLength}"개 입니다.
                     
                     </div>
-                )}
+            )}
+            {isVisible2 && (
+                    <div className={`getPlaceByCategoryTitle2 ${isVisible2 ? "show" : ""}`}>
+                    조회된 자료는 "{placeListByCategoryOrderBy}"순 입니다.
+                    </div>
+            )}
+            <div className='getPlaceByCategoryBtns'>
+                <button onClick={()=>{getPlaceByCategoryByStars()}}>별점순</button>&nbsp;
+                <button onClick={()=>{getPlaceByCategoryByReviews()}}>리뷰순</button>&nbsp;
+                <button onClick={()=>{getPlaceByCategoryByRandom()}}>랜덤정렬</button>
+            </div>
+            <br/>
             {
                 (!placeListLength==0)?(
                     placeList.map((place, idx)=>{

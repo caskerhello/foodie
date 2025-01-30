@@ -146,7 +146,7 @@ const MainMenu = (props) => {
         if(!searchPlace){return alert("한글자이상 입력해주세요!")}
         props.setWord(searchPlace);  
         console.log(searchPlace);
-        navigate(`/getPlaceByName/${searchPlace}`, { replace: true });
+        navigate(`/getPlaceByName/${searchPlace}`);
         setViewOrNot( !viewOrNot );
     }
 
@@ -173,7 +173,7 @@ const MainMenu = (props) => {
         console.log('enter 입력');
         onSearch()
         setViewOrNot( !viewOrNot );
-        }    
+        }
     }
     
     return (
