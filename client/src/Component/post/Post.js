@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
-import { FcPicture } from "react-icons/fc";
+import { IoMdPhotos } from "react-icons/io";
 import { FcComments } from "react-icons/fc";
 
 import Slider from 'react-slick';
@@ -141,7 +141,7 @@ function Post( props ) {
                         display:'flex', justifyContent:'center', alignItems:'center',
                         lineHeight:'0.5',
                         // border:'2px solid black', borderRadius:'10px',
-                    }}>#{props.post.postid}&nbsp;
+                    }}>&nbsp;&nbsp;#{props.post.postid}&nbsp;&nbsp;
                     
                     <span style={{
                         display:'flex', justifyContent:'center', alignItems:'center',
@@ -149,7 +149,7 @@ function Post( props ) {
                         props.getProfile(props.post.memberid);
                         props.setModalOpen(true);
                     }}>
-                        <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${props.post.profileimg}`}/>{props.post.nickname}</span> &nbsp;
+                        <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${props.post.profileimg}`}/>{props.post.nickname}</span> &nbsp;&nbsp;&nbsp;&nbsp;
                     
                         {formatDate(props.post.post_write_date)}
                     </span>
@@ -157,9 +157,9 @@ function Post( props ) {
                     <span style={{
                         display:'flex', justifyContent:'center', alignItems:'center',
                         lineHeight:'0.5'}}>
-
-                    <FcPicture style={{width:'0.6em', lineHeight:'0.5'}} />
-                    {images.length}
+                    
+                    <IoMdPhotos style={{width:'0.6em', lineHeight:'0.5'}}/>
+                    {images.length}&nbsp;&nbsp;
                     </span>
 
                 </div>
@@ -180,7 +180,7 @@ function Post( props ) {
                 }
             </Slider>  }
 
-            <div className='contents1' style={{width:'100%',display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'20px'}}>
+            <div className='contents1'>
                 
                 <span style={{width:'200px',}}>
                     {
@@ -206,7 +206,9 @@ function Post( props ) {
                     <FcComments style={{height:'20px',width:'20px'}} onClick={()=>{
                         viewOrNot()}} />
                     
-                    {replyList.length}
+                    {replyList.length}&nbsp;
+
+                    ★{props.post.post_stars}
                 </span>
                 
                 
@@ -224,9 +226,9 @@ function Post( props ) {
                 </span>
             </div>
 
-            <div className='contents2' style={{width:'600px',fontSize:'80%', borderRadius:'10px',padding:'10px', boxShadow:'0px 0px 5px'}}> 
+            <div className='contents2' style={{width:'580px',fontSize:'80%', borderRadius:'10px',padding:'10px', boxShadow:'0px 0px 5px'}}> 
                 <span >
-                    {props.post.post_content}★{props.post.post_stars}&nbsp;
+                &nbsp;{props.post.post_content}
                 </span>
             </div>
 
@@ -248,7 +250,7 @@ function Post( props ) {
                                     <div style={{flex:'1', textAlign:'right'}}>
                                     {
                                         (reply.memberid==lUser.memberid)?(
-                                            <button onClick={ ()=>{ deleteReply(reply.replyid)  } } style={{width:'100%'}}>삭제</button>
+                                            <button onClick={ ()=>{ deleteReply(reply.replyid)  } }>삭제</button>
                                         ):(null)
                                     }
                                     </div>
@@ -259,9 +261,10 @@ function Post( props ) {
                 }
 
                 <div style={replyStyle}>
-                    <input type="text" style={{flex:'5'}} value={replyContent} onChange={
+                    <input type="text" style={{flex:'5',borderRadius:'10px'}} value={replyContent} onChange={
                         (e)=>{ setReplyContent( e.currentTarget.value) }
                     }/>
+                    &nbsp;
                     <button style={{flex:'1'}} onClick={
                         ()=>{  addReply() }
                     }>댓글입력</button>

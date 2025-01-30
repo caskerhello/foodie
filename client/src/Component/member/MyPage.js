@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
 import { VscFileMedia } from "react-icons/vsc";
+import { IoMdPhotos } from "react-icons/io";
 import { VscFeedback } from "react-icons/vsc";
 
 import Slider from 'react-slick'

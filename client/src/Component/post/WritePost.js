@@ -290,9 +290,10 @@ return (
     <div className='writePostContainer'
     // style={{display:"flex", flexDirection:"column", alignItems:"center"}}
     >
-        <MainMenu setWord={setWord}/>
+        
 
         <div className='writePost'>
+            <MainMenu setWord={setWord}/>
             <div className='title' >포스팅</div>
             <br></br>
             <div className='field' id='wpContent'>
