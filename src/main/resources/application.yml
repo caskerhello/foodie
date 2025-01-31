@@ -31,6 +31,18 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: on1yuseproject@gmail.com
+    password: # 앱키
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 5000
 
 kakao:
   client_id: 626518f490cdfa8cfb51cdca88122b82

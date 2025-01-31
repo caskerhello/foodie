@@ -15,7 +15,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const dispatch = useDispatch();  // 쓰기를 위한 함수 생성
-    const cookies = new Cookies()
+    const cookies = new Cookies();
     const navigate = useNavigate();
 
     async function onLoginLocal(){
@@ -41,8 +41,8 @@ function Login() {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-        console.log('enter 입력');
-        onLoginLocal()
+            console.log('enter 입력');
+            onLoginLocal()
         }
     }
 
@@ -62,7 +62,9 @@ function Login() {
                 <label></label>
                 <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e)=>{ setPwd(e.currentTarget.value) }} onKeyDown={onSubmitEnter}/>
             </div>
-
+            <div className='message' onClick={ ()=>{ navigate('/findPassword') }}>
+                비밀번호를 잊으셨나요?
+            </div>
             <div className='btns'>
                 <div className='btn'><BiSolidKey style={{height:'40px',width:'40px'}} 
                 onClick={ ()=>{ onLoginLocal() }}            
@@ -71,14 +73,13 @@ function Login() {
 
             <div className='btn'>
                 <BiSolidUserPlus style={{height:'50px',width:'50px'}} onClick={ ()=>{ navigate('/join') } }/>
+            </div>
+                <button
+                // onClick={()=>{
+                //     window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
+                // }}
+                ><img style={{height:"40px"}} src="images/free-icon-kakao-talk.png"/></button>
                 </div>
-                    <button 
-                    // onClick={()=>{
-                    //     window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
-                    // }}
-                    ><img style={{height:"40px"  }} src="images/free-icon-kakao-talk.png"/></button>
-                </div>
-            
         </div>
     </div>
     )
