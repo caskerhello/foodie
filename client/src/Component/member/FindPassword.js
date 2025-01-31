@@ -49,6 +49,7 @@ const FindPassword = () => {
 
     /* 인증코드 전송 */
     function sendCode(){
+        setEmailMessage('이메일 전송 중...');
         axios.post('/api/member/sendCode', null, { params: { email } })
         .then((result) => {
             if(result.data.msg === 'yes'){
@@ -61,14 +62,14 @@ const FindPassword = () => {
         }).catch((err) => { console.error('인증코드 전송 에러', err) })
     }
 
-    /* 인증코드 확인 후 비밀번호 재설정 */
-    function onSubmit(){
-        axios.post('/api/member/findPassword', null, {params: { email, code }})
+    /* 인증코드 확인 후 비밀번호 재설정 페이지로 이동 */
+    function codeCheck(){
+        axios.post('/api/member/codeCheck', null, { params: { code } })
         .then((result) => {
             if(result.data.msg == 'yes'){
-                navigate('/setNewPassword');
+                navigate(`/setNewPassword?email=${email}`);
             }else{
-                
+                setCodeMessage('인증 코드가 일치하지 않습니다');
             }
         })
     }
@@ -114,7 +115,7 @@ const FindPassword = () => {
                 <div className='btns'>
                     <button className={ ( !isCodeCheck ) ? "disabled" : "enabled" }
                         disabled={ !isCodeCheck }
-                        onClick={() => { onSubmit() }}>
+                        onClick={() => { codeCheck() }}>
                         확인
                     </button>
                     <button onClick={() => { navigate('/') }}>뒤로</button>

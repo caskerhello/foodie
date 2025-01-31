@@ -49,7 +49,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         } catch (CustomJWTException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -75,8 +74,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         if(path.startsWith("/images/"))
             return true;
 
-       
-
         //회원가입시 제외
         if(path.startsWith("/member/emailCheck"))
             return true;
@@ -86,15 +83,19 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return true;
         if(path.startsWith("/member/join"))
             return true;
+        if(path.startsWith("/member/getEmail"))
+            return true;
+        if(path.startsWith("/member/sendCode"))
+            return true;
+        if(path.startsWith("/member/codeCheck"))
+            return true;
+        if(path.startsWith("/member/setNewPassword"))
+            return true;
 
 //        if(path.startsWith("/member/kakaostart"))
 //            return true;
 //        if(path.startsWith("/member/kakaoLogin"))
 //            return true;
-
-        if(path.startsWith("/member/getEmail"))
-            return true;
-
 
         return false;
     }

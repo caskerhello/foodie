@@ -55,24 +55,48 @@ public class MemberController {
         return result;
     }
 
+    private int randomCode; // 랜덤 코드 저장 변수
+
     /* 입력한 이메일로 인증코드 전송 */
     @PostMapping("/sendCode")
     public HashMap<String, Object> sendCode(@RequestParam("email") String email){
         HashMap<String, Object> result = new HashMap<>();
-
+        Member member = ms.getMemberByEmail(email);
+        if(member != null){
+            try{
+                randomCode = ms.sendCode(email);
+                String code = String.valueOf(randomCode);
+                result.put("msg", "yes");
+                result.put("code", code);
+            }catch(Exception e){
+                throw new RuntimeException(e);
+            }
+        }else{
+            result.put("msg", "no");
+        }
         return result;
     }
 
-
-    /* 비밀번호 찾기 (이메일 조회) */
-    @PostMapping("/findPassword")
-    public HashMap<String, Object> findPassword(
-            @RequestParam("code") String code,
-            @RequestParam("email") String email){
+    /* 인증코드 확인 */
+    @PostMapping("/codeCheck")
+    public HashMap<String, Object> checkCode(@RequestParam("code") String code){
         HashMap<String, Object> result = new HashMap<>();
-        Member member = ms.getMemberByEmail(email);
-        if(member == null) result.put("msg", "no");
-        else result.put("msg", "yes");
+        if(String.valueOf(randomCode).equals(code)){
+            result.put("msg", "yes");
+        }else{
+            result.put("msg", "no");
+        }
+        return result;
+    }
+
+    /* 비밀번호 재설정 */
+    @PostMapping("/setNewPassword")
+    public HashMap<String, Object> setNewPassword(
+            @RequestParam("email") String email,
+            @RequestParam("pwd") String pwd){
+        HashMap<String, Object> result = new HashMap<>();
+        ms.updateNewPassword(email, pwd);
+        result.put("msg", "yes");
         return result;
     }
 
@@ -130,17 +154,15 @@ public class MemberController {
     @GetMapping("/logout")
     public HashMap<String, Object> logout(HttpSession session) {
         HashMap<String, Object> result = new HashMap<>();
-//        session.removeAttribute("loginUser");
         result.put("msg", "ok");
         return result;
     }
 
     @PostMapping("/updateProfile")
-    public HashMap<String, Object> updateProfile(@RequestBody Member member, HttpSession session) {
+    public HashMap<String, Object> updateProfile(@RequestBody Member member) {
         HashMap<String, Object> result = new HashMap<>();
         System.out.println("updateProfile:" + member);
         ms.updateMember( member );
-//        session.setAttribute("loginUser", member.getEmail() );
         result.put("msg", "ok");
         return result;
     }

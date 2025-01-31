@@ -34,7 +34,7 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: on1yuseproejct@gmail.com
+    username: on1yuseproject@gmail.com
     password: # 앱키
     properties:
       mail:

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import '../../style/join.css'
 
-const SetNewPassword = (props) => {
+const SetNewPassword = () => {
+    // URL에서 쿼리 파라미터로 전달된 email 값 가져오기
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const email = queryParams.get('email');
+
     const [pwd, setPwd] = useState('');
     const [pwdCheck, setPwdCheck] = useState('');
     const [pwdMessage, setPwdMessage] = useState('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
@@ -37,7 +42,13 @@ const SetNewPassword = (props) => {
     }, [pwd, pwdCheck]);
 
     function onSubmit(){
-        //axios.post('/api/member/setNewPassword')
+        axios.post('/api/member/setNewPassword', null, { params: { email, pwd } })
+        .then((result) => {
+            if(result.data.msg === 'yes'){
+                alert('비밀번호 재설정이 완료되었습니다. 로그인 페이지로 돌아갑니다');
+                navigate('/');
+            }
+        }).catch((err) => { console.error(err); })
     }
 
     return (
