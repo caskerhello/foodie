@@ -226,7 +226,7 @@ function Post( props ) {
                 </span>
             </div>
 
-            <div className='contents2' style={{width:'580px',fontSize:'80%', borderRadius:'10px',padding:'10px', boxShadow:'0px 0px 5px'}}> 
+            <div className='contents2' style={{width:'580px',fontSize:'80%', borderRadius:'10px',padding:'10px', boxShadow:'0 4px 8px rgba(0, 0, 0, 0.1)'}}> 
                 <span >
                 &nbsp;{props.post.post_content}
                 </span>
