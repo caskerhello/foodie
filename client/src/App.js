@@ -14,6 +14,7 @@ import WritePost from './Component/post/WritePost';
 import PostOne from './Component/post/PostOne';
 import GetPlaceByName from './Component/place/GetPlaceByName';
 import GetPlaceByCategory from './Component/place/GetPlaceByCategory';
+import MeetingList from './Component/meeting/MeetingList';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/postOne/:postid" element={<PostOne />} />
                 <Route path="/getPlaceByName/:searchPlace" element={<GetPlaceByName />} />
                 <Route path="/getPlaceByCategory/:category" element={<GetPlaceByCategory />} />
+                <Route path="/meeting" element={<MeetingList />} />
             </Routes>
         </div>
   );
