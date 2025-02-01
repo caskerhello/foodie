@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useSelector, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import jaxios from '../../util/jwtUtil';
 import MapContainer from '../post/MapContainer';
-import DateRangePicker from '../util/DateRangePicker'; // 날짜 선택 api
+import CalendarPicker from '../util/CalendarPicker'; // 날짜 선택 api
 
 const { kakao } = window; // 카카오맵
 
@@ -42,9 +43,9 @@ const CreateMeeting = () => {
     }
 
     /* 장소 값 변경 */
-    const onChange = (e) => {
-        setInputText(e.target.value)
-    }
+    const handleInputChange = (e) => {
+        setInputText(e.target.value); // 사용자 입력을 상태에 저장
+    };
 
     /* 카카오맵에서 검색한 장소 정보 */
     const handleSubmit = (e) => {
@@ -109,7 +110,7 @@ const CreateMeeting = () => {
                                     setPlace('');
                                 }
                             }}>
-                        <div className={'writePostModalContent'}>
+                            <div className={'writePostModalContent'}>
                             <div className='writePostTitle'>
                                 <button className={'modalCloseBtn'}
                                     onClick={() => { setModalOpen(false); setPlace(''); } }>
@@ -118,7 +119,11 @@ const CreateMeeting = () => {
                             </div>
                                 
                             <form className="inputForm" onSubmit={handleSubmit}>
-                                <input placeholder="장소 검색" onChange={onChange} value={InputText} autoFocus/>
+                                <input placeholder="장소 검색"
+                                    onChange={handleInputChange}
+                                    value={InputText}
+                                    autoFocus
+                                />
                                 <button type="submit" className='modalCloseBtn'>검색</button>
                                 <br/>
                                 <br/>
@@ -146,17 +151,17 @@ const CreateMeeting = () => {
                 </div>
                 <div className='field'>
                     <label>날짜</label>
-                    <input type='text' placeholder='모임 제목을 입력하세요'></input>
+                    <input type='text' placeholder='모임 제목을 입력하세요'/>
                     {/* 날짜 선택 달력 api */}
-                    {/* <DateRangePicker /> */}
+                    <CalendarPicker />
                 </div>
                 <div className='field'>
                     <label>주최자</label>
-                    <input type='text' value={loginUser.nickname}></input>
+                    <input type='text' value={loginUser.nickname}/>
                 </div>
                 <div className='field'>
                     <label>최대인원</label>
-                    <input type='text' maxLength={99}>명</input>
+                    <input type='text' maxLength={99}/>명
                 </div>
             </div>
         </div>
