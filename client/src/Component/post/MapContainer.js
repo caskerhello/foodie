@@ -5,9 +5,22 @@ import '../../style/mapcontainer.css'
 
 const { kakao } = window
 
-const MapContainer = ({ searchPlace, setPlace ,setPlace_name, setRoad_address_name, setPhone, setPlace_url, setModalOpen, setSelectedPlace, setMovedLocation2, movedLocation2, options1 , setOptions1, selectButton, onSubmitEnter, setCurrentLocation}) => {
-
-
+const MapContainer = ({
+  searchPlace,
+  setPlace,
+  setPlace_name,
+  setRoad_address_name,
+  setPhone, setPlace_url,
+  setModalOpen, 
+  setSelectedPlace,
+  setMovedLocation2,
+  movedLocation2,
+  options1,
+  setOptions1,
+  selectButton,
+  onSubmitEnter,
+  setCurrentLocation 
+}) => {
   const [locationw, setLocationw] = useState();
   const [options, setOptions] = useState({
     center: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),

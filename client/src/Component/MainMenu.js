@@ -10,6 +10,8 @@ import { VscHome } from "react-icons/vsc";
 import { VscEdit } from "react-icons/vsc";
 import { VscSearch } from "react-icons/vsc";
 import { VscAccount } from "react-icons/vsc";
+import { VscExport } from "react-icons/vsc";
+import { FaPeopleGroup } from "react-icons/fa6";
 import { BiLogOutCircle } from "react-icons/bi";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -67,7 +69,6 @@ const MainMenu = (props) => {
     const cookies = new Cookies()
 
     const navigate=useNavigate();
-    const [loginUser, setLoginUser] = useState({});
     const [iconstyle, setIconstyle] = useState({width:'30px',height:'30px'});
 
     const [searchPlace, setSearchPlace] = useState('');
@@ -217,15 +218,18 @@ const MainMenu = (props) => {
             <div className='mainMenu'style={topMenuCss}>
                 <VscMenu className='mainMenuBtns' style={{height:"30px",width:"30px"}} onClick={()=>{ onChangeMenuView() }} />
                 
-                <VscHome className='mainMenuBtns' style={iconstyle}onClick={ 
-                    ()=>{   navigate('/main') }
+                <VscHome className='mainMenuBtns' style={iconstyle} onClick={
+                    ()=>{ navigate('/main') }
                 }/>
 
                 <VscEdit className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/writePost')}} />
 
                 <VscSearch className='mainMenuBtns' style={iconstyle} onClick={
-                    ()=>{ onChangeView()  }} />
+                    ()=>{ onChangeView() }} />
+
+                <FaPeopleGroup className='mainMenuBtns' style={iconstyle} onClick={
+                    ()=>{ navigate('/meeting') }} />
 
                 <VscAccount className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
