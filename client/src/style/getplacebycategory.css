@@ -27,7 +27,7 @@
     position: fixed;
     top: 20px;
     left: 20px;
-    background-color: rgba(242, 38, 38, 0.8);
+    background-color: rgba(255, 111, 97, 1);
     color: white;
     padding: 5px 20px;
     border-radius: 8px;
@@ -47,7 +47,7 @@
     position: fixed;
     top: 100px;
     left: 20px;
-    background-color: rgba(242, 38, 38, 0.8);
+    background-color: rgba(255, 111, 97, 1);
     color: white;
     padding: 5px 20px;
     border-radius: 8px;
@@ -68,7 +68,7 @@
 
 .getPlaceByCategoryContainer .getPlaceByCategoryBtns button{
     height: 30px;
-    background-color: rgba(242, 38, 38);
+    background-color: rgba(255, 111, 97, 1);
     border: #f9f9f9;
     border-radius: 10px;
     color: white;
@@ -147,7 +147,7 @@
 
 .getPlaceByCategoryContainer .placeContainer .right .btns button{
     height: 30px;
-    background-color: rgba(242, 38, 38);
+    background-color: rgba(255, 111, 97, 1);
     border: #f9f9f9;
     border-radius: 10px;
     color: white;

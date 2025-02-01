@@ -29,7 +29,7 @@ const FindPassword = () => {
             setEmailMessage("이메일 형식이 올바르지 않습니다");
             setIsEmailValid(false);
         } else {
-            setCodeButtonStyle({ backgroundColor: "rgb(242, 38, 38)", color: "#fff" });
+            setCodeButtonStyle({ backgroundColor: "rgba(255, 111, 97, 1)", color: "#fff" });
             setEmailMessage(''); // 에러 메시지 제거
             setIsEmailValid(true);
         }
@@ -93,7 +93,7 @@ const FindPassword = () => {
                         </button>
                     </div>
                     <div className='message'
-                        style={{ color: isEmailValid ? "blue" : "rgb(242, 38, 38)" }}>
+                        style={{ color: isEmailValid ? "blue" : "rgba(255, 111, 97, 1)" }}>
                         { emailMessage }
                     </div>
                 </div>
@@ -108,7 +108,7 @@ const FindPassword = () => {
                         />
                     </div>
                     <div className='message'
-                        style={{ color: isCodeCheck ? "blue" : "rgb(242, 38, 38)" }}>
+                        style={{ color: isCodeCheck ? "blue" : "rgba(255, 111, 97, 1)" }}>
                         { codeMessage }
                     </div>
                 </div>
