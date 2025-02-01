@@ -1,0 +1,187 @@
+.meeting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.meeting-container .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgba(255, 111, 97, 1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.meeting-write {
+    width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 2px solid rgba(255, 111, 97, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+.meeting-write .field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.meeting-write .field label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.meeting-write .field input {
+    padding: 8px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.meeting-write .field .place {
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.meeting-write .field .place p {
+    font-size: 1em;
+    color: #333;
+}
+
+.meeting-write .field .place button {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.meeting-write .field .place button:hover {
+    background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 */
+}
+
+.meeting-write .field .calendar-modal {
+    margin-top: 10px;
+}
+
+.meeting-write .field button {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.meeting-write .field button:hover {
+    background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 */
+}
+
+.writePostModalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.writePostModalContent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.writePostTitle {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.writePostTitle .modalCloseBtn {
+    background-color: transparent;
+    color: #333;
+    font-size: 1.2em;
+    border: none;
+    cursor: pointer;
+}
+
+.writePostModalContent form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.writePostModalContent form button {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.writePostModalContent form button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+/* 전체 버튼 스타일 */
+.meeting-container .create-buttons {
+    display: flex;
+    justify-content: space-between; /* 버튼들 사이의 공간을 균등하게 분배 */
+    width: 100%; /* 부모 요소의 너비에 맞춰 버튼들을 배치 */
+    gap: 10px; /* 버튼 사이의 간격 */
+    margin-top: 20px; /* 상단 여백 추가 */
+}
+
+.meeting-container .create-buttons button {
+    flex: 1; /* 버튼이 부모 요소의 너비에 맞게 확장 */
+    padding: 12px 16px; /* 버튼 안의 여백 */
+    font-size: 16px; /* 폰트 크기 */
+    color: #fff; /* 글자 색 */
+    background-color: rgba(255, 111, 97, 1); /* 배경 색 */
+    border: none; /* 테두리 없앰 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    cursor: pointer; /* 클릭할 수 있음을 나타내는 커서 */
+    transition: background-color 0.3s, transform 0.2s; /* 배경 색과 크기 변화에 애니메이션 추가 */
+}
+
+.meeting-container .create-buttons button.enabled:hover {
+    background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 배경 */
+}
+
+.meeting-container button.enabled {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.meeting-container button.disabled {
+    background-color: rgb(238, 238, 238);
+    color: rgb(191, 191, 191);
+    cursor: pointer;
+}

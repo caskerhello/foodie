@@ -1,0 +1,84 @@
+.meeting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.meeting-list {
+    width: 560px; /* meeting-item과 동일한 너비 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 기본적으로 왼쪽 정렬 */
+    gap: 10px;
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 크기로 설정 */
+}
+
+.meeting-list .creating-button {
+    align-self: flex-end; /* 버튼을 오른쪽 끝으로 정렬 */
+}
+
+.meeting-item {
+    width: 560px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid rgba(255, 111, 97, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    gap: 10px;
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 크기로 설정 */
+}
+
+.meeting-list .title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.meeting-list .location,
+.meeting-list .day,
+.meeting-list .organizer,
+.meeting-list .participants {
+    font-size: 1em;
+    color: #333;
+}
+
+.meeting-list .bottom {
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    width: 100%;
+}
+
+.meeting-list .bottom-left,
+.meeting-list .bottom-right {
+    display: flex;
+    align-items: center; /* 세로로 중앙 정렬 */
+}
+
+.meeting-list .bottom-left {
+    flex: 1;
+}
+
+.meeting-list .bottom-right {
+    flex: 1;
+    justify-content: flex-end; /* 오른쪽으로 정렬 */
+    gap: 10px;
+}
+
+.meeting-container button {
+    background-color: rgba(255, 111, 97, 1); /* 버튼 색상 */
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.meeting-list .attend-button:hover {
+    background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 */
+}
