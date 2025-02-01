@@ -52,7 +52,7 @@ function Login() {
         <div className="loginform">
             <br></br>
             <div className="title">
-                즐거운 미식 생활의 시작 <span>식신</span>
+                즐거운 미식 생활의 시작 <span>Foodie</span>
                 <span className="fallingDots">·&nbsp;</span>
                 <span className="fallingDots2">·</span>
             </div>
