@@ -26,8 +26,7 @@
     border: 2px solid rgba(255, 111, 97, 1);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 50px;
 }
 
 .meeting-write .field {
@@ -104,6 +103,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .writePostModalContent {
@@ -170,6 +170,18 @@
     transition: background-color 0.3s, transform 0.2s; /* 배경 색과 크기 변화에 애니메이션 추가 */
 }
 
-.meeting-container .create-buttons button:hover {
+.meeting-container .create-buttons button.enabled:hover {
     background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 배경 */
+}
+
+.meeting-container button.enabled {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.meeting-container button.disabled {
+    background-color: rgb(238, 238, 238);
+    color: rgb(191, 191, 191);
+    cursor: pointer;
 }

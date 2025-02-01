@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import jaxios from '../../util/jwtUtil';
 import MainMenu from './../MainMenu';
@@ -7,9 +8,18 @@ import MainMenu from './../MainMenu';
 import '../../style/meeting.css'
 
 const MeetingList = () => {
-    const [word, setWord] = useState(null);
+    const loginUser = useSelector( state => state.user ); // 로그인 유저
     const navigate = useNavigate();
 
+    const [title, setTitle] = useState('');
+    const [place, setPlace] = useState('');
+    const [startDate, setStartDate] = useState(new Date());
+    const [organizer, setOrganizer] = useState('');
+    const [maxParticipants, setParticipants] = useState();
+
+    /* MainMenu 사용 변수 */
+    const [word, setWord] = useState(null);
+    
     return (
         <div className='meeting-container'>
             <MainMenu setWord={setWord} />

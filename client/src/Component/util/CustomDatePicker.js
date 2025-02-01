@@ -6,18 +6,24 @@ import "react-datepicker/dist/react-datepicker.css";
 const CustomDatePicker = ({
     startDate,
     setStartDate,
-    calendarModalOpen }) => {
+    setSelectedDateTime,
+    calendarModalOpen
+}) => {
+    const handleDateChange = (date) => {
+        setStartDate(date); // 선택된 날짜로 startDate 업데이트
+        setSelectedDateTime(date);
+    };
+
     return (
         <div>
             {calendarModalOpen && (
                 <div className='calendar-modal'>
-                    {/* DatePicker 컴포넌트를 열고 시간 선택 옵션 활성화 */}
                     <DatePicker
                         selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        onChange={handleDateChange}
                         showTimeSelect
-                        dateFormat="yyyy/MM/dd h:mm"
-                        inline // 바로 캘린더가 나타나도록 설정
+                        dateFormat="yyyy/MM/dd h:mm aa"
+                        inline
                     />
                 </div>
             )}
