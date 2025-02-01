@@ -15,12 +15,19 @@ public class MeetingController {
 
     /* 모임 생성 */
     @PostMapping("/createMeeting")
-    public HashMap<String, Object> createMeeting(@RequestBody Meeting meeting, @RequestParam("email") String email) {
+    public HashMap<String, Object> createMeeting(@RequestBody Meeting meeting, @RequestParam("memberId") int memberId) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println(meeting);
-        System.out.println(email);
-        ms.createMeeting(meeting, email);
+        ms.createMeeting(meeting, memberId);
         result.put("msg", "yes");
+        return result;
+    }
+
+    /* 모임 불러오기 */
+    @GetMapping("/getMeeting")
+    public HashMap<String, Object> getMeeting() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("meetingList", ms.getMeeting());
+        result.put("participantsList", ms.getParticipants());
         return result;
     }
 

@@ -17,7 +17,7 @@ const CreateMeeting = () => {
     const [title, setTitle] = useState('');
     const [location, setLocation] = useState('');
     const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-    const [organizer, setOrganizer] = useState(loginUser.nickname);
+    const [organizer, setOrganizer] = useState(loginUser.memberid);
     const [maxParticipants, setMaxParticipants] = useState(null);
     const [status, setStatus] = useState('Y');
     const [isMeetingWriteValid, setIsMeetingWriteValid] = useState(false);
@@ -52,7 +52,8 @@ const CreateMeeting = () => {
         console.log("place.id" + place.id);
     
         setSelectedPlace(place);
-        setLocation(`${place.place_name}(${place.road_address_name})`);
+        setLocation(place.road_address_name);
+        //setLocation(`${place.place_name}(${place.road_address_name})`);
     }
 
     /* 장소 검색어 */
@@ -107,7 +108,7 @@ const CreateMeeting = () => {
 
         jaxios.post('/api/meeting/createMeeting',
             { title, location, datetime: formattedDate, organizer, maxParticipants, status },
-            { params: { email: loginUser.email }})
+            { params: { memberId: loginUser.memberid }})
         .then((result) => {
             if(result.data.msg === 'yes'){
                 alert('모임이 생성되었습니다.');

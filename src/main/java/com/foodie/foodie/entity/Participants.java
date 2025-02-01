@@ -12,6 +12,10 @@ public class Participants {
     private int participantId;
     @Column(name = "meeting_id")
     private int meetingId;
-    @Column(name = "member_email")
-    private String email;
+    @Column(name = "member_id")
+    private int memberId;
+
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "memberid")
+    Member member;
 }

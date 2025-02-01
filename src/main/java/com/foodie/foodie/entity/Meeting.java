@@ -16,7 +16,7 @@ public class Meeting {
     private int meetingId;
     private String title;
     private String location;
-    private String organizer;
+    private int organizer;
     private int maxParticipants;
     @CreationTimestamp
     private Timestamp datetime;
@@ -25,4 +25,8 @@ public class Meeting {
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "meeting_id")
     Participants participants;
+
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "memberid")
+    Member member;
 }
