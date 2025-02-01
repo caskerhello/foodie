@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 
 import jaxios from '../../util/jwtUtil';
 import MapContainer from '../post/MapContainer';
-import CalendarPicker from '../util/CalendarPicker'; // 날짜 선택 api
+import CustomDatePicker from '../util/CustomDatePicker'; // 날짜 선택 api
+
+import '../../style/createmeeting.css'
 
 const { kakao } = window; // 카카오맵
 
 const CreateMeeting = () => {
     const loginUser = useSelector( state => state.user ); // 로그인 유저
+    const navigate = useNavigate();
 
     /* 카카오맵 장소 불러오기를 위한 변수 */
     const modalBackground = useRef();
@@ -29,6 +32,10 @@ const CreateMeeting = () => {
         sort: kakao.maps.services.SortBy.DISTANCE,
     });
 
+    /* 날짜 선택 달력 api 변수 */
+    const [calendarModalOpen, setCalendarModalOpen] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    
     /* 카카오맵 장소 검색 */
     async function selectButton(place){
         if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))){
@@ -77,10 +84,15 @@ const CreateMeeting = () => {
         setInputText('');
     }
 
+    /* 모임 생성 */
+    function createMeeting(){
+        
+    }
+
     return (
         <div className='meeting-container'>
-            <div className='logo'>모임 생성</div>
             <div className='meeting-write'>
+                <div className='logo'>모임 생성</div>
                 <div className='field'>
                     <label>제목</label>
                     <input type='text' placeholder='모임 제목을 입력하세요'></input>
@@ -95,7 +107,7 @@ const CreateMeeting = () => {
                                 <button onClick={() => setModalOpen(true)}>재검색</button>
                             </div>
                         ) : (
-                            <p>장소를 검색해주세요<br/>
+                            <p>장소를 검색해주세요<br/><br/>
                                 <button onClick={() => setModalOpen(true)}>검색</button>
                             </p>
                         )}
@@ -111,57 +123,77 @@ const CreateMeeting = () => {
                                 }
                             }}>
                             <div className={'writePostModalContent'}>
-                            <div className='writePostTitle'>
-                                <button className={'modalCloseBtn'}
-                                    onClick={() => { setModalOpen(false); setPlace(''); } }>
-                                X
-                                </button>
-                            </div>
-                                
-                            <form className="inputForm" onSubmit={handleSubmit}>
-                                <input placeholder="장소 검색"
-                                    onChange={handleInputChange}
-                                    value={InputText}
-                                    autoFocus
+                                <div className='writePostTitle'>
+                                    <button className={'modalCloseBtn'}
+                                        onClick={() => { setModalOpen(false); setPlace(''); } }>
+                                    X
+                                    </button>
+                                </div>
+                                    
+                                <form className="inputForm" onSubmit={handleSubmit}>
+                                    <input placeholder="장소 검색"
+                                        onChange={handleInputChange}
+                                        value={InputText}
+                                        autoFocus
+                                    />
+                                    <button type="submit" className='modalCloseBtn'>검색</button>
+                                    <br/>
+                                    <br/>
+                                </form>
+                                {/* 장소 검색을 위한 카카오맵 api */}
+                                <MapContainer
+                                    searchPlace={place}
+                                    setPlace={setPlace}
+                                    setPlace_name={setPlace_name}
+                                    setRoad_address_name={setRoad_address_name}
+                                    setPhone={setPhone}
+                                    setPlace_url={setPlace_url}
+                                    setModalOpen={setModalOpen}
+                                    setSelectedPlace={setSelectedPlace}
+                                    movedLocation2={movedLocation2}
+                                    setMovedLocation2={setMovedLocation2}
+                                    options1={options1}
+                                    setOptions1={setOptions1}
+                                    selectButton={selectButton}
+                                    setCurrentLocation={setCurrentLocation}
                                 />
-                                <button type="submit" className='modalCloseBtn'>검색</button>
-                                <br/>
-                                <br/>
-                            </form>
-                            {/* 장소 검색을 위한 카카오맵 api */}
-                            <MapContainer
-                                searchPlace={place}
-                                setPlace={setPlace}
-                                setPlace_name={setPlace_name}
-                                setRoad_address_name={setRoad_address_name}
-                                setPhone={setPhone}
-                                setPlace_url={setPlace_url}
-                                setModalOpen={setModalOpen}
-                                setSelectedPlace={setSelectedPlace}
-                                movedLocation2={movedLocation2}
-                                setMovedLocation2={setMovedLocation2}
-                                options1={options1}
-                                setOptions1={setOptions1}
-                                selectButton={selectButton}
-                                setCurrentLocation={setCurrentLocation}
-                            />
                             </div>
                         </div>
                     }
                 </div>
                 <div className='field'>
-                    <label>날짜</label>
-                    <input type='text' placeholder='모임 제목을 입력하세요'/>
-                    {/* 날짜 선택 달력 api */}
-                    <CalendarPicker />
+                    <label>모임 날짜와 시간</label>
+                    <input type='text'
+                        value = {startDate.toLocaleString()}
+                        onClick={() => {
+                            calendarModalOpen ? (
+                                setCalendarModalOpen(false)
+                            ) : (setCalendarModalOpen(true)) }}
+                        readOnly
+                    />
                 </div>
+                {
+                    calendarModalOpen &&
+                    <div className='calendar-modal'>
+                        {/* 날짜 선택 달력 api */}
+                        <CustomDatePicker
+                            startDate={startDate}
+                            setStartDate={setStartDate}
+                            calendarModalOpen={calendarModalOpen}
+                        />
+                    </div>
+                }
                 <div className='field'>
                     <label>주최자</label>
                     <input type='text' value={loginUser.nickname}/>
                 </div>
                 <div className='field'>
                     <label>최대인원</label>
-                    <input type='text' maxLength={99}/>명
+                    <input type='text' placeholder='최대 99명' maxLength={2}/>
+                </div>
+                <div className='create-buttons'>
+                    <button onClick={ createMeeting }>생성</button>
+                    <button onClick={ () => { navigate('/meeting') } }>취소</button>
                 </div>
             </div>
         </div>

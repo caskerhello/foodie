@@ -51,7 +51,6 @@
     display: flex;
     justify-content: space-between; /* 좌우 정렬 */
     width: 100%;
-    border: 1px solid blue;
 }
 
 .meeting-list .bottom-left,

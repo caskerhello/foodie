@@ -24,7 +24,7 @@ const MeetingList = () => {
                     <div className='day'>날짜</div>
                     <div className='bottom'>
                         <div className='bottom-left'>
-                            <div className='organizer'>주최자</div>
+                            <div className='organizer'>주최자 : test</div>
                         </div>
                         <div className='bottom-right'>
                             <div className='participants'>1/99</div>
