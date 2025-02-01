@@ -1,40 +1,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
 
-/* body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-} */
+@keyframes fallingDots {
+    0% {
+        opacity: 0.5;
+        transform: translateY(-30px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    70% {
+        transform: translateY(-20px); /* 첫 번째 튕김 */
+    }
+    85% {
+        transform: translateY(0px);
+    }
+    92% {
+        transform: translateY(-8px); /* 두 번째 튕김 */
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1; /* 최종적으로 opacity를 1로 유지 */
+    }
+}
 
 .loginContainer{
     /* font-family: Arial, sans-serif;
     background-color: #f9f9f9; */
     margin: 0;
     padding: 0;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
+    width: 100vw;
     height: 100vh;
+
 
 }
 
 .loginform{
     width:600px;
-    min-width: 400px; 
-    border:2px solid rgb(242, 38, 38);
-    background-color: rgb(242, 38, 38);
+    min-width: 400px;
+    border:2px solid rgba(255, 111, 97, 1);
+    background-color: rgba(255, 111, 97, 1);
+    /*background: linear-gradient(130deg, #e63946, rgb(255, 140, 140));*/
     border-radius : 20px;
     padding:15px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: box-shadow 0.3s ease-in-out,transform 0.3s ease-in-out;
+    /*box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);*/
+}
+
+
+.loginform:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .loginform .title{
@@ -45,13 +69,45 @@
     /* background-color: white; */
     color: white;
     border-radius: 10px;
+
+    position: relative; /* 부모 요소 기준으로 배치 */
+}
+
+.fallingDots {
+    font-size: 40px;
+    color: white;
+    position: absolute;
+    top: -50px; /* '식신' 위로 이동 */
+    left: 83%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fallingDots 0.8s ease-in-out forwards;
+}
+
+.fallingDots2 {
+    font-size: 40px;
+    color: white;
+    position: absolute;
+    top: -50px; /* '식신' 위로 이동 */
+    left: 92%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fallingDots 0.8s ease-in-out forwards;
+}
+
+.fallingDots{
+    animation-delay: 0.1s;
+}
+
+.fallingDots2{
+    animation-delay: 0.4s;
 }
 
 
 .loginform .logo{
-    margin-bottom:50px; 
-    border:1px dotted blue; 
-    width:100%; 
+    margin-bottom:50px;
+    border:1px dotted blue;
+    width:100%;
     text-align: center;
 }
 
@@ -62,7 +118,7 @@
 
 .loginform .field{
     /* border:1px dotted blue;  */
-    width:100%; 
+    width:100%;
     display: flex;
     margin:5px 0;
     height: 35px;
@@ -72,7 +128,7 @@
     flex:0;
     font-weight: bold;
     margin:5px 0;
-    color : rgb(242, 38, 38)
+    color : rgba(255, 111, 97, 1)
 }
 
 .loginform .field input{
@@ -84,7 +140,7 @@
     font-family: "Dongle", serif;
     /* font-weight: 400; */
     font-style: normal;
-    color : rgb(242, 38, 38);
+    color : rgba(255, 111, 97, 1);
     font-size: 200%;
     text-align: center;
 }
@@ -103,18 +159,23 @@
     cursor: pointer;
     text-align: right;
     border: none; /* 기존 테두리 제거 */
+    transition: transform 0.3s ease-in-out;
+}
+.loginform .message:hover{
+    transform: scale(1.1);
 }
 
-.loginform .btns, .loginform .snslogin{
-    /* border:1px dotted blue;  */
-    width:100%; 
+/*로그인 창 버튼*/
+.loginform .btns{
+     /*border:1px dotted blue;*/
+    width:100%;
     margin-top:10px;
     display: flex;
     padding:3px;
     box-sizing: border-box;
 }
 
-.loginform .btns .btn, .loginform .btns button, .loginform .snslogin button{
+.loginform .btns .btn, .loginform .btns button{
     flex:1;
     height:50px;
     margin-right:5px;
@@ -123,22 +184,18 @@
     padding:5px;
     font-size: 1.1rem;
     border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
 }
 
-.loginform .btns button:last-child, .loginform .snslogin button:last-child{
-    margin-right: 0;
+.loginform .btns .btn:hover,
+.loginform .btns button:hover {
+    transform: scale(1.1);
 }
+
 .loginform .btns button{
-    color:rgb(242, 38, 38); 
-    background-color: white;
-    background-color: rgb(242, 38, 38);
+    background-color: rgba(255, 111, 97, 1);
     height: 50px;
 }
-
-/* .loginform .snslogin button:nth-child(1){background-color: yellow;}
-.loginform .snslogin button:nth-child(2){background-color: rgb(28, 204, 28); color:white}
-.loginform .snslogin button:nth-child(3){background-color: black; color:white}
-.loginform .snslogin button:nth-child(4){background-color: blue; color:white} */
 
 @media (max-width:700px) {
     .loginform .field , .loginform .btns , .loginform .snslogin{
@@ -147,8 +204,8 @@
         flex-direction: column;
         flex:1;
     }
-    .loginform .field input, 
-    .loginform .btns button, 
+    .loginform .field input,
+    .loginform .btns button,
     .loginform .snslogin button{
         flex:1;
         width: 95%;

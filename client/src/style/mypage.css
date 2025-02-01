@@ -93,7 +93,7 @@
 .mypage .btns button{
     flex: 1;
     padding:10px;
-    background-color: rgb(242, 38, 38);
+    background-color: rgba(255, 111, 97, 1);
     color:white;
     
     font-family: "Dongle", serif;
