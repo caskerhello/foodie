@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast , Bounce, Slide, Flip} from 'react-toastify';
 
+
+
 import { VscMenu } from "react-icons/vsc";
 import { VscHome } from "react-icons/vsc";
 import { VscEdit } from "react-icons/vsc";
@@ -10,9 +12,10 @@ import { VscSearch } from "react-icons/vsc";
 import { VscAccount } from "react-icons/vsc";
 import { VscExport } from "react-icons/vsc";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { BiLogOutCircle } from "react-icons/bi";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { loginAction, logoutAction, setFollowers, setFollowings } from './store/userSlice';
+import { loginAction, logoutAction} from './store/userSlice';
 import {Cookies} from 'react-cookie'
 
 import '../style/mainmenu.css'
@@ -26,7 +29,6 @@ const MainMenu = (props) => {
         
         width:"700px",
         border:"1px solid silver",
-        borderRadius: "15px",
         
         display: "flex",
         justifyContent: "space-around",
@@ -49,7 +51,6 @@ const MainMenu = (props) => {
         
         width:"50px",
         border:"1px solid silver",
-        borderRadius: "15px",
         
         display: "flex",
         justifyContent: "space-around",
@@ -84,7 +85,7 @@ const MainMenu = (props) => {
         if(!sessionStorage.getItem('loginAlertShown'))
             {toast.success(
                 <>
-                <span style={{ color: "rgb(242, 38, 38)" }}>
+                <span style={{ color: "rgba(255, 111, 97, 1)" }}>
                 {lUser.nickname}
                 </span>
                 님 로그인 완료!
@@ -152,7 +153,7 @@ const MainMenu = (props) => {
     function onLogout(){
         toast.success(
             <>
-            <span style={{ color: "rgb(242, 38, 38)" }}>
+            <span style={{ color: "rgba(255, 111, 97, 1)" }}>
             {lUser.nickname}
             </span>
             님 로그아웃 완료!
@@ -227,16 +228,12 @@ const MainMenu = (props) => {
                 <VscSearch className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ onChangeView() }} />
 
-                <FaPeopleGroup className='mainMenuBtns' style={iconstyle} onClick={
-                    ()=>{ navigate('/meeting') }}/>
-
                 <VscAccount className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
                 } />
 
-                <VscExport className='mainMenuBtns' style={iconstyle} onClick={
-                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}
-                />
+                <BiLogOutCircle className='mainMenuBtns' style={iconstyle} onClick={
+                    ()=>{ onLogout(); sessionStorage.setItem('loginAlertShown', '')}}/>
                 
             </div>
 

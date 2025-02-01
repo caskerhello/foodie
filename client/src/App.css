@@ -38,10 +38,10 @@
 }
 
 :root {
-  --toastify-color-light: (249, 249, 249, .7);
+  --toastify-color-light: rgb(249, 249, 249, .95);
   --toastify-color-dark: #121212;
   --toastify-color-info: #3498db;
-  --toastify-color-success: rgb(242, 38, 38, .7);
+  --toastify-color-success: rgba(255, 111, 97, 0.95);
   --toastify-color-warning: #f1c40f;
   --toastify-color-error: hsl(6, 78%, 57%);
   --toastify-color-transparent: rgba(255, 255, 255, .7);

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BiSolidKey } from "react-icons/bi";
 import { BiSolidUserPlus } from "react-icons/bi";
+import { BiLogInCircle } from "react-icons/bi";
 
 import { useDispatch } from 'react-redux';
 import { loginAction, setFollowers, setFollowings } from './store/userSlice';
@@ -50,36 +51,51 @@ function Login() {
     <div className="loginContainer">
         <div className="loginform">
             <br></br>
-            <div className='title'> 즐거운 미식 생활의 시작 <span>식신</span> </div>
+            <div className="title">
+                즐거운 미식 생활의 시작 <span>식신</span>
+                <span className="fallingDots">·&nbsp;</span>
+                <span className="fallingDots2">·</span>
+            </div>
             <br></br>
             <div className='field'>
                 <br></br>
                 <label></label>
-                <input type="text" value={email} placeholder='이메일을 입력해주세요' onChange={(e)=>{ setEmail(e.currentTarget.value) }} onKeyDown={onSubmitEnter}/>
+                <input type="text" value={email} placeholder='이메일을 입력해주세요' onChange={(e) => {
+                    setEmail(e.currentTarget.value)
+                }} onKeyDown={onSubmitEnter}/>
             </div>
-            
+
             <div className='field'>
                 <label></label>
-                <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e)=>{ setPwd(e.currentTarget.value) }} onKeyDown={onSubmitEnter}/>
+                <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e) => {
+                    setPwd(e.currentTarget.value)
+                }} onKeyDown={onSubmitEnter}/>
             </div>
-            <div className='message' onClick={ ()=>{ navigate('/findPassword') }}>
+            <div className='message' onClick={() => {
+                navigate('/findPassword')
+            }}>
                 비밀번호를 잊으셨나요?
             </div>
             <div className='btns'>
-                <div className='btn'><BiSolidKey style={{height:'40px',width:'40px'}} 
-                onClick={ ()=>{ onLoginLocal() }}            
-                />
-            </div>
+                <div className='btn'>
+                    <BiLogInCircle style={{height: '40px', width: '40px'}}
+                                   onClick={() => {
+                                       onLoginLocal()
+                                   }}/>
 
-            <div className='btn'>
-                <BiSolidUserPlus style={{height:'50px',width:'50px'}} onClick={ ()=>{ navigate('/join') } }/>
-            </div>
-                <button
-                // onClick={()=>{
-                //     window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
-                // }}
-                ><img style={{height:"40px"}} src="images/free-icon-kakao-talk.png"/></button>
                 </div>
+
+                <div className='btn'>
+                    <BiSolidUserPlus style={{height: '50px', width: '50px'}} onClick={() => {
+                        navigate('/join')
+                    }}/>
+                </div>
+                <button
+                    // onClick={()=>{
+                    //     window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
+                    // }}
+                ><img style={{height: "40px"}} src="images/free-icon-kakao-talk.png"/></button>
+            </div>
         </div>
     </div>
     )

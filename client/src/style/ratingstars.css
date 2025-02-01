@@ -4,7 +4,7 @@
 
 .rating-star-over path{
     cursor: pointer;
-    fill: rgb(242, 38, 38);
+    fill: rgba(255, 111, 97, 1);
 }
 
 .rating-star-out path{

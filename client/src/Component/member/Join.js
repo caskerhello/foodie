@@ -19,7 +19,7 @@ const Join = () => {
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null); // 잘린 이미지 값
     const inputRef = useRef(); // 버튼 입력과 동시에 input 작동을 위함
     
-    const [buttonStyle, setButtonStyle] = useState({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
+    const [buttonStyle, setButtonStyle] = useState({backgroundColor: "rgba(255, 111, 97, 1)", color: "#fff"});
 
     const [emailMessage, setEmailMessage] = useState('');
     const [pwdMessage, setPwdMessage] = useState('영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리');
@@ -65,11 +65,11 @@ const Join = () => {
 
         // 이메일 형식 검사
         if (!emailRegex.test(value)) {
-            setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
+            setButtonStyle({backgroundColor: "rgba(255, 111, 97, 1)", color: "#fff"});
             setEmailMessage("이메일 형식이 올바르지 않습니다");
             setIsEmailValid(false);
         } else {
-            setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
+            setButtonStyle({backgroundColor: "rgba(255, 111, 97, 1)", color: "#fff"});
             setEmailMessage(''); // 에러 메시지 제거
             setIsEmailValid(false);
         }
@@ -79,7 +79,7 @@ const Join = () => {
     async function onEmailCheck(){
         if(!email){
             setIsEmailValid(false);
-            setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
+            setButtonStyle({backgroundColor: "rgba(255, 111, 97, 1)", color: "#fff"});
             return alert('이메일을 입력하세요');
         }
 
@@ -90,7 +90,7 @@ const Join = () => {
                 setEmailMessage('사용 가능한 이메일입니다');
                 setIsEmailValid(true); // 이메일 유효 상태
             }else{
-                setButtonStyle({backgroundColor: "rgb(242, 38, 38)", color: "#fff"});
+                setButtonStyle({backgroundColor: "rgba(255, 111, 97, 1)", color: "#fff"});
                 setEmailMessage('이메일이 중복됩니다');
                 setIsEmailValid(false); // 이메일 유효하지 않은 상태
             }
@@ -191,7 +191,7 @@ const Join = () => {
                         <button style={buttonStyle} onClick={() => { onEmailCheck() }}>중복확인</button>
                     </div>
                     <div className='message' style={{
-                        color: isEmailValid ? "blue" : "rgb(242, 38, 38)"
+                        color: isEmailValid ? "blue" : "rgba(255, 111, 97, 1)"
                     }}>{emailMessage}</div>
                 </div>
                 <div className='field' style={{margin: "5px 0"}}>
