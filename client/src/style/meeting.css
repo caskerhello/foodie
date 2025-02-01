@@ -24,7 +24,7 @@
     width: 560px;
     padding: 20px;
     background-color: #fff;
-    border: 2px solid rgb(242, 38, 38);
+    border: 2px solid rgba(255, 111, 97, 1);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -71,7 +71,7 @@
 }
 
 .meeting-container button {
-    background-color: rgb(242, 38, 38); /* 버튼 색상 */
+    background-color: rgba(255, 111, 97, 1); /* 버튼 색상 */
     color: #fff;
     padding: 8px 16px;
     border: none;
@@ -81,5 +81,5 @@
 }
 
 .meeting-list .attend-button:hover {
-    background-color: darkred; /* 호버 시 어두운 빨강 */
+    background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 */
 }

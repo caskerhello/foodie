@@ -1,19 +1,23 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 
+import jaxios from '../../util/jwtUtil';
 import MainMenu from './../MainMenu';
 
 import '../../style/meeting.css'
 
 const MeetingList = () => {
     const [word, setWord] = useState(null);
+    const navigate = useNavigate();
 
     return (
         <div className='meeting-container'>
             <MainMenu setWord={setWord} />
             <div className='meeting-list'>
-                <button className='creating-button'>모임 생성</button>
+                <button className='creating-button'
+                    onClick={ () => { navigate('/createMeeting') }}>
+                    모임 생성
+                </button>
                 <div className='meeting-item'>
                     <div className='title'>제목</div>
                     <div className='location'>장소</div>

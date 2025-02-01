@@ -218,8 +218,8 @@ const MainMenu = (props) => {
             <div className='mainMenu'style={topMenuCss}>
                 <VscMenu className='mainMenuBtns' style={{height:"30px",width:"30px"}} onClick={()=>{ onChangeMenuView() }} />
                 
-                <VscHome className='mainMenuBtns' style={iconstyle}onClick={ 
-                    ()=>{   navigate('/main') }
+                <VscHome className='mainMenuBtns' style={iconstyle} onClick={
+                    ()=>{ navigate('/main') }
                 }/>
 
                 <VscEdit className='mainMenuBtns' style={iconstyle} onClick={
@@ -227,6 +227,9 @@ const MainMenu = (props) => {
 
                 <VscSearch className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ onChangeView() }} />
+
+                <FaPeopleGroup className='mainMenuBtns' style={iconstyle} onClick={
+                    ()=>{ navigate('/meeting') }} />
 
                 <VscAccount className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
