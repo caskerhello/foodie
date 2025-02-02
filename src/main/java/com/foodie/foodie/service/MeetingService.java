@@ -44,8 +44,8 @@ public class MeetingService {
     }
 
     /* 모임 참여자 리스트 조회 */
-    public List<Participants> getParticipants() {
-        return participantsRepo.findAll();
+    public List<Participants> getParticipants(int meetingid) {
+        return participantsRepo.findByMeetingId(meetingid);
     }
 
     /* 모임 삭제 */

@@ -27,7 +27,15 @@ public class MeetingController {
     public HashMap<String, Object> getMeeting() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("meetingList", ms.getMeeting());
-        result.put("participantsList", ms.getParticipants());
+        return result;
+    }
+
+    /* 모임 참여자 불러오기 */
+    @GetMapping("/getParticipants")
+    public HashMap<String, Object> getParticipants(@RequestParam("meetingid") int meetingid) {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("participants", ms.getParticipants(meetingid));
+        System.out.println("participants: " + ms.getParticipants(meetingid));
         return result;
     }
 

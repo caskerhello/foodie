@@ -229,7 +229,7 @@ const MainMenu = (props) => {
                     ()=>{ onChangeView() }} />
 
                 <FaPeopleGroup className='mainMenuBtns' style={iconstyle} onClick={
-                    ()=>{ navigate('/meeting') }} />
+                    ()=>{ navigate('/meetingList') }} />
 
                 <VscAccount className='mainMenuBtns' style={iconstyle} onClick={
                     ()=>{ navigate('/myPage') }
