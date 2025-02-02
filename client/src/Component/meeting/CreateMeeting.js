@@ -109,7 +109,7 @@ const CreateMeeting = () => {
         .then((result) => {
             if(result.data.msg === 'yes'){
                 alert('모임이 생성되었습니다.');
-                navigate('/meeting');
+                navigate('/meetingList');
             }else{
                 alert('모임 생성에 실패했습니다');
             }
@@ -235,7 +235,7 @@ const CreateMeeting = () => {
                         className={(!isMeetingWriteValid) ? "disabled" : "enabled"}>
                         생성
                     </button>
-                    <button onClick={ () => { navigate('/meeting') } }>취소</button>
+                    <button onClick={ () => { navigate('/meetingList') } }>취소</button>
                 </div>
             </div>
         </div>

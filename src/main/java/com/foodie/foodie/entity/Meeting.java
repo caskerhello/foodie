@@ -22,11 +22,7 @@ public class Meeting {
     private Timestamp datetime;
     private String status;
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "meeting_id")
-    Participants participants;
-
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "memberid")
     Member member;
 }

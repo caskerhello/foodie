@@ -35,7 +35,7 @@ function App() {
                 <Route path="/getPlaceByName/:searchPlace" element={<GetPlaceByName />} />
                 <Route path="/getPlaceByCategory/:category" element={<GetPlaceByCategory />} />
                 
-                <Route path="/meeting" element={<MeetingList />} />
+                <Route path="/meetingList" element={<MeetingList />} />
                 <Route path="/createMeeting" element={<CreateMeeting />} />
             </Routes>
         </div>
