@@ -31,4 +31,13 @@ public class MeetingController {
         return result;
     }
 
+    /* 선택한 모임 삭제 */
+    @DeleteMapping("/deleteMeeting")
+    public HashMap<String, Object> deleteMeeting(@RequestParam("meetingId") int meetingId) {
+        HashMap<String, Object> result = new HashMap<>();
+        ms.deleteMeeting(meetingId);
+        result.put("msg", "yes");
+        return result;
+    }
+
 }

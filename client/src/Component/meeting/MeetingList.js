@@ -29,8 +29,20 @@ const MeetingList = () => {
     )
 
     /* 모임 삭제 */
-    function deleteMeeting(meetingId){
+    async function deleteMeeting(meetingId){
+        const result = window.confirm('해당 모임을 삭제하시겠습니까?')
+        if(result){
+            const deleteResult = await jaxios.delete('/api/meeting/deleteMeeting', {params: { meetingId }} );
+            if(deleteResult.data.msg === 'yes'){
+                alert('모임을 성공적으로 삭제했습니다');
 
+                const loadResult = await jaxios.get('/api/meeting/getMeeting');
+                setMeetingList(loadResult.data.meetingList);
+                setParticipantsList(loadResult.data.participantsList);
+            }else {
+                alert('모임 삭제에 실패했습니다');
+            }
+        }
     }
 
     return (
@@ -71,7 +83,11 @@ const MeetingList = () => {
                                 </div>
                             )
                         })
-                    ) : (null)
+                    ) : (
+                        <div className='meeting-list'>
+                            <div className='title'>생성된 모임이 없습니다</div>
+                        </div>
+                    )
                 }
                 
             </div>

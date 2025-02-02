@@ -27,13 +27,13 @@ public class MeetingService {
     public void createMeeting(Meeting meeting, int memberId) {
         Optional<Member> member = memberRepo.findByMemberid(memberId);
         if(member.isPresent()) {
+            /* 모임 저장 */
             meeting.setMember(member.get());
             Meeting newMeeting = meetingRepo.save(meeting); // meeting 생성
-
+            /* 모임 참여자 저장 */
             Participants newParticipant = new Participants();
-            newParticipant.setMeetingId(newMeeting.getMeetingId());
+            newParticipant.setMeetingId(newMeeting.getMeetingId()); // 모임 정보 저장
             newParticipant.setMember(member.get());
-            newParticipant.setMemberId(memberId); // 현재 유저 정보 담기
             participantsRepo.save(newParticipant); // participant 생성
         }
     }
@@ -46,5 +46,15 @@ public class MeetingService {
     /* 모임 참여자 리스트 조회 */
     public List<Participants> getParticipants() {
         return participantsRepo.findAll();
+    }
+
+    /* 모임 삭제 */
+    public void deleteMeeting(int meetingId) {
+        Optional<Meeting> meeting = meetingRepo.findById(meetingId);
+        if(meeting.isPresent()) {
+            List<Participants> participants = participantsRepo.findByMeetingId(meetingId);
+            participantsRepo.deleteAll(participants); // 해당 모임의 모든 참여자 삭제
+            meetingRepo.delete(meeting.get()); // 모임 삭제
+        }
     }
 }
