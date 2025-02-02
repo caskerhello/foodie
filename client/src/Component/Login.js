@@ -42,7 +42,6 @@ function Login() {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-            console.log('enter 입력');
             onLoginLocal()
         }
     }
@@ -52,7 +51,7 @@ function Login() {
         <div className="loginform">
             <br></br>
             <div className="title">
-                즐거운 미식 생활의 시작 <span>식신</span>
+                즐거운 미식 생활의 시작 <span>Foodie</span>
                 <span className="fallingDots">·&nbsp;</span>
                 <span className="fallingDots2">·</span>
             </div>
@@ -79,9 +78,9 @@ function Login() {
             <div className='btns'>
                 <div className='btn'>
                     <BiLogInCircle style={{height: '40px', width: '40px'}}
-                                   onClick={() => {
-                                       onLoginLocal()
-                                   }}/>
+                        onClick={() => {
+                            onLoginLocal()
+                    }}/>
 
                 </div>
 
@@ -90,11 +89,7 @@ function Login() {
                         navigate('/join')
                     }}/>
                 </div>
-                <button
-                    // onClick={()=>{
-                    //     window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
-                    // }}
-                ><img style={{height: "40px"}} src="images/free-icon-kakao-talk.png"/></button>
+                <button><img style={{height: "40px"}} src="images/free-icon-kakao-talk.png"/></button>
             </div>
         </div>
     </div>

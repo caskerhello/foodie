@@ -26,7 +26,6 @@ public class CustomUserDetailsService  implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 전송된  username 으로 사용자를 검색하고 DTO 객체에 넣어서  리턴하면서
         // UsernamePasswordAuthenticationFilter.class 로 이동합니다
-        System.out.println("------------loadUserByUsername------------" + username );
 
         // 멤버를 조회
         Optional<Member> member = mR.findByEmail(username);
@@ -47,8 +46,6 @@ public class CustomUserDetailsService  implements UserDetailsService {
                 member.get().getProvider(),
                 list
         );
-        System.out.println(memberdto);
-        System.out.println(member);
 
         return memberdto;
     }

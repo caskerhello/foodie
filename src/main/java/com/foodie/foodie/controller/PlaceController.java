@@ -20,11 +20,7 @@ public class PlaceController {
 
         HashMap<String, Object> result = new HashMap<String, Object>();
 
-        System.out.println("place"+place);
-
         Place p = pcs.getPlace(place.getKakaoplaceid(),place);
-
-        System.out.println("리턴될 장소정보:"+p);
 
         result.put("place", p);
 
@@ -34,7 +30,6 @@ public class PlaceController {
     @PostMapping("/checkPlaceCategory")
     public HashMap<String, Object> checkPlaceCategory(@RequestParam("kakaoplaceid") int kakaoplaceid) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println("kakaoplaceid"+kakaoplaceid);
 
         int category = pcs.checkPlaceCategory(kakaoplaceid);
 
@@ -48,11 +43,7 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceInfo(@RequestParam("placeid") int placeid) {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
-        System.out.println("placeid"+placeid);
-
         Place p = pcs.getPlaceInfo(placeid);
-
-        System.out.println("리턴될 장소정보:"+p);
 
         result.put("place", p);
 
@@ -63,7 +54,6 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceList(@RequestParam("searchPlace") String searchPlace) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.out.println("searchPlace"+searchPlace);
         List<Place> list = pcs.getPlaceList(searchPlace);
         result.put("placeList", list);
         return result;
@@ -73,9 +63,7 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceListByStars(@RequestParam("searchPlace") String searchPlace) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.out.println("searchPlace"+searchPlace);
         List<Place> list = pcs.getPlaceListByStars(searchPlace);
-        System.out.println("list"+list);
         result.put("placeList", list);
         return result;
     }
@@ -84,9 +72,7 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceListByReviews(@RequestParam("searchPlace") String searchPlace) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.out.println("searchPlace"+searchPlace);
         List<Place> list = pcs.getPlaceListByReviews(searchPlace);
-        System.out.println("list"+list);
         result.put("placeList", list);
         return result;
     }
@@ -97,7 +83,6 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceListByCategory(@RequestParam("category") int category) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.out.println("category"+category);
         List<Place> list = pcs.getPlaceListByCategory(category);
         result.put("placeList", list);
         return result;
@@ -107,7 +92,6 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceListByCategoryByStars(@RequestParam("category") int category) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.out.println("category"+category);
         List<Place> list = pcs.getPlaceListByCategoryByStars(category);
         result.put("placeList", list);
         return result;
@@ -117,7 +101,6 @@ public class PlaceController {
     public HashMap<String, Object> getPlaceListByCategoryByReviews(@RequestParam("category") int category) {
         HashMap<String, Object> result = new HashMap<>();
 
-        System.out.println("category"+category);
         List<Place> list = pcs.getPlaceListByCategoryByReviews(category);
         result.put("placeList", list);
         return result;

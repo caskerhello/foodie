@@ -81,6 +81,7 @@ const MainMenu = (props) => {
     const dispatch = useDispatch();
     const lUser = useSelector( state=>state.user );
     
+    //토스트 팝업 내용
     useEffect(()=>{
         if(!sessionStorage.getItem('loginAlertShown'))
             {toast.success(
@@ -99,7 +100,7 @@ const MainMenu = (props) => {
     },[])
 
 
-
+    //검색바 설정
     useEffect(() => {
         if (viewOrNot) {
             setInputStyle({
@@ -137,6 +138,7 @@ const MainMenu = (props) => {
         }
     }, [viewOrNot]);
 
+    //메뉴 설정
     useEffect(()=>{
         if(menuViewOrNot){
             setIconstyle({display:"none"})
@@ -150,6 +152,7 @@ const MainMenu = (props) => {
         }
     },[menuViewOrNot])
 
+    //로그아웃
     function onLogout(){
         toast.success(
             <>
@@ -164,25 +167,17 @@ const MainMenu = (props) => {
             }
         );
         setTimeout(() => {
-        // axios.get('/api/member/logout')
-        // .then((result)=>{
-        //     dispatch( logoutAction() );
-        //     cookies.remove('user', {path:'/',} )
-        //     navigate('/')
-        // }).catch((err)=>{console.error(err)})
 
         dispatch( logoutAction() );
         cookies.remove('user', {path:'/',} )
         navigate('/')
-
         
-            }, 1200);
+        }, 1200);
     }
 
     function onSearch() {
         if(!searchPlace){return alert("한글자이상 입력해주세요!")}
-        props.setWord(searchPlace);  
-        console.log(searchPlace);
+        props.setWord(searchPlace);
         navigate(`/getPlaceByName/${searchPlace}`);
         setViewOrNot( !viewOrNot );
     }
@@ -207,7 +202,6 @@ const MainMenu = (props) => {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-        console.log('enter 입력');
         onSearch()
         setViewOrNot( !viewOrNot );
         }

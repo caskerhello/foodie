@@ -52,7 +52,6 @@ function PostOne() {
             // 포스트
             jaxios.get(`/api/post/getPost/${postid}`)
             .then((result)=>{
-                // console.log(result.data)
                 setPost( result.data )
             })
             .catch((err)=>{console.error(err)})
@@ -60,7 +59,6 @@ function PostOne() {
             // 이미지
             jaxios.get(`/api/post/getImages/${postid}` )
             .then((result)=>{ setImages( result.data.imgList );
-                // console.log("result.data.imgList"+JSON.stringify(result.data.imgList))
             })
             .catch((err)=>{console.error(err)})
 

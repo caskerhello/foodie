@@ -52,11 +52,8 @@ public class PostController {
             ){
         HashMap<String, Object> result = new HashMap<String, Object>();
 
-        System.out.println("post"+post);
-
         Post p = ps.insertPost(post);  // 방금 추가된 레코드의 id 를위해 추가된 레코드를 리턴
 
-        System.out.println("리턴될 post"+p);
         result.put("postid", p.getPostid() );
         return result;
     }
@@ -64,8 +61,6 @@ public class PostController {
     @PostMapping("/writeImages")
     public HashMap<String, Object> writeimages( @RequestBody Images images){
         HashMap<String, Object> result = new HashMap<String, Object>();
-        System.out.println("writeimages");
-        System.out.println("images:"+images);
         ps.insertImages(images);
         return result;
     }
@@ -144,7 +139,6 @@ public class PostController {
     @GetMapping("/findPost")
     public HashMap<String, Object> findPost(@RequestParam("placeid") int placeid) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println("placeid:"+placeid);
 
         result.put("postList", ps.getPostListByPlaceid(placeid));
         return result;

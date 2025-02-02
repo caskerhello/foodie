@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+//페이지 변경시 스크롤 초기화 위한 컴포넌트
 function ScrollToTop() {
   const location = useLocation();
 

@@ -49,11 +49,8 @@ const CreateMeeting = () => {
         if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))){
             return alert("음식점만 선택해주세요");
         }
-        console.log("place.id" + place.id);
-    
         setSelectedPlace(place);
         setLocation(place.road_address_name);
-        //setLocation(`${place.place_name}(${place.road_address_name})`);
     }
 
     /* 장소 검색어 */

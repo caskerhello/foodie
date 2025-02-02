@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import { useSelector } from 'react-redux';
 import { loginAction } from '../store/userSlice';
@@ -26,6 +25,7 @@ const EditProfile = () => {
     const [imgSrc, setImgSrc] = useState('');
     const [imgStyle, setImgStyle] = useState({display:"none"});
     const lUser = useSelector( state=>state.user );
+    //프로필 업데이트후에도 토큰 유지시키기 위함
     const { accessToken, refreshToken } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -55,7 +55,6 @@ const EditProfile = () => {
         formData.append('image',  e.target.files[0]);
         try{
             const result = await jaxios.post('/api/member/fileUpload', formData);
-            console.log("result.data.filename"+result.data.filename)
             setImgSrc(result.data.filename);
             // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
             setImgStyle({display:"block", width:"200px"});
@@ -79,15 +78,11 @@ const EditProfile = () => {
                 let result = await jaxios.post('/api/member/nicknameCheck', null, {params:{nickname}} );
                 if(result.data.msg == 'no' ){ return alert('닉네임이 중복됩니다'); }
             }
-            // alert("profileimg"+profileimg)
 
             let currentProfileImg = profileimg;
             if( !profileimg ) {
-                // alert("!profileimg oldImgsrc : " + oldImgsrc);
                 currentProfileImg = oldImgsrc; // 상태가 비어 있으면 oldImgsrc를 사용
             }
-
-            // alert("profileimg"+profileimg)
 
             //회원정보수정
                 let result = await jaxios.post('/api/member/updateProfile', { memberid, email, nickname, pwd, phone,  profileimg:currentProfileImg, profilemsg })
