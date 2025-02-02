@@ -1,19 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react'
-import axios from 'axios';
 import { useNavigate, useParams  } from "react-router-dom";
 import MainMenu from '../MainMenu';
 import PostFromMypage from '../post/PostFromMypage';
 import { useSelector } from 'react-redux';
-
-import { VscHeart } from "react-icons/vsc";
-import { VscHeartFilled } from "react-icons/vsc";
-import { VscFileMedia } from "react-icons/vsc";
-import { IoMdPhotos } from "react-icons/io";
-import { VscFeedback } from "react-icons/vsc";
-
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 
 import '../../style/mypage.css'
 
@@ -21,19 +10,12 @@ import jaxios from '../../util/jwtUtil';
 
 const MyPage = () => {
 const [ imgSrc, setImgSrc ]=useState();
-const [ followers, setFollowers] = useState([]);  // 나를 follow 하는 사람들
-const [ followings, setFollowings ] = useState([]);   // 내가 following 하는 사람들
 const [ postList, setPostList ] = useState([]);  // 로그인 유저가 작성한 포스트들
 const [ imgList, setImgList] = useState([]);   // 하단에 포스트를 대변할 수 있는 이미지들
-// const [loginUser, setLoginUser] = useState({});
 const lUser = useSelector( state=>state.user );
 const [ word, setWord ] = useState('');
 
-const [ post, setPost ] =useState({});
 const [ modalPost, setModalPost ] =useState({});
-const [ images, setImages] =useState([]);
-const [ likeList, setLikeList ] = useState([]);
-const [ replyList, setReplyList] = useState([]);
 
 const navigate=useNavigate();
 
@@ -125,7 +107,7 @@ return (
                         setModalOpen(false); }
                 }}>
                     <div className={'getMypageModalContent'}>
-                        <div className='getMypageModalTitle'>                        
+                        <div className='getMypageModalTitle'>
                             
                         <br/>
                         </div>

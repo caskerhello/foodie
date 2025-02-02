@@ -78,9 +78,9 @@ function Login() {
             <div className='btns'>
                 <div className='btn'>
                     <BiLogInCircle style={{height: '40px', width: '40px'}}
-                                   onClick={() => {
-                                       onLoginLocal()
-                                   }}/>
+                        onClick={() => {
+                            onLoginLocal()
+                    }}/>
 
                 </div>
 
@@ -89,11 +89,7 @@ function Login() {
                         navigate('/join')
                     }}/>
                 </div>
-                <button
-                    // onClick={()=>{
-                    //     window.location.href=`${process.env.REACT_APP_ADDRESS2}/member/kakaostart`;
-                    // }}
-                ><img style={{height: "40px"}} src="images/free-icon-kakao-talk.png"/></button>
+                <button><img style={{height: "40px"}} src="images/free-icon-kakao-talk.png"/></button>
             </div>
         </div>
     </div>
