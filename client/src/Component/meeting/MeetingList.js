@@ -23,7 +23,6 @@ const MeetingList = () => {
             jaxios.get('/api/meeting/getMeeting')
             .then((result) => {
                 setMeetingList(result.data.meetingList);
-                console.log('meetingList', meetingList);
             }).catch((err) => { console.error('모임 불러오기 실패', err); })
         }, []
     )

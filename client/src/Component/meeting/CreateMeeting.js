@@ -226,7 +226,16 @@ const CreateMeeting = () => {
                     <input type='text'
                         placeholder='최대 99명'
                         value={maxParticipants}
-                        onChange={ (e) => { setMaxParticipants(e.target.value) } }
+                        onChange={ (e) => {
+                            const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
+                            const numValue = Number(value);
+                    
+                            if (numValue >= 1 && numValue <= 99) {
+                                setMaxParticipants(value);
+                            } else if (value === "") {
+                                setMaxParticipants(""); // 빈 값 허용
+                            }
+                        } }
                         maxLength={2}/>
                 </div>
                 <div className='create-buttons'>

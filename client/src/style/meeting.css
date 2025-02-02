@@ -79,6 +79,64 @@
     font-size: 1em;
 }
 
-.meeting-list .attend-button:hover {
+.meeting-list button:hover {
     background-color: rgb(200, 30, 30); /* 호버 시 어두운 빨강 */
+}
+
+.meeting-container button.enabled {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.meeting-container button.disabled {
+    background-color: rgb(238, 238, 238);
+    color: rgb(191, 191, 191);
+    cursor: pointer;
+}
+
+.meeting-list .participants {
+    position: relative;
+    cursor: pointer;
+}
+
+.meeting-list .participants-view {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* participants div 바로 아래에 표시 */
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px; /* 모달 너비 조정 */
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.meeting-list .participants-view div {
+    font-size: 1em;
+    color: #333;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.meeting-list .participants-view div:last-child {
+    border-bottom: none; /* 마지막 참가자에는 아래 border 제거 */
+}
+
+.meeting-list .participants-view::-webkit-scrollbar {
+    width: 6px;
+}
+
+.meeting-list .participants-view::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+.meeting-list .participants-view::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
