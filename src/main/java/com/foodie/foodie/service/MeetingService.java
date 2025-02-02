@@ -44,8 +44,8 @@ public class MeetingService {
     }
 
     /* 모임 참여자 리스트 조회 */
-    public List<Participants> getParticipants(int meetingid) {
-        return participantsRepo.findByMeetingId(meetingid);
+    public List<Participants> getParticipants(int meetingId) {
+        return participantsRepo.findByMeetingId(meetingId);
     }
 
     /* 모임 삭제 */
@@ -55,6 +55,28 @@ public class MeetingService {
             List<Participants> participants = participantsRepo.findByMeetingId(meetingId);
             participantsRepo.deleteAll(participants); // 해당 모임의 모든 참여자 삭제
             meetingRepo.delete(meeting.get()); // 모임 삭제
+        }
+    }
+
+    /* 모임 참여 */
+    public void joinMeeting(int meetingId, int memberId) {
+        Optional<Member> member = memberRepo.findByMemberid(memberId); // 참가할 member 정보
+        if(member.isPresent()) {
+            Participants newParticipant = new Participants();
+            newParticipant.setMeetingId(meetingId);
+            newParticipant.setMember(member.get());
+            participantsRepo.save(newParticipant);
+        }
+    }
+
+    /* 모임 참여 취소 */
+    public void leaveMeeting(int meetingId, int memberId) {
+        Optional<Participants> participant = participantsRepo.findByMeetingIdAndMember_Memberid(meetingId, memberId);
+
+        if (participant.isPresent()) {
+            participantsRepo.delete(participant.get());
+        } else {
+            throw new RuntimeException("해당 모임 참가자 정보를 찾을 수 없습니다.");
         }
     }
 }

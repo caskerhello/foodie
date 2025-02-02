@@ -32,10 +32,10 @@ public class MeetingController {
 
     /* 모임 참여자 불러오기 */
     @GetMapping("/getParticipants")
-    public HashMap<String, Object> getParticipants(@RequestParam("meetingid") int meetingid) {
+    public HashMap<String, Object> getParticipants(@RequestParam("meetingId") int meetingId) {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("participants", ms.getParticipants(meetingid));
-        System.out.println("participants: " + ms.getParticipants(meetingid));
+        result.put("participants", ms.getParticipants(meetingId));
+        System.out.println("participants: " + ms.getParticipants(meetingId));
         return result;
     }
 
@@ -44,6 +44,28 @@ public class MeetingController {
     public HashMap<String, Object> deleteMeeting(@RequestParam("meetingId") int meetingId) {
         HashMap<String, Object> result = new HashMap<>();
         ms.deleteMeeting(meetingId);
+        result.put("msg", "yes");
+        return result;
+    }
+
+    /* 선택한 모임 참여 */
+    @PostMapping("/joinMeeting")
+    public HashMap<String, Object> joinMeeting(
+            @RequestParam("meetingId") int meetingId,
+            @RequestParam("memberId") int memberId) {
+        HashMap<String, Object> result = new HashMap<>();
+        ms.joinMeeting(meetingId, memberId);
+        result.put("msg", "yes");
+        return result;
+    }
+
+    /* 선택한 모임 참여 취소 */
+    @DeleteMapping("/leaveMeeting")
+    public HashMap<String, Object> leaveMeeting(
+            @RequestParam("meetingId") int meetingId,
+            @RequestParam("memberId") int memberId) {
+        HashMap<String, Object> result = new HashMap<>();
+        ms.leaveMeeting(meetingId, memberId);
         result.put("msg", "yes");
         return result;
     }
