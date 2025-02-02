@@ -24,27 +24,6 @@ public class MemberController {
     @Autowired
     MemberService ms;
 
-//    @PostMapping("/loginLocal")
-//    public HashMap<String , Object> loginLocal(
-//            @RequestBody Member member,
-//            HttpSession session ) {
-//
-//        System.out.println("loginLocal");
-//        HashMap<String , Object> result = new HashMap<>();
-//        Member mem = ms.getMember(member.getEmail());
-//        if(mem == null) {
-//            result.put("msg", "해당 아이디가 없습니다");
-//        }else if(!mem.getPwd().equals(member.getPwd())){
-//            result.put("msg", "비밀번호가 일치하지 않습니다.");
-//        }else {
-//            session.setAttribute("memberid", mem.getMemberid() );
-//            session.setAttribute("loginUser", mem.getEmail());
-//            result.put("msg", "ok");
-//            result.put("loginUser", mem);
-//        }
-//        return result;
-//    }
-
     @GetMapping("/getLoginUser")
     public HashMap<String , Object> getLoginUser(HttpSession session, @RequestParam("email") String email) {
         HashMap<String, Object> result = new HashMap<>();
@@ -161,7 +140,7 @@ public class MemberController {
     @PostMapping("/updateProfile")
     public HashMap<String, Object> updateProfile(@RequestBody Member member) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println("updateProfile:" + member);
+
         ms.updateMember( member );
         result.put("msg", "ok");
         return result;
@@ -174,11 +153,7 @@ public class MemberController {
     public HashMap<String , Object> getMyPost(@RequestParam("memberid") int memberid,HttpSession session) {
         HashMap<String, Object> result = new HashMap<>();
 
-//        List list = null;
         List list2 = null;
-//        int memberid = (int)session.getAttribute("memberid");
-
-        System.out.println(memberid);
 
         List<Post> list = ps.getPostListByMemberid(memberid);
         List<String> imglist = new ArrayList<String>();
@@ -197,8 +172,6 @@ public class MemberController {
     @GetMapping("/getProfile")
     public HashMap<String , Object> getProfile(@RequestParam("memberid") int memberid) {
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println("getProfile:" + memberid);
-
         result.put("profile", ms.getMemberByMemberid(memberid));
         return result;
     }
@@ -224,11 +197,9 @@ public class MemberController {
         Boolean expAt = checkExpiredToken( accessToken );
 
         if( expAt ){
-            System.out.println("토큰 유효기간 아직 안지났습니다. 계속 사용합니다");
             result.put("accessToken", accessToken);
             result.put("refreshToken", refreshToken);
         }else{
-            System.out.println("유효기간 만료로 토큰이 갱신되었습니다");
             // accessToken 기간 만료시  refresh 토큰으로 재 검증하여 사용자 정보 추출
             Map<String, Object> claims = JWTUtil.validateToken(refreshToken);
 

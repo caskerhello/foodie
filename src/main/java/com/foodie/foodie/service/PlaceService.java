@@ -19,7 +19,6 @@ public class PlaceService {
     public Place getPlace(int id, Place insertplace) {
        Optional<Place> getplace = pr.findByKakaoplaceid((long)id);
         if( getplace.isPresent() ) {
-            System.out.println("isPresent()");
             Place place = getplace.get();
 
 
@@ -27,23 +26,13 @@ public class PlaceService {
 
             place.setReviewamount(place.getReviewamount()+1);
 
-            // 소수점 첫째 자리까지 버림 처리
-//            updatestars = Math.floor(updatestars * 10.0) / 10.0;
-
             place.setAvestars(updatestars);
 
-            System.out.println("수정 리뷰"+place.getReviewamount());
-            System.out.println("수정 평균별점"+updatestars);
-            
-
-            System.out.println("isPresent()"+place);
             return place;
         }else{
-            System.out.println("isEmpty()");
             insertplace.setReviewamount(insertplace.getReviewamount()+1);
 
             Place place = pr.save(insertplace);
-            System.out.println("isEmpty()"+place);
             return place;
         }
     }

@@ -23,7 +23,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("doFilterInternal");
 
         String authHeaderStr = request.getHeader("Authorization");
         String accessToken = authHeaderStr.substring(7);
@@ -54,7 +53,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request)  throws ServletException {
         String path = request.getRequestURI();
-        System.out.println("check uri.............." + path);
         if(request.getMethod().equals("OPTIONS"))
             return true;
         

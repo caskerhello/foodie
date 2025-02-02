@@ -93,8 +93,6 @@ async function findPostList(placeid){
 
     await jaxios.get(`/api/post/findPost`,{params:{placeid}})
     .then((result)=>{
-        console.log("result.data.postList : ", result.data.postList)
-        // console.log("result.data.postList.length : ", result.data.postList.length)
         setPostList( result.data.postList );
         setPostListLength(result.data.postList.length);
         setModalOpen(true)

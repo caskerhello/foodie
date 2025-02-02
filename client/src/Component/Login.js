@@ -42,7 +42,6 @@ function Login() {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-            console.log('enter 입력');
             onLoginLocal()
         }
     }

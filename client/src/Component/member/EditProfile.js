@@ -55,7 +55,6 @@ const EditProfile = () => {
         formData.append('image',  e.target.files[0]);
         try{
             const result = await jaxios.post('/api/member/fileUpload', formData);
-            console.log("result.data.filename"+result.data.filename)
             setImgSrc(result.data.filename);
             // `${process.env.REACT_APP_ADDRESS2}/uploads/${result.data.filename}`
             setImgStyle({display:"block", width:"200px"});

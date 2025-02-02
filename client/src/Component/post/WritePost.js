@@ -53,8 +53,6 @@ const [Place, setPlace] = useState('')
 async function selectButton(place){
     if(!((place.category_group_code == 'FD6')||(place.category_group_code == 'CE7'))
     ){return alert("음식점만 선택해주세요") }
-    
-    // console.log("place.id"+place.id)
 
     let placeresult = await jaxios.post('/api/place/checkPlaceCategory', null ,{params: {kakaoplaceid:place.id}  } )
     setBeforeSetCategory(placeresult.data.category)
@@ -103,69 +101,6 @@ const handleSubmit = (e) => {
     setPlace(InputText)
     setInputText('')
 }
-
-// useEffect(
-//     ()=>{
-//         navigator.geolocation.getCurrentPosition(
-//             (position) => {
-//                 setCurrentLocation({
-//                     location: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
-//                     radius: 1000,
-//                     sort: kakao.maps.services.SortBy.DISTANCE,
-//                 })
-
-//             },
-//             (err) => {
-
-
-//             }
-//         );
-//     },[]
-// )
-
-
-
-// const onSubmitEnter = (e) => {
-//     // if(e.key === 'Enter' || e.keyCode === 13) {
-//     if(e.key === 'Enter') {
-//       // 엔터 키 입력 후 발생하는 이벤트 작성
-//     console.log('enter 입력');
-    
-//     setOptions1({
-//         location: new kakao.maps.LatLng(
-//             movedLocation2.lat,
-//             movedLocation2.lng
-//         ),
-//         radius: 1000,
-//         sort: kakao.maps.services.SortBy.DISTANCE,
-//         })
-    
-    
-//         if(!movedLocation2.lat){
-    
-//             if(currentLocation){
-//                 setOptions1(
-//                     currentLocation
-//                 )
-    
-//             }
-    
-    
-//             else{
-//             setOptions1({
-//                 location: new kakao.maps.LatLng(37.57261013516411,126.99042333710086),
-//                 radius: 1000,
-//                 sort: kakao.maps.services.SortBy.DISTANCE,
-//                 })
-//             }
-//         }
-    
-//         setPlace(InputText)
-//         setInputText('')
-
-
-//     }
-// }
 
 const [ imgsrc1, setImgsrc1 ] = useState('');
 const [ imgsrc2, setImgsrc2 ] = useState('');
@@ -248,8 +183,6 @@ async function imgUpload(e, n){
     let arr = [...imgList];
     arr.push(result.data.savefilename);
     setImgList( [...arr] );
-    // console.log(imgList);
-
 }
 
 async function onSubmit(){

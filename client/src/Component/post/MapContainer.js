@@ -139,16 +139,6 @@ const MapContainer = ({
       
 
       setMovedLocation2({lat:latlng.getLat(),lng:latlng.getLng()})
-
-      // if(!latlng.getLat()){setMovedLocation2({lat:37.57261013516411,lng:126.99042333710086})}
-
-      // console.log({lat:latlng.getLat(),lng:latlng.getLng()})
-
-      // var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
-      // message += '경도는 ' + latlng.getLng() + ' 입니다';
-      
-      // var resultDiv = document.getElementById('result');  
-      // resultDiv.innerHTML = message;
       
   });
       

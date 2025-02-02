@@ -181,8 +181,7 @@ const MainMenu = (props) => {
 
     function onSearch() {
         if(!searchPlace){return alert("한글자이상 입력해주세요!")}
-        props.setWord(searchPlace);  
-        console.log(searchPlace);
+        props.setWord(searchPlace);
         navigate(`/getPlaceByName/${searchPlace}`);
         setViewOrNot( !viewOrNot );
     }
@@ -207,7 +206,6 @@ const MainMenu = (props) => {
         // if(e.key === 'Enter' || e.keyCode === 13) {
         if(e.key === 'Enter') {
           // 엔터 키 입력 후 발생하는 이벤트 작성
-        console.log('enter 입력');
         onSearch()
         setViewOrNot( !viewOrNot );
         }

@@ -19,7 +19,6 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 매개변수 authentication : 로그인에 성공한  유저의 MemberDTO 가 같이 포함된 객체
-        System.out.println("onAuthenticationSuccess");
 
         // authentication에서 MemberDTO를 꺼냅니다
         MemberDTO memberDTO = (MemberDTO)authentication.getPrincipal();
@@ -34,8 +33,6 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         claims.put("accessToken", accessToken);
         claims.put("refreshToken", refreshToken);
 
-//        System.out.println("claims : " + claims);
-
         Gson gson = new Gson();
         String jsonStr = gson.toJson(claims);  // claims에 있는 데이터를 json형태로 변환
 
@@ -43,7 +40,6 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setCharacterEncoding("UTF-8");   // 한글 인코딩 설정
         PrintWriter printWriter = response.getWriter();  // 출력도구를 얻어서
         printWriter.println(jsonStr);  // 얻어낸 도구로 출력  -> 클라이언트로 전송
-//        System.out.println("Claims as JSON: " + jsonStr);
         printWriter.close();
     }
 }

@@ -31,7 +31,6 @@ public class CustomSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
         // 전달받은 매개변수 http 로 security 환경설정후 build 된 객체를 리턴
-        System.out.println("------------security config start-------------");
 
         // 서로다른 위치의 서버간 자료공유 규칙설정
         http.cors(
@@ -64,7 +63,6 @@ public class CustomSecurityConfig {
         );
 
         // 요청 토큰을 어디서 체크하고 검증할건지에 대한 설정
-        System.out.println("UsernamePasswordAuthenticationFilter");
         http.addFilterBefore( new JWTCheckFilter() ,  UsernamePasswordAuthenticationFilter.class );
         // 토큰 유효성 검사 : new JWTCheckFilter()
         // 토큰안에 있는 사용자정보의 확인 : UsernamePasswordAuthenticationFilter.class

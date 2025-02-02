@@ -57,7 +57,6 @@ useEffect(
 async function myPageModalOpen(postid) {
     try {
         const result = await jaxios.get(`/api/post/getPost/${postid}`);
-        console.log(result.data);
         setModalPost(result.data);
     } catch (err) {
         console.error(err);
