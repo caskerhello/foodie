@@ -24,6 +24,11 @@ public class MemberController {
     @Autowired
     MemberService ms;
 
+    @GetMapping("/test")
+    public @ResponseBody String index() {
+        return "<h1>Hello Security World</h1> ";
+    }
+
     @GetMapping("/getLoginUser")
     public HashMap<String , Object> getLoginUser(HttpSession session, @RequestParam("email") String email) {
         HashMap<String, Object> result = new HashMap<>();

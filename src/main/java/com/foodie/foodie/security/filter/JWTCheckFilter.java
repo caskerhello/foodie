@@ -55,6 +55,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         if(request.getMethod().equals("OPTIONS"))
             return true;
+
+        if(path.equals("/member/test"))
+            return true;
         
         //로그인
         if(path.startsWith("/member/loginLocal"))

@@ -43,9 +43,3 @@ spring:
           starttls:
             enable: true
           timeout: 5000
-
-kakao:
-  client_id: 626518f490cdfa8cfb51cdca88122b82
-  redirect_uri: ${process.env.REACT_APP_ADDRESS2}/member/kakaoLogin
-
-
