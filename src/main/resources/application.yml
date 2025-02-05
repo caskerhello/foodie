@@ -35,7 +35,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: on1yuseproject@gmail.com
-    password: # 앱키
+    password: yspn iufj rhty uads
     properties:
       mail:
         smtp:
