@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { CiGps } from "react-icons/ci";
 import { VscMap } from "react-icons/vsc";
 import { Map, MapMarker ,ZoomControl, CustomOverlayMap  } from "react-kakao-maps-sdk";
+import { IoIosAlert } from "react-icons/io";
 
 import jaxios from '../util/jwtUtil';
 
@@ -245,6 +246,69 @@ const formatDate = (dateString) => {
   
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
+
+const sse = new EventSource("http://localhost:8070/sse/connect");
+
+useEffect(() => {
+
+  sse.addEventListener('connect', (e) => {
+    const { data: receivedConnectData } = e;
+    console.log('connect event data: ', receivedConnectData);  // "connected!"
+  });
+
+  // Clean up when the component is unmounted
+  return () => {
+    sse.close();
+  };
+}, []);
+
+const [count, setCount] = useState();
+const [receivedCount, setReceivedCount] = useState(null);
+
+sse.addEventListener('count', e => {
+  const { data: count } = e;
+  console.log("count event data", count);
+  setReceivedCount(count); // 상태 업데이트
+});
+
+
+
+const handleChange = async (e) => {
+  const count = e.target.value;
+
+  jaxios.post(`/api/sse/count`)
+    .then((result) => {
+        setCount(count);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+  
+
+  // axios.post(`/api/sse/update`, { count })
+  //   .then((result) => {
+  //       setCount(count);
+  //   })
+  //   .catch((err) => {
+  //       console.error(err);
+  //   });
+
+  // await fetch("http://localhost:8070/sse/update", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ count: newCount }),
+  // });
+};
+
+function deleteAlert(){
+  setReceivedCount(null);
+}
+
+// sse.addEventListener('update', e => {
+//   const { data: receivedCount } = e;
+//   console.log("count event data",receivedCount);
+//   setCount(receivedCount);
+// });
       
 return (
 <div
@@ -320,14 +384,16 @@ className='mainContainer'
       <div className='mainMapLoading'>위치 정보를 가져오는 중...</div>
       )}
 
+      <IoIosAlert
+        id="IoIosAlert"
+        className={receivedCount ? 'alertRed' : ''}  // receivedCount가 있으면 빨간색 클래스 적용
+        onClick={()=>{deleteAlert()}}
+      />
       
       <CiGps id='CiGps' onClick={()=>{getLocation()}}/>
-      
-
-      
+            
       <VscMap id='VscMap' onClick={()=>{onChangeMapView()}}/>
       
-
       {
       modalOpen &&
         <div className={'mainModalContainer'} ref={modalBackground} onClick={e => {
@@ -345,6 +411,14 @@ className='mainContainer'
             <div className='mainModalContent'>
               { profile?
               (<>
+                <input
+                  type="number"
+                  value={count}
+                  onChange={handleChange}
+                  placeholder="숫자 입력"
+                />
+                <p>현재 count: {count}</p>
+
                 <div className='profileImg'>
                   <img src={`${process.env.REACT_APP_ADDRESS2}/uploads/${profile.profileimg}`} />
                 </div>

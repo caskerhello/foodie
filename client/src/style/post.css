@@ -249,6 +249,19 @@
 
 /* 우상단 버튼 css */
 
+#IoIosAlert{
+    position: fixed;
+    top: 2%;
+    right: 8%;
+    width: 50px;
+    height: 50px;
+    /* color: inherit; */
+}
+.alertRed {
+    color: red;
+}
+
+
 #CiGps{
     position: fixed;
     top: 2%;

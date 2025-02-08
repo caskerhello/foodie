@@ -53,6 +53,8 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request)  throws ServletException {
         String path = request.getRequestURI();
+        System.out.println("url check @@@@@@@@@@@@@@@@@@@@@@"+ path);
+
         if(request.getMethod().equals("OPTIONS"))
             return true;
 
@@ -61,6 +63,24 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         
         //로그인
         if(path.startsWith("/member/loginLocal"))
+            return true;
+
+        if(path.startsWith("/api/sse/connect"))
+            return true;
+
+        if(path.startsWith("/sse/connect"))
+            return true;
+
+        if(path.startsWith("/api/sse/count"))
+            return true;
+
+        if(path.startsWith("/sse/count"))
+            return true;
+
+        if(path.startsWith("/api/sse/update"))
+            return true;
+
+        if(path.startsWith("/sse/update"))
             return true;
 
         //토큰 갱신
