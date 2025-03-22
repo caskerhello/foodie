@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+.modal-open-button, .modalCloseBtn {
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.getPlaceByCategoryContainer{
+    font-family: "Dongle", serif;
+
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    margin-top: 50px;
+    
+
+}
+
+
+/* 토스트팝업 css */
+.getPlaceByCategoryTitle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 111, 97, 1);
+    color: white;
+    padding: 5px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 20px; 
+}
+
+.getPlaceByCategoryTitle.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.getPlaceByCategoryTitle2 {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background-color: rgba(255, 111, 97, 1);
+    color: white;
+    padding: 5px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 20px;
+}
+
+.getPlaceByCategoryTitle2.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 토스트팝업 css 끝*/
+
+
+.getPlaceByCategoryContainer .getPlaceByCategoryBtns button{
+    height: 30px;
+    background-color: rgba(255, 111, 97, 1);
+    border: #f9f9f9;
+    border-radius: 10px;
+    color: white;
+
+    font-family: "Dongle", serif;
+    font-size: 150%;
+    line-height: 0.8;
+
+    transition: background-color 0.3s;
+    box-shadow: 0px 0px 10px;
+}
+
+.getPlaceByCategoryContainer .getPlaceByCategoryBtns button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+
+.getPlaceByCategoryContainer .placeContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 0 5px;
+
+    width: 600px;
+
+}
+
+.getPlaceByCategoryContainer .placeContainer .left{
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+    /* flex: 1; */
+    width: 200px;
+    /* border: 1px solid black; */
+
+    font-size: 200%;
+}
+
+.getPlaceByCategoryContainer .placeContainer .right{
+    padding: 10px;
+
+    /* flex: 1.5; */
+    width: 400px;
+    /* border: 1px solid black; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start ;
+    align-items: flex-start;
+
+    font-size: 150%;
+}
+
+.getPlaceByCategoryContainer .placeContainer .right .placeContents{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: flex-start ;
+    align-items: flex-start; */
+    text-align: left;
+}
+
+.getPlaceByCategoryContainer .placeContainer .right .btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 40px;
+
+}
+
+.getPlaceByCategoryContainer .placeContainer .right .btns button{
+    height: 30px;
+    background-color: rgba(255, 111, 97, 1);
+    border: #f9f9f9;
+    border-radius: 10px;
+    color: white;
+
+    font-family: "Dongle", serif;
+    font-size: 110%;
+    line-height: 0.8;
+
+    transition: background-color 0.3s;
+    box-shadow: 0px 0px 10px;
+}
+
+.getPlaceByCategoryContainer .placeContainer .right .btns button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+
+/* 모달 관련 css */
+.getPlaceByCategoryModalContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    
+}
+
+.getPlaceByCategoryModalContent {
+    background-color: #f9f9f9;
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: auto;
+    
+}
+
+.getPlaceByCategoryModalContentTitle{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.getPlaceByCategoryModalContent .post{
+    text-align: left;
+    font-size: 170%;
+    line-height: 0.9;
+
+    margin: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.getPlaceByCategoryModalContent .post .postTitle{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

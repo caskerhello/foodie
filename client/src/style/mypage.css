@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+.mypageContainer{
+    /* position: relative;
+    top:0%; */
+    width: 100vw;
+    height: 100vh;
+    /* border: 1px solid red; */
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+}
+
+.mypage{
+    /* position: absolute; */
+    /* top: 5%; */
+    /* left: 15%; */
+    width:850px;
+    border:0px solid black;
+    border-radius : 10px;
+    margin:2px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+.mypage .title{
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 300%;
+
+    text-align: center;
+}
+.mypage .userinfo{
+    width:100%;
+    border:0px solid black;
+    display: flex;
+}
+.mypage .userinfo .img{
+    flex-basis:250px;    
+    /* border:1px solid black; */
+}
+.mypage .userinfo .img img{
+    width:250px;
+    height:250px;
+    border-radius: 50%;
+    border:0px solid black;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);    
+}
+.mypage .userinfo .profile{
+    flex:1;
+    /* border:2px solid black; */
+    border-radius : 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.mypage .userinfo .profile .field{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+    width: 100%;
+}
+.mypage .userinfo .profile .field .title{
+    flex: 1;
+    /* font-weight: bold; */
+    font-size: 200%;
+}
+.mypage .userinfo .profile .field .content{
+    font-family: "Dongle", serif;
+    /* font-weight: 400; */
+    font-style: normal;
+    font-size: 180%;
+    flex :4;
+}
+/* .mypage .userinfo .profile .field label{
+    flex:1;
+    padding:5px;
+    font-weight: bold;
+} */
+.mypage .userinfo .profile .field div{
+    flex:2;
+    padding:5px;
+}
+.mypage .btns{ 
+    display: flex;
+    margin:10px 0;    
+}
+.mypage .btns button{
+    flex: 1;
+    padding:10px;
+    background-color: rgba(255, 111, 97, 1);
+    color:white;
+    
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+
+    line-height: 0.7;
+
+    margin:2px;
+    border-radius: 10px;
+    border: 0px;
+
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* .editform button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgb(242, 38, 38);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    margin-top: 10px;
+} */
+
+.mypage .btns button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+
+.userpost{
+    width:100%;
+    /* border:1px solid black; */
+    display: grid;
+    margin-bottom: 100px;
+    grid-template-columns:1fr 1fr 1fr; 
+}
+
+.userpost div{
+    /* overflow: hidden; */
+    display: flex;    
+    /* border:2px solid black; */
+    justify-content: center;
+    height:250px;
+    margin: 10px;
+    /* margin-bottom: 100px; */
+    
+}
+
+.userpost div img{
+    width:250px;
+    height: 250px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+.userpost div img:hover{
+    transform: translateY(-5px);
+}
+
+
+.modal-open-button, .modalCloseBtn {
+    cursor: pointer;
+    margin-left: auto;
+
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 100%;
+
+    line-height: 0.7;
+}
+
+.getMypageModalContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.getMypageModalContent {
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    overflow: auto;
+    width: 650px;
+    height: 730px;
+    padding: 15px;
+    
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.getMypageModalTitle{
+    width: 100%;
+    font-family: "Dongle", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 200%;
+    display: flex;
+    justify-content: right;
+}
+
+.getMypageModalContent .mainImg{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.getMypageModalContent img{
+    
+    width: 500px;
+    height: 500px;
+    border-radius: 40px;
+}
+
+.postFromMypage .postProfile span{
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 200%;
+}
+
+.postFromMypage .postButtonsAndContents span{
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 150%;
+}
+
+.postFromMypage .postReply .postReplyContents{
+    font-family: "Dongle", serif;
+    font-weight: 50;
+    font-style: normal;
+    font-size: 150%;
+}

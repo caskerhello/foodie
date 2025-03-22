@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.editformContainer{
+    width: 100vh;
+    /* height: 100vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editform {
+    width: 360px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid rgba(255, 111, 97, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.editform .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgba(255, 111, 97, 1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 필드 스타일 */
+.editform .field {
+    margin-bottom: 15px;
+}
+
+.editform .field label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+}
+
+.editform .input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.editform .input-wrapper input[type="text"],
+.editform .input-wrapper input[type="password"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.editform .input-wrapper input:focus {
+    border-color: rgba(255, 111, 97, 1);
+}
+
+.editform .input-wrapper .message {
+    margin-top: 3px; /* 입력 필드 아래 간격 */
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 12px;
+    color: rgba(255, 111, 97, 1);
+}
+
+/* 버튼 스타일 */
+.editform button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgba(255, 111, 97, 1);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.editform button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+.editform .btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.editform .btns button {
+    flex: 1;
+}
+
+/* 파일 업로드 및 미리보기 */
+.editform input[type="file"] {
+    margin-top: 5px;
+}
+
+.editform .field img {
+    margin-top: 10px;
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+@media (max-width:700px) {
+    .editform .field , .editform .btns , .editform .snslogin{
+        flex-direction: column;
+    }
+    .editform .field input, 
+    .editform .btns button, 
+    .editform .snslogin button{
+        margin: 5px 0;
+        padding:10px;
+    }
+}

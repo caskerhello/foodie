@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+  
+#mapContainer{
+  display: flex;
+  flex-direction: row;
+}
+
+#resultList {
+  width: 60%;
+  height: 500px;
+  overflow: auto;
+  padding: 0px 15px;
+}
+
+.mapContainerResult{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  
+}
+
+.mapContainerResult .mapContainerResultTitle{
+  font-family: "Dongle", serif;
+  /* font-weight: 400; */
+  font-style: normal;
+  font-weight: bold;
+  font-size: 200%;
+  letter-spacing: 2px; 
+}
+
+
+.mapContainerResult .mapContainerResultContents{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+
+  font-family: "Dongle", serif;
+  /* font-weight: 400; */
+  font-style: normal;
+  /* font-weight: bold; */
+  font-size: 150%;
+  letter-spacing: 1px; 
+
+}
+
+
+
+#pagination {
+  margin-top: 3rem;
+}
+
+#pagination a {
+  color: black;
+  font-size: 20px;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+#pagination a.on {
+  color: lightblue;
+  font-weight: bold;
+}
+
+
+#overlaywrap{
+  background-color: blue;
+  width: 110px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+
+}
+
+/* #overlayinfo{
+
+
+} */
+
+#overlaytitle{
+  background-color: white;
+  width: 100px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center;
+  margin: 0 auto; */
+  border-radius: 10px;
+
+}
+
+#overlayclose{
+  width: 20px;
+  height: 20px;
+  background-color: gray;
+  color: white;
+
+}

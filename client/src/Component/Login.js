@@ -1,62 +1,98 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BiSolidKey } from "react-icons/bi";
+import { BiSolidUserPlus } from "react-icons/bi";
+import { BiLogInCircle } from "react-icons/bi";
+
+import { useDispatch } from 'react-redux';
+import { loginAction, setFollowers, setFollowings } from './store/userSlice';
+import {Cookies} from 'react-cookie'
 
 import '../style/login.css'
+
 
 function Login() {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const dispatch = useDispatch();  // 쓰기를 위한 함수 생성
+    const cookies = new Cookies();
     const navigate = useNavigate();
+
     async function onLoginLocal(){
         if(!email){return alert("이메일을 입력하세요");}
         if(!pwd){return alert("패스워드를 입력하세요");}
+        
         try{
-            const result = await axios.post('/api/member/loginlocal', {email, pwd} )
-            if( result.data.msg== 'ok'){
-                alert("로그인 되었습니다")
-                const res=await axios.get('/api/member/getLoginUser')
-
-                console.log(res.data.loginUser)
-                console.log('followings', res.data.followings)
-                console.log('followers', res.data.followers)
-
-                dispatch( loginAction( res.data.loginUser )  );     
-                dispatch( setFollowers( {followers:res.data.followers} ) );          
-                dispatch( setFollowings( {followings:res.data.followings} ) );
-                
-                navigate('/main'); 
-            }else{
+            const result = await axios.post('/api/member/loginLocal', null, {params:{username:email, password:pwd}} )
+            if( result.data.error === 'ERROR_LOGIN'){
                 setPwd("");
-                return alert(result.data.msg);
+                return alert('이메일과 패스워드를 확인하세요')
+            }else{
+                // alert('result.data',result.data)
+                // alert('result.data', JSON.stringify( result.data ) );
+                cookies.set('user', JSON.stringify( result.data ) , {path:'/', })
+                dispatch( loginAction( result.data ) )
+                navigate('/main');
             }
         }catch(err){ console.error(err)}
     }
 
+    const onSubmitEnter = (e) => {
+        // if(e.key === 'Enter' || e.keyCode === 13) {
+        if(e.key === 'Enter') {
+          // 엔터 키 입력 후 발생하는 이벤트 작성
+            onLoginLocal()
+        }
+    }
+
     return (
+    <div className="loginContainer">
         <div className="loginform">
-            <div className='field'>
-                <label>E-MAIL</label>
-                <input type="text" value={email} onChange={(e)=>{ setEmail(e.currentTarget.value) }}/>
+            <br></br>
+            <div className="title">
+                즐거운 미식 생활의 시작 <span>Foodie</span>
+                <span className="fallingDots">·&nbsp;</span>
+                <span className="fallingDots2">·</span>
             </div>
+            <br></br>
             <div className='field'>
-                <label>PASSWORD</label>
-                <input type="password" value={pwd} onChange={(e)=>{ setPwd(e.currentTarget.value) }}/>
+                <br></br>
+                <label></label>
+                <input type="text" value={email} placeholder='이메일을 입력해주세요' onChange={(e) => {
+                    setEmail(e.currentTarget.value)
+                }} onKeyDown={onSubmitEnter}/>
+            </div>
+
+            <div className='field'>
+                <label></label>
+                <input type="password" value={pwd} placeholder='비밀번호를 입력해주세요' onChange={(e) => {
+                    setPwd(e.currentTarget.value)
+                }} onKeyDown={onSubmitEnter}/>
+            </div>
+            <div className='message' onClick={() => {
+                navigate('/findPassword')
+            }}>
+                비밀번호를 잊으셨나요?
             </div>
             <div className='btns'>
-                <button onClick={ ()=>{ onLoginLocal() } }>LOGIN</button>
-                <button onClick={ ()=>{ navigate('/join') } }>JOIN</button>
-            </div>
-            <div className='snslogin'>
-                <button onClick={()=>{
-                    window.location.href='http://localhost:8070/member/kakaostart';
-                }}>KAKAO</button>
-                <button>NAVER</button>
-                <button>GOOGLE</button>
-                <button>FACEBOOK</button>
+                <div className='btn'>
+                    <BiLogInCircle style={{height: '40px', width: '40px'}}
+                        onClick={() => {
+                            onLoginLocal()
+                    }}/>
+
+                </div>
+
+                <div className='btn'>
+                    <BiSolidUserPlus style={{height: '50px', width: '50px'}} onClick={() => {
+                        navigate('/join')
+                    }}/>
+                </div>
+                <button><img style={{height: "40px"}} src="images/free-icon-kakao-talk.png"/></button>
             </div>
         </div>
+    </div>
     )
 }
 

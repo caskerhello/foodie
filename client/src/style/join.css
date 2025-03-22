@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.joinformContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.joinform {
+    width: 360px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid rgba(255, 111, 97, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.joinform .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgba(255, 111, 97, 1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 필드 스타일 */
+.joinform .field {
+    margin-bottom: 15px;
+}
+
+.joinform .field label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+}
+
+.joinform .input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.joinform .input-wrapper input[type="text"],
+.joinform .input-wrapper input[type="password"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.joinform .input-wrapper input:focus {
+    border-color: rgba(255, 111, 97, 1);
+}
+
+.joinform .message,
+.joinform .input-wrapper .message {
+    margin-top: 3px; /* 입력 필드 아래 간격 */
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 12px;
+    color: rgba(255, 111, 97, 1);
+}
+
+/* 버튼 스타일 */
+.joinform .btns button,
+.joinform .input-wrapper button,
+.joinform .cropper-buttons button {
+    flex: 2;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgba(255, 111, 97, 1);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.joinform .btns button.enabled,
+.joinform .input-wrapper button.enabled {
+    background-color: rgba(255, 111, 97, 1);
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.joinform .btns button.disabled,
+.joinform .input-wrapper button.disabled {
+    background-color: rgb(238, 238, 238);
+    color: rgb(191, 191, 191);
+    cursor: pointer;
+}
+
+.joinform .btns button.enabled:hover,
+.joinform .cropper-buttons button:hover {
+    background-color: rgb(200, 30, 30);
+}
+
+.joinform .btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* 파일 업로드 및 미리보기 */
+.joinform .field input[type="file"] {
+    margin-top: 5px;
+}
+
+.joinform .field img {
+    display: block;
+    margin-top: 10px;
+    width: 150px;
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+/* 크롭 컨테이너 및 모달 스타일 */
+.joinform .container-cropper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.joinform .cropper-modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 크롭 화면 */
+.joinform .cropper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-color: #f3f3f3;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* 크롭 버튼 그룹 */
+.joinform .cropper-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.joinform .cropper-buttons .btn-cancel {
+    background-color: rgb(128, 128, 128); /* 취소 버튼 색상 */
+}
+
+.joinform .cropper-buttons .btn-cancel:hover {
+    background-color: rgb(100, 100, 100);
+}
+
+@media (max-width:700px) {
+    .joinform .field , .joinform .btns , .joinform .snslogin{
+        /*flex-direction: column;*/
+    }
+    .joinform .field input, 
+    .joinform .btns button, 
+    .joinform .snslogin button{
+        /*padding: 10px;*/
+    }
+}
